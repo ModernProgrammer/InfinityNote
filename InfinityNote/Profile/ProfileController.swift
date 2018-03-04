@@ -167,7 +167,7 @@ class ProfileController: UIViewController {
     }
     
     fileprivate func fetchUserInfo() {
-        guard let userId = Auth.auth().currentUser?.uid else  { return }
+        //guard let userId = Auth.auth().currentUser?.uid else  { return }
         
 //        Database.fetchUserWithUID(uid: userId) { (user) in
 //            <#code#>

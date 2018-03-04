@@ -63,9 +63,6 @@ class NoteEditorViewController: UIViewController {
         view.addSubview(noteBody)
         noteBodyContainer.anchor(topAnchor: noteTitleContainer.bottomAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
         noteBody.anchor(topAnchor: noteBodyContainer.topAnchor, bottomAnchor: noteBodyContainer.bottomAnchor, leadingAnchor: noteBodyContainer.safeAreaLayoutGuide.leadingAnchor, trailingAnchor: noteBodyContainer.safeAreaLayoutGuide.trailingAnchor, paddingTop: 20, paddingBottom: 20, paddingLeft: 20, paddingRight: 20, width: 0, height: 0)
-        
-        
-        
     }
     
     override func viewDidDisappear(_ animated: Bool) {

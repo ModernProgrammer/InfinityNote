@@ -10,6 +10,7 @@ target 'InfinityNote' do
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
   pod 'Firebase/Auth'
-  pod 'lottie-ios'
- 
+  pod 'lottie-ios' 
+  pod 'KMPlaceholderTextView', '~> 1.3'
+
 end
