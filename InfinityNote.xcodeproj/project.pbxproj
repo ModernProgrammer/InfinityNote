@@ -30,6 +30,7 @@
 		F35BF4ED203787F400E2D283 /* AddNoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35BF4EC203787F400E2D283 /* AddNoteController.swift */; };
 		F35BF4EF2037883100E2D283 /* BookmarkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35BF4EE2037883100E2D283 /* BookmarkController.swift */; };
 		F36C952F20327470007A2666 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36C952E20327470007A2666 /* Models.swift */; };
+		F3A61DE5204DEFEF008AAFA3 /* SelectNoteBookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A61DE4204DEFEF008AAFA3 /* SelectNoteBookController.swift */; };
 		F3C1D298202F6E7F009B77DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C1D297202F6E7F009B77DE /* AppDelegate.swift */; };
 		F3C1D29A202F6E7F009B77DE /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C1D299202F6E7F009B77DE /* MainTabBarController.swift */; };
 		F3C1D29D202F6E7F009B77DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F3C1D29B202F6E7F009B77DE /* Main.storyboard */; };
@@ -66,6 +67,7 @@
 		F35BF4EC203787F400E2D283 /* AddNoteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteController.swift; sourceTree = "<group>"; };
 		F35BF4EE2037883100E2D283 /* BookmarkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkController.swift; sourceTree = "<group>"; };
 		F36C952E20327470007A2666 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		F3A61DE4204DEFEF008AAFA3 /* SelectNoteBookController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectNoteBookController.swift; sourceTree = "<group>"; };
 		F3C1D294202F6E7F009B77DE /* InfinityNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfinityNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3C1D297202F6E7F009B77DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F3C1D299202F6E7F009B77DE /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			children = (
 				F35BF4EC203787F400E2D283 /* AddNoteController.swift */,
 				F3276AAB2048C81000FB0675 /* NewNoteController.swift */,
+				F3A61DE4204DEFEF008AAFA3 /* SelectNoteBookController.swift */,
 			);
 			path = Add;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				F324AA69203253FB007551B1 /* LoginController.swift in Sources */,
 				F3287B092040C5F200934EBE /* CameraController.swift in Sources */,
 				F3C1D29A202F6E7F009B77DE /* MainTabBarController.swift in Sources */,
+				F3A61DE5204DEFEF008AAFA3 /* SelectNoteBookController.swift in Sources */,
 				F3287B192041CE7100934EBE /* NoteEditorViewController.swift in Sources */,
 				F35BF4EF2037883100E2D283 /* BookmarkController.swift in Sources */,
 				F35BF4E12034EB5600E2D283 /* SignupController.swift in Sources */,

@@ -105,7 +105,6 @@ class SignupController: UIViewController, UIGestureRecognizerDelegate {
         button.addTarget(self, action: #selector(handleSignupPress), for: .touchUpInside)
         return button
     }()
-
     
     let loginButton: UIButton = {
         let button = UIButton()
@@ -125,7 +124,6 @@ class SignupController: UIViewController, UIGestureRecognizerDelegate {
         guard let fullName = fullnameTextField.text , fullName.count > 0 else { return }
         guard let email = emailTextField.text, email.count > 0 else { return }
         guard let password = passwordTextField.text, password.count > 0 else { return }
-        
         
         Auth.auth().createUser(withEmail: email, password: password) { (user, err) in
             if let err = err {
@@ -156,7 +154,6 @@ class SignupController: UIViewController, UIGestureRecognizerDelegate {
         print("Handle Login")
         navigationController?.popViewController(animated: true)
     }
-    
     
     func setupUserInterface(){
         view.addSubview(backgroundImage)
