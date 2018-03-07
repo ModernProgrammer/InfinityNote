@@ -19,7 +19,6 @@ class NoteEditorViewController: UIViewController {
             
             let bodyAttributedText = NSMutableAttributedString(string: bodyText, attributes: [NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
             noteBody.attributedText = bodyAttributedText
-            
         }
     }
     

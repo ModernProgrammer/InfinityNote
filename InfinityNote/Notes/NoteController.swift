@@ -10,17 +10,24 @@ import UIKit
 
 
 class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+    var navTitle: String? {
+        didSet {
+            navigationItem.title = navTitle
+        }
+    }
+    
+    
     let headerId = "headerId"
     let cellId = "cellId"
     let numberOfCells = 10
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = paletteSystemTan
-        
         collectionView?.register(NoteHeaderCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(NoteCell.self, forCellWithReuseIdentifier: cellId)
-        
     }
     
     // For Header
@@ -31,9 +38,8 @@ class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! NoteHeaderCell
         return header
     }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 200)
+        return CGSize(width: view.frame.width, height: 48)
     }
     
     // For CollectionView You Need...

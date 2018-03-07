@@ -12,13 +12,15 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
     
     let cellId = "cellId"
     let headerId = "headerId"
-    let numberOfCells = 5
+    let numberOfCells = 20
+    
+    
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = paletteSystemWhite
-        collectionView?.register(NoteBookHeaderCell.self,forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView?.register(NoteBookHeaderCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(NoteBookCell.self, forCellWithReuseIdentifier: cellId)
     
         setupNavigationController()
@@ -45,7 +47,7 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 200)
+        return CGSize(width: view.frame.width, height: 60)
     }
     
     // For CollectionView You Need...
@@ -81,8 +83,9 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
     
     // For selecting a cell
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let noteController = NoteController(collectionViewLayout: UICollectionViewFlowLayout())
         
+        let noteController = NoteController(collectionViewLayout: UICollectionViewFlowLayout())
+        noteController.navTitle = "Title: " + String(indexPath.item)
         //userProfileController.userId = user.uid
         navigationController?.pushViewController(noteController, animated: true)
     }

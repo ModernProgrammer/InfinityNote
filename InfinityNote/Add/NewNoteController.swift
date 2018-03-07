@@ -98,13 +98,12 @@ class NewNoteController: UIViewController {
         text.font = UIFont.boldSystemFont(ofSize: 16)
         return text
     }()
+    
     let noteTitleContainer: UIView = {
         let view = UIView()
         view.backgroundColor = paletteSystemWhite
         return view
     }()
-    
-    
     
     @objc func handleSelectNotebook() {
         print("Select Notebook")
@@ -126,7 +125,6 @@ class NewNoteController: UIViewController {
                 print("Something went wrong: ", err)
                 return
             }
-            
             print("Successful saving")
             self.dismiss(animated: true, completion: nil)
         }

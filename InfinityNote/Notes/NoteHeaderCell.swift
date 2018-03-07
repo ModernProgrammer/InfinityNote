@@ -9,9 +9,30 @@
 import UIKit
 
 class NoteHeaderCell: UICollectionViewCell {
+
+    let headerContainer: UIView = {
+        let view = UIView()
+        view.backgroundColor = paletteSystemTan
+        return view
+    }()
+
+    let searchBar: UISearchBar = {
+        let bar = UISearchBar()
+        bar.placeholder = "Search Notes"
+        bar.barTintColor = paletteSystemTan
+        bar.searchBarStyle = .minimal
+        bar.textColor = paletteSystemGrayBlue
+        return bar
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = paletteSystemBlue
+        backgroundColor = paletteSystemTan
+        
+        addSubview(headerContainer)
+        addSubview(searchBar)
+        headerContainer.anchor(topAnchor: topAnchor, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor, trailingAnchor: trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+        searchBar.anchor(topAnchor: headerContainer.topAnchor, bottomAnchor: headerContainer.bottomAnchor, leadingAnchor: headerContainer.leadingAnchor, trailingAnchor: headerContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {

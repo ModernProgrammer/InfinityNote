@@ -134,7 +134,7 @@ class SignupController: UIViewController, UIGestureRecognizerDelegate {
             print("Successfully created user with userId: ", user?.uid ?? "")
             
             guard let uid = user?.uid else { return }
-            let dictionaryValues = ["fullname":fullName]
+            let dictionaryValues = ["fullname":fullName, "email":email]
             let values = [uid:dictionaryValues]
             Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (error, ref) in
                 if let error = error {
