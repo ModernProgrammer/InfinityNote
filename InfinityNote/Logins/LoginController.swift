@@ -17,7 +17,6 @@ class LoginController: UIViewController {
         navigationController?.isNavigationBarHidden = true
         setupUserInterface()
         AppUtility.lockOrientation(.portrait)
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {

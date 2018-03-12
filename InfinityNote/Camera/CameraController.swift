@@ -108,9 +108,5 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
         
         //let previewImage = UIImage(data: imageData!)
         print("Finish Processing Photo Sample Buffer...")
-
-        
     }
-
-    
 }

@@ -15,7 +15,7 @@ class NewNoteController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = paletteSystemWhite
         setupUI()
-    }
+    }   
     
     let scrollContainer: UIScrollView = {
         let view = UIScrollView()
@@ -118,9 +118,15 @@ class NewNoteController: UIViewController {
         guard let title = noteTitle.text, title.count > 0 else { return }
         guard let body = bodyNoteBookTextField.text, body.count > 0 else { return }
         
-        let dictionaryValues = ["title":title, "body":body]
-        //let values = [dictionaryValues]
-        Database.database().reference().child("users").child(uid).child("notebook").child(title).updateChildValues(dictionaryValues) { (err, ref) in
+        let notebookTitle = "NotebookTitle2"
+        let formatter = DateFormatter()
+        // initially set the format based on your datepicker date
+        formatter.dateFormat = "MM/dd/yyyy"
+        
+        let date = formatter.string(from: Date())
+        print(date)
+        let dictionaryValues = ["body": body,"date": date, ]
+        Database.database().reference().child(uid).child("notebooks").child(notebookTitle).child(title).updateChildValues(dictionaryValues) { (err, ref) in
             if let err = err {
                 print("Something went wrong: ", err)
                 return

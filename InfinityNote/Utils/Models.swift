@@ -35,15 +35,35 @@ struct AppUtility {
     
 }
 
-
 struct User {
-    let username: String
+    let fullname: String
+    let email: String
     let profileImageURL: String
     let uid:String
     
-    init(uid: String,dictionary: [String: Any]) {
+    init(uid: String, dictionary: [String: Any]) {
         self.uid = uid
-        self.username = dictionary["username"] as? String ?? ""
+        self.fullname = dictionary["username"] as? String ?? ""
+        self.email = dictionary["email"] as? String ?? ""
         self.profileImageURL = dictionary["profileImageURL"] as? String ?? ""
+    }
+}
+
+struct Notebook {
+    let notebookTitle: String
+    init(dictionary: [String: Any], notebookTitle: String){
+        self.notebookTitle = notebookTitle
+    }
+}
+
+struct Note {
+    let title: String
+    let date: String
+    let body: String
+    
+    init(dictionary: [String: Any], noteTitle: String){
+        self.title = noteTitle
+        self.date =  dictionary["date"] as? String ?? ""
+        self.body =  dictionary["body"] as? String ?? ""
     }
 }

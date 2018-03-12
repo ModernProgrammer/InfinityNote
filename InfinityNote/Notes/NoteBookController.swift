@@ -7,14 +7,13 @@
 //
 
 import UIKit
+import Firebase
 
 class NoteBookController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let cellId = "cellId"
     let headerId = "headerId"
-    let numberOfCells = 20
-    
-    
+    //let numberOfCells =
     
 
     override func viewDidLoad() {
@@ -22,19 +21,41 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.backgroundColor = paletteSystemWhite
         collectionView?.register(NoteBookHeaderCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(NoteBookCell.self, forCellWithReuseIdentifier: cellId)
-    
-        setupNavigationController()
-        
         collectionView?.alwaysBounceVertical = true
+        
+        fetchNotebooks()
+        setupNavigationController()
+    }
+    
+    var notebooks = [Notebook]()
+    func fetchNotebooks(){
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        Database.database().reference().child(uid).child("notebooks").observeSingleEvent(of: .value) { (snapshot) in
+            guard let dictionaries = snapshot.value as? [String: Any] else { return }
+            
+            dictionaries.forEach({ (key,value) in
+                guard let dictionary = value as? [String: Any] else { return }
+                let keyTitle = key
+                let notebook = Notebook(dictionary: dictionary, notebookTitle: keyTitle)
+                self.notebooks.append(notebook)
+            })
+            self.collectionView?.reloadData()
+        }
     }
     
     func setupNavigationController() {
         navigationItem.title = "Notebooks"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "plusIcon"), style: .plain, target: handleAddNotebookButton(), action: nil)
+        let image = UIImage(named: "plusIcon")
+            //?.withRenderingMode(.alwaysOriginal)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(handleAddNotebookButton))
+        
     }
     
-    func handleAddNotebookButton() {
+    @objc func handleAddNotebookButton() {
         print("Add Notebook")
+        let addNoteBookController = AddNoteBookController()
+        present(addNoteBookController, animated: true, completion: nil)
     }
     
     // For Header
@@ -57,11 +78,12 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
     // sizeForItemAt: Requires an extension of UICollectionViewDelegateFlowLayout
     // didSelectItemAt: Checks to see if you clicked on a cell
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numberOfCells
+        return notebooks.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! NoteBookCell
+        cell.notebook = notebooks[indexPath.item]
         return cell
     }
     
@@ -83,10 +105,13 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
     
     // For selecting a cell
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         let noteController = NoteController(collectionViewLayout: UICollectionViewFlowLayout())
-        noteController.navTitle = "Title: " + String(indexPath.item)
-        //userProfileController.userId = user.uid
+        
+        let notebook = self.notebooks[indexPath.item]
+        
+        noteController.notebookTitle = notebook.notebookTitle
+        print(notebook)
+        
         navigationController?.pushViewController(noteController, animated: true)
     }
 }

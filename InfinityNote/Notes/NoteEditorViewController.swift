@@ -9,14 +9,14 @@
 import UIKit
 
 class NoteEditorViewController: UIViewController {
-    var name: String? {
+    var note: Note? {
         didSet {
-            guard let titleName = name else { return }
+            guard let titleName = note?.title else { return }
             let attributedText = NSMutableAttributedString(string: titleName, attributes: [NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
             noteTitle.attributedText = attributedText
             
-            let bodyText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-            
+            guard let bodyText = note?.body else { return }
+
             let bodyAttributedText = NSMutableAttributedString(string: bodyText, attributes: [NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
             noteBody.attributedText = bodyAttributedText
         }

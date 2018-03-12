@@ -20,6 +20,7 @@
 		F3287B152041C4B000934EBE /* NoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3287B142041C4B000934EBE /* NoteController.swift */; };
 		F3287B172041C4CA00934EBE /* NoteHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3287B162041C4CA00934EBE /* NoteHeaderCell.swift */; };
 		F3287B192041CE7100934EBE /* NoteEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3287B182041CE7100934EBE /* NoteEditorViewController.swift */; };
+		F34BD2D020543A4500923C83 /* AddNoteBookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BD2CF20543A4500923C83 /* AddNoteBookController.swift */; };
 		F35354B8203B899B0030C9E7 /* animation-w200-h200.json in Resources */ = {isa = PBXBuildFile; fileRef = F35354B4203B899B0030C9E7 /* animation-w200-h200.json */; };
 		F35354B9203B899B0030C9E7 /* done.json in Resources */ = {isa = PBXBuildFile; fileRef = F35354B5203B899B0030C9E7 /* done.json */; };
 		F35354BA203B899B0030C9E7 /* loader_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = F35354B6203B899B0030C9E7 /* loader_animation.json */; };
@@ -57,6 +58,7 @@
 		F3287B142041C4B000934EBE /* NoteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteController.swift; sourceTree = "<group>"; };
 		F3287B162041C4CA00934EBE /* NoteHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteHeaderCell.swift; sourceTree = "<group>"; };
 		F3287B182041CE7100934EBE /* NoteEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditorViewController.swift; sourceTree = "<group>"; };
+		F34BD2CF20543A4500923C83 /* AddNoteBookController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteBookController.swift; sourceTree = "<group>"; };
 		F35354B4203B899B0030C9E7 /* animation-w200-h200.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "animation-w200-h200.json"; sourceTree = "<group>"; };
 		F35354B5203B899B0030C9E7 /* done.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = done.json; sourceTree = "<group>"; };
 		F35354B6203B899B0030C9E7 /* loader_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loader_animation.json; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				F3287B162041C4CA00934EBE /* NoteHeaderCell.swift */,
 				F3C1D2AC202F758A009B77DE /* NoteCell.swift */,
 				F3287B182041CE7100934EBE /* NoteEditorViewController.swift */,
+				F34BD2CF20543A4500923C83 /* AddNoteBookController.swift */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F3287B0F2041B88A00934EBE /* NoteBookHeaderCell.swift in Sources */,
+				F34BD2D020543A4500923C83 /* AddNoteBookController.swift in Sources */,
 				F3C1D2B0202FBB87009B77DE /* Extensions.swift in Sources */,
 				F3287B172041C4CA00934EBE /* NoteHeaderCell.swift in Sources */,
 				F324AA69203253FB007551B1 /* LoginController.swift in Sources */,

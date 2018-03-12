@@ -7,27 +7,43 @@
 //
 
 import UIKit
-
+import Firebase
 
 class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    var navTitle: String? {
+    var notebookTitle: String? {
         didSet {
-            navigationItem.title = navTitle
+            navigationItem.title = notebookTitle
         }
     }
     
-    
     let headerId = "headerId"
     let cellId = "cellId"
-    let numberOfCells = 10
-    
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = paletteSystemTan
         collectionView?.register(NoteHeaderCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(NoteCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.alwaysBounceVertical = true
+        fetchNotes()
+    }
+    
+    var notes = [Note]()
+    func fetchNotes(){
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let notebookTitle = self.notebookTitle else { return }
+        
+        Database.database().reference().child(uid).child("notebooks").child(notebookTitle).observeSingleEvent(of: .value) { (snapshot) in
+            guard let dictionaries = snapshot.value as? [String: Any] else { return }
+            
+            dictionaries.forEach({ (key,value) in
+                guard let dictionary = value as? [String: Any] else { return }
+                let note = Note(dictionary: dictionary, noteTitle: key)
+                print("Dic: ",dictionary)
+                self.notes.append(note)
+            })
+            self.collectionView?.reloadData()
+        }
     }
     
     // For Header
@@ -49,24 +65,23 @@ class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLa
     // sizeForItemAt: Requires an extension of UICollectionViewDelegateFlowLayout
     // didSelectItemAt: Checks to see if you clicked on a cell
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numberOfCells
+        return notes.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! NoteCell
+        cell.note = notes[indexPath.item]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = view.frame.width
-        return CGSize(width: width, height: width/2)
+        return CGSize(width: width, height: width/3)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let noteEditorViewController = NoteEditorViewController()
-        noteEditorViewController.name = "Diego: " + String(indexPath.item)
+        noteEditorViewController.note = notes[indexPath.item]
         navigationController?.pushViewController(noteEditorViewController, animated: true)
-        print("Path: ", indexPath.item)
-        //present(noteEditorViewController, animated: true, completion: nil)
     }
 }

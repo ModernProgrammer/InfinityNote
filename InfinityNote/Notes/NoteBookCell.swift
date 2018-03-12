@@ -9,6 +9,14 @@
 import UIKit
 
 class NoteBookCell: UICollectionViewCell {
+    var notebook: Notebook? {
+        didSet{
+            guard let notebookTitle = notebook?.notebookTitle else { return }
+            let attributedText = NSMutableAttributedString(string: notebookTitle, attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14),NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
+            self.notebookTitle.attributedText = attributedText
+        }
+    }
+    
     let notebookImage: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "notebook")
@@ -41,16 +49,16 @@ class NoteBookCell: UICollectionViewCell {
         backgroundColor = paletteSystemWhite
         
         addSubview(notebookImage)
-        notebookImage.anchor(topAnchor: topAnchor, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor, trailingAnchor: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 16, paddingRight: 0, width: 30, height: 0)
+        notebookImage.anchor(topAnchor: safeAreaLayoutGuide.topAnchor, bottomAnchor: safeAreaLayoutGuide.bottomAnchor, leadingAnchor: safeAreaLayoutGuide.leadingAnchor, trailingAnchor: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 16, paddingRight: 0, width: 30, height: 0)
         
         addSubview(notebookLineSeperator)
-        notebookLineSeperator.anchor(topAnchor: nil, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor, trailingAnchor: trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 0, width: 0, height: 0.5)
+        notebookLineSeperator.anchor(topAnchor: nil, bottomAnchor: safeAreaLayoutGuide.bottomAnchor, leadingAnchor: safeAreaLayoutGuide.leadingAnchor, trailingAnchor: safeAreaLayoutGuide.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 0, width: 0, height: 0.5)
         
         addSubview(notebookTitle)
-        notebookTitle.anchor(topAnchor: topAnchor, bottomAnchor: bottomAnchor, leadingAnchor: notebookImage.trailingAnchor, trailingAnchor: trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 16, paddingRight: 0, width: 0, height: 0)
+        notebookTitle.anchor(topAnchor: safeAreaLayoutGuide.topAnchor, bottomAnchor: safeAreaLayoutGuide.bottomAnchor, leadingAnchor: notebookImage.trailingAnchor, trailingAnchor: safeAreaLayoutGuide.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 16, paddingRight: 0, width: 0, height: 0)
         
         addSubview(nextArrow)
-        nextArrow.anchor(topAnchor: topAnchor, bottomAnchor: bottomAnchor, leadingAnchor: nil, trailingAnchor: trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 8, width: 20, height: 0)
+        nextArrow.anchor(topAnchor: safeAreaLayoutGuide.topAnchor, bottomAnchor: safeAreaLayoutGuide.bottomAnchor, leadingAnchor: nil, trailingAnchor: safeAreaLayoutGuide.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 8, width: 20, height: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {

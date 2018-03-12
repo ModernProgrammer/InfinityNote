@@ -12,5 +12,7 @@ class SelectNoteBookController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = paletteSystemGreen
+        let notebookcontroller = NoteBookController()
+        print(notebookcontroller.notebooks)
     }
 }
