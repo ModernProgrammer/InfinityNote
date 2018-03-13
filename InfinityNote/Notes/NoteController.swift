@@ -13,6 +13,8 @@ class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLa
     var notebookTitle: String? {
         didSet {
             navigationItem.title = notebookTitle
+            let image = UIImage(named: "plusIcon")?.withRenderingMode(.alwaysOriginal)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(handleAddNoteButton))
         }
     }
     
@@ -28,6 +30,11 @@ class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLa
         fetchNotes()
     }
     
+    
+    @objc func handleAddNoteButton(){
+        print("Add Note")
+    }
+    
     var notes = [Note]()
     func fetchNotes(){
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -38,8 +45,7 @@ class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLa
             
             dictionaries.forEach({ (key,value) in
                 guard let dictionary = value as? [String: Any] else { return }
-                let note = Note(dictionary: dictionary, noteTitle: key)
-                print("Dic: ",dictionary)
+                let note = Note(dictionary: dictionary, noteTitle: key, notebookTitle: notebookTitle, uid: uid)
                 self.notes.append(note)
             })
             self.collectionView?.reloadData()
@@ -82,6 +88,9 @@ class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let noteEditorViewController = NoteEditorViewController()
         noteEditorViewController.note = notes[indexPath.item]
+        print("Yo: ",indexPath.item)
         navigationController?.pushViewController(noteEditorViewController, animated: true)
     }
+    
+    
 }

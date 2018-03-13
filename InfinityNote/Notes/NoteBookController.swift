@@ -46,8 +46,7 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
     
     func setupNavigationController() {
         navigationItem.title = "Notebooks"
-        let image = UIImage(named: "plusIcon")
-            //?.withRenderingMode(.alwaysOriginal)
+        let image = UIImage(named: "plusIcon")?.withRenderingMode(.alwaysOriginal)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(handleAddNotebookButton))
         
     }

@@ -125,7 +125,7 @@ class NewNoteController: UIViewController {
         
         let date = formatter.string(from: Date())
         print(date)
-        let dictionaryValues = ["body": body,"date": date, ]
+        let dictionaryValues = ["body": body,"date": date]
         Database.database().reference().child(uid).child("notebooks").child(notebookTitle).child(title).updateChildValues(dictionaryValues) { (err, ref) in
             if let err = err {
                 print("Something went wrong: ", err)
@@ -133,6 +133,8 @@ class NewNoteController: UIViewController {
             }
             print("Successful saving")
             self.dismiss(animated: true, completion: nil)
+            let dictionaryValues = ["bookmark": false]
+            ref.updateChildValues(dictionaryValues)
         }
     }
     

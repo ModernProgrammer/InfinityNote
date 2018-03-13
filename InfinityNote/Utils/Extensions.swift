@@ -63,19 +63,20 @@ extension UIViewController
 }
 
 extension Database{
-    static func fetchUserWithUID(uid: String, completion: @escaping
-        (User) -> ()){
-        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            guard let userDictionary = snapshot.value as? [String: Any] else { return }
-            
-            let user = User(uid: uid,dictionary: userDictionary)
-            
-            completion(user)
-        }) {(err)in
-            print("Error: ",err)
-        }
+    static func setNoteBookmark(note: Note, bookmarkBool: Bool){
+        let uid = note.uid
+        let notebookTitle = note.notebookTitle
+        let noteTitle = note.noteTitle
+        let dictionaryValues = ["bookmark": bookmarkBool]
+        Database.database().reference().child(uid).child("notebooks").child(notebookTitle).child(noteTitle).updateChildValues(dictionaryValues, withCompletionBlock: { (err, ref) in
+            if let err = err {
+                print("Oops... looks like something went wrong: ", err)
+                return
+            }
+        })
     }
 }
+
 
 
 extension UISearchBar {

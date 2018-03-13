@@ -7,11 +7,16 @@
 //
 
 import UIKit
+import Firebase
 
 class NoteEditorViewController: UIViewController {
+    var image: UIImage?
+    let bookmarkUnselected = "bookmarkUnselected"
+    let bookmarkSelected = "bookmarkSelected"
+    
     var note: Note? {
         didSet {
-            guard let titleName = note?.title else { return }
+            guard let titleName = note?.noteTitle else { return }
             let attributedText = NSMutableAttributedString(string: titleName, attributes: [NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
             noteTitle.attributedText = attributedText
             
@@ -19,6 +24,14 @@ class NoteEditorViewController: UIViewController {
 
             let bodyAttributedText = NSMutableAttributedString(string: bodyText, attributes: [NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
             noteBody.attributedText = bodyAttributedText
+            
+            
+            if note?.bookmark == false{
+                self.image = UIImage(named: bookmarkUnselected)?.withRenderingMode(.alwaysOriginal)
+            } else {
+                self.image = UIImage(named: bookmarkSelected)?.withRenderingMode(.alwaysOriginal)
+            }
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: self.image, style: .plain, target: self, action: #selector(handleSelectBookmark))
         }
     }
     
@@ -66,6 +79,23 @@ class NoteEditorViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         self.navigationController?.isToolbarHidden = true;
+    }
+    
+    @objc func handleSelectBookmark() {
+        guard let note = self.note else { return }
+        
+        if navigationItem.rightBarButtonItem?.image == UIImage(named: bookmarkUnselected)?.withRenderingMode(.alwaysOriginal) {
+            self.image = UIImage(named: bookmarkSelected)?.withRenderingMode(.alwaysOriginal)
+            // Use firebase to set bookmark for note
+            Database.setNoteBookmark(note: note, bookmarkBool: true)            
+        } else {
+            self.image = UIImage(named: bookmarkUnselected)?.withRenderingMode(.alwaysOriginal)
+            // Use firebase to remove bookmark for note
+            Database.setNoteBookmark(note: note, bookmarkBool: false)
+        }
+        
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(handleSelectBookmark))
     }
 }
 

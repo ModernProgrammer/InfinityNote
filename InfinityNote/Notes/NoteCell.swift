@@ -13,7 +13,7 @@ class NoteCell: UICollectionViewCell {
     
     var note: Note? {
         didSet{
-            guard let noteTitle = note?.title else { return }
+            guard let noteTitle = note?.noteTitle else { return }
             guard let noteDate = note?.date else { return }
             guard let body = note?.body else { return }
             
@@ -31,6 +31,13 @@ class NoteCell: UICollectionViewCell {
         }
     }
     
+    let bookmarkButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Bookmark", for: .normal)
+        button.addTarget(self, action: #selector(handleBookmark), for: .touchUpInside)
+        return button
+    }()
+    
     let noteContainer: UIView = {
         let view = UIView()
         view.backgroundColor = paletteSystemWhite
@@ -38,19 +45,6 @@ class NoteCell: UICollectionViewCell {
         view.layer.borderWidth = 1.0
         view.layer.cornerRadius = 5
         return view
-    }()
-    
-    let notebookImage: UIImageView = {
-        var image = UIImageView()
-        image.image = #imageLiteral(resourceName: "notebook")
-        image.contentMode = .scaleAspectFit
-        return image
-    }()
-    
-    let bookmarkButton: LOTAnimationView = {
-        let animation = LOTAnimationView(name: "loader_animation")
-        animation.play()
-        return animation
     }()
     
     let noteTitle: UITextView = {
@@ -72,8 +66,12 @@ class NoteCell: UICollectionViewCell {
         noteTitle.anchor(topAnchor: noteContainer.topAnchor, bottomAnchor: noteContainer.bottomAnchor, leadingAnchor: noteContainer.leadingAnchor, trailingAnchor: bookmarkButton.leadingAnchor, paddingTop: 8, paddingBottom: 8, paddingLeft: 8, paddingRight: 8, width: 0, height: 0)
         
         
-        bookmarkButton.anchor(topAnchor: noteContainer.topAnchor, bottomAnchor: nil, leadingAnchor: noteTitle.trailingAnchor, trailingAnchor: noteContainer.trailingAnchor, paddingTop: 8, paddingBottom: 8, paddingLeft: 8, paddingRight: 8, width: 20, height: 20)
+        bookmarkButton.anchor(topAnchor: noteContainer.topAnchor, bottomAnchor: nil, leadingAnchor: noteTitle.trailingAnchor, trailingAnchor: noteContainer.trailingAnchor, paddingTop: 8, paddingBottom: 8, paddingLeft: 8, paddingRight: 8, width: 60, height: 60)
         
+    }
+    
+    @objc func handleBookmark() {
+        print("Book marking yo")
     }
     
     
