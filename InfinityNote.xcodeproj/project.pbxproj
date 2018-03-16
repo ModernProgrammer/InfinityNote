@@ -12,19 +12,15 @@
 		F3276AAA2048AC1700FB0675 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F3276AA92048AC1600FB0675 /* GoogleService-Info.plist */; };
 		F3276AAC2048C81000FB0675 /* NewNoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3276AAB2048C81000FB0675 /* NewNoteController.swift */; };
 		F3287B092040C5F200934EBE /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3287B082040C5F200934EBE /* CameraController.swift */; };
-		F3287B0B2040D1E300934EBE /* beacon_green.json in Resources */ = {isa = PBXBuildFile; fileRef = F3287B0A2040D1E300934EBE /* beacon_green.json */; };
-		F3287B0D2040D72D00934EBE /* capture_green.json in Resources */ = {isa = PBXBuildFile; fileRef = F3287B0C2040D72D00934EBE /* capture_green.json */; };
 		F3287B0F2041B88A00934EBE /* NoteBookHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3287B0E2041B88A00934EBE /* NoteBookHeaderCell.swift */; };
 		F3287B112041B93200934EBE /* NoteBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3287B102041B93200934EBE /* NoteBookCell.swift */; };
-		F3287B132041C1F400934EBE /* animated_background.json in Resources */ = {isa = PBXBuildFile; fileRef = F3287B122041C1F400934EBE /* animated_background.json */; };
 		F3287B152041C4B000934EBE /* NoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3287B142041C4B000934EBE /* NoteController.swift */; };
 		F3287B172041C4CA00934EBE /* NoteHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3287B162041C4CA00934EBE /* NoteHeaderCell.swift */; };
 		F3287B192041CE7100934EBE /* NoteEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3287B182041CE7100934EBE /* NoteEditorViewController.swift */; };
+		F33603CF205B0B2B000BDCFC /* bookmarkAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = F33603CD205B0B2A000BDCFC /* bookmarkAnimation.json */; };
+		F33603D2205B0BF8000BDCFC /* infinityLoader.json in Resources */ = {isa = PBXBuildFile; fileRef = F33603D1205B0BF8000BDCFC /* infinityLoader.json */; };
+		F33603D4205B1190000BDCFC /* BookmarkCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33603D3205B1190000BDCFC /* BookmarkCellController.swift */; };
 		F34BD2D020543A4500923C83 /* AddNoteBookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BD2CF20543A4500923C83 /* AddNoteBookController.swift */; };
-		F35354B8203B899B0030C9E7 /* animation-w200-h200.json in Resources */ = {isa = PBXBuildFile; fileRef = F35354B4203B899B0030C9E7 /* animation-w200-h200.json */; };
-		F35354B9203B899B0030C9E7 /* done.json in Resources */ = {isa = PBXBuildFile; fileRef = F35354B5203B899B0030C9E7 /* done.json */; };
-		F35354BA203B899B0030C9E7 /* loader_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = F35354B6203B899B0030C9E7 /* loader_animation.json */; };
-		F35354BB203B899B0030C9E7 /* animation-w800-h600.json in Resources */ = {isa = PBXBuildFile; fileRef = F35354B7203B899B0030C9E7 /* animation-w800-h600.json */; };
 		F35BF4E12034EB5600E2D283 /* SignupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35BF4E02034EB5600E2D283 /* SignupController.swift */; };
 		F35BF4E62036590E00E2D283 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35BF4E52036590E00E2D283 /* ProfileController.swift */; };
 		F35BF4EB203787BF00E2D283 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35BF4EA203787BF00E2D283 /* SearchController.swift */; };
@@ -50,19 +46,15 @@
 		F3276AA92048AC1600FB0675 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F3276AAB2048C81000FB0675 /* NewNoteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteController.swift; sourceTree = "<group>"; };
 		F3287B082040C5F200934EBE /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
-		F3287B0A2040D1E300934EBE /* beacon_green.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = beacon_green.json; sourceTree = "<group>"; };
-		F3287B0C2040D72D00934EBE /* capture_green.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capture_green.json; sourceTree = "<group>"; };
 		F3287B0E2041B88A00934EBE /* NoteBookHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteBookHeaderCell.swift; sourceTree = "<group>"; };
 		F3287B102041B93200934EBE /* NoteBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteBookCell.swift; sourceTree = "<group>"; };
-		F3287B122041C1F400934EBE /* animated_background.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = animated_background.json; sourceTree = "<group>"; };
 		F3287B142041C4B000934EBE /* NoteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteController.swift; sourceTree = "<group>"; };
 		F3287B162041C4CA00934EBE /* NoteHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteHeaderCell.swift; sourceTree = "<group>"; };
 		F3287B182041CE7100934EBE /* NoteEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditorViewController.swift; sourceTree = "<group>"; };
+		F33603CD205B0B2A000BDCFC /* bookmarkAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bookmarkAnimation.json; sourceTree = "<group>"; };
+		F33603D1205B0BF8000BDCFC /* infinityLoader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = infinityLoader.json; sourceTree = "<group>"; };
+		F33603D3205B1190000BDCFC /* BookmarkCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCellController.swift; sourceTree = "<group>"; };
 		F34BD2CF20543A4500923C83 /* AddNoteBookController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteBookController.swift; sourceTree = "<group>"; };
-		F35354B4203B899B0030C9E7 /* animation-w200-h200.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "animation-w200-h200.json"; sourceTree = "<group>"; };
-		F35354B5203B899B0030C9E7 /* done.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = done.json; sourceTree = "<group>"; };
-		F35354B6203B899B0030C9E7 /* loader_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loader_animation.json; sourceTree = "<group>"; };
-		F35354B7203B899B0030C9E7 /* animation-w800-h600.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "animation-w800-h600.json"; sourceTree = "<group>"; };
 		F35BF4E02034EB5600E2D283 /* SignupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupController.swift; sourceTree = "<group>"; };
 		F35BF4E52036590E00E2D283 /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		F35BF4EA203787BF00E2D283 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
@@ -122,13 +114,8 @@
 		F35354B3203B898E0030C9E7 /* lottie */ = {
 			isa = PBXGroup;
 			children = (
-				F3287B122041C1F400934EBE /* animated_background.json */,
-				F3287B0C2040D72D00934EBE /* capture_green.json */,
-				F3287B0A2040D1E300934EBE /* beacon_green.json */,
-				F35354B4203B899B0030C9E7 /* animation-w200-h200.json */,
-				F35354B7203B899B0030C9E7 /* animation-w800-h600.json */,
-				F35354B5203B899B0030C9E7 /* done.json */,
-				F35354B6203B899B0030C9E7 /* loader_animation.json */,
+				F33603CD205B0B2A000BDCFC /* bookmarkAnimation.json */,
+				F33603D1205B0BF8000BDCFC /* infinityLoader.json */,
 			);
 			path = lottie;
 			sourceTree = "<group>";
@@ -163,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				F35BF4EE2037883100E2D283 /* BookmarkController.swift */,
+				F33603D3205B1190000BDCFC /* BookmarkCellController.swift */,
 			);
 			path = Bookmark;
 			sourceTree = "<group>";
@@ -303,17 +291,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F3287B132041C1F400934EBE /* animated_background.json in Resources */,
+				F33603CF205B0B2B000BDCFC /* bookmarkAnimation.json in Resources */,
 				F3C1D2A2202F6E7F009B77DE /* LaunchScreen.storyboard in Resources */,
-				F3287B0B2040D1E300934EBE /* beacon_green.json in Resources */,
-				F35354BB203B899B0030C9E7 /* animation-w800-h600.json in Resources */,
-				F35354B8203B899B0030C9E7 /* animation-w200-h200.json in Resources */,
 				F3C1D29F202F6E7F009B77DE /* Assets.xcassets in Resources */,
 				F3276AAA2048AC1700FB0675 /* GoogleService-Info.plist in Resources */,
-				F3287B0D2040D72D00934EBE /* capture_green.json in Resources */,
-				F35354BA203B899B0030C9E7 /* loader_animation.json in Resources */,
-				F35354B9203B899B0030C9E7 /* done.json in Resources */,
 				F3C1D29D202F6E7F009B77DE /* Main.storyboard in Resources */,
+				F33603D2205B0BF8000BDCFC /* infinityLoader.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,6 +390,7 @@
 				F35BF4EB203787BF00E2D283 /* SearchController.swift in Sources */,
 				F3287B112041B93200934EBE /* NoteBookCell.swift in Sources */,
 				F3C1D2AD202F758A009B77DE /* NoteCell.swift in Sources */,
+				F33603D4205B1190000BDCFC /* BookmarkCellController.swift in Sources */,
 				F36C952F20327470007A2666 /* Models.swift in Sources */,
 				F3276AAC2048C81000FB0675 /* NewNoteController.swift in Sources */,
 			);

@@ -8,13 +8,19 @@
 
 import UIKit
 import Firebase
+import Lottie
 
 class NoteBookController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let cellId = "cellId"
     let headerId = "headerId"
-    //let numberOfCells =
-    
+    var animationView: LOTAnimationView = {
+        let view = LOTAnimationView(name: "infinityLoader")
+        view.contentMode = .scaleAspectFit
+        view.play()
+        view.loopAnimation = true
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +29,8 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.register(NoteBookCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.alwaysBounceVertical = true
         
+        collectionView?.addSubview(animationView)
+        animationView.frame = CGRect(x: view.center.x/4, y: view.center.y/3, width: 300, height: 300)
         fetchNotebooks()
         setupNavigationController()
     }
@@ -40,6 +48,9 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
                 let notebook = Notebook(dictionary: dictionary, notebookTitle: keyTitle)
                 self.notebooks.append(notebook)
             })
+            
+            self.animationView.loopAnimation = false
+            self.animationView.removeFromSuperview()
             self.collectionView?.reloadData()
         }
     }

@@ -18,7 +18,7 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.backgroundColor = paletteSystemGrayBlue
+        collectionView?.backgroundColor = paletteSystemWhite
         navigationController?.navigationBar.addSubview(searchBar)
         collectionView?.keyboardDismissMode = .onDrag
 

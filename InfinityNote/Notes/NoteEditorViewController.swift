@@ -14,9 +14,12 @@ class NoteEditorViewController: UIViewController {
     let bookmarkUnselected = "bookmarkUnselected"
     let bookmarkSelected = "bookmarkSelected"
     
+    
     var note: Note? {
         didSet {
             guard let titleName = note?.noteTitle else { return }
+            
+            // hide lottie animation
             let attributedText = NSMutableAttributedString(string: titleName, attributes: [NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
             noteTitle.attributedText = attributedText
             
@@ -87,7 +90,7 @@ class NoteEditorViewController: UIViewController {
         if navigationItem.rightBarButtonItem?.image == UIImage(named: bookmarkUnselected)?.withRenderingMode(.alwaysOriginal) {
             self.image = UIImage(named: bookmarkSelected)?.withRenderingMode(.alwaysOriginal)
             // Use firebase to set bookmark for note
-            Database.setNoteBookmark(note: note, bookmarkBool: true)            
+            Database.setNoteBookmark(note: note, bookmarkBool: true)
         } else {
             self.image = UIImage(named: bookmarkUnselected)?.withRenderingMode(.alwaysOriginal)
             // Use firebase to remove bookmark for note
@@ -95,7 +98,7 @@ class NoteEditorViewController: UIViewController {
         }
         
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(handleSelectBookmark))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: self.image, style: .plain, target: self, action: #selector(handleSelectBookmark))
     }
 }
 
