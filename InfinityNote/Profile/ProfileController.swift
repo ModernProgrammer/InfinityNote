@@ -95,6 +95,8 @@ class ProfileController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = paletteSystemTan
         setupProfileUI()
+        navigationItem.title = "Profile"
+
     }
     
     func setupProfileUI() {

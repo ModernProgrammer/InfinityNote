@@ -19,7 +19,8 @@
 		F3287B192041CE7100934EBE /* NoteEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3287B182041CE7100934EBE /* NoteEditorViewController.swift */; };
 		F33603CF205B0B2B000BDCFC /* bookmarkAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = F33603CD205B0B2A000BDCFC /* bookmarkAnimation.json */; };
 		F33603D2205B0BF8000BDCFC /* infinityLoader.json in Resources */ = {isa = PBXBuildFile; fileRef = F33603D1205B0BF8000BDCFC /* infinityLoader.json */; };
-		F33603D4205B1190000BDCFC /* BookmarkCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33603D3205B1190000BDCFC /* BookmarkCellController.swift */; };
+		F33603D4205B1190000BDCFC /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33603D3205B1190000BDCFC /* BookmarkCell.swift */; };
+		F33603D6205D7196000BDCFC /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33603D5205D7196000BDCFC /* SearchCell.swift */; };
 		F34BD2D020543A4500923C83 /* AddNoteBookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34BD2CF20543A4500923C83 /* AddNoteBookController.swift */; };
 		F35BF4E12034EB5600E2D283 /* SignupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35BF4E02034EB5600E2D283 /* SignupController.swift */; };
 		F35BF4E62036590E00E2D283 /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35BF4E52036590E00E2D283 /* ProfileController.swift */; };
@@ -53,7 +54,8 @@
 		F3287B182041CE7100934EBE /* NoteEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditorViewController.swift; sourceTree = "<group>"; };
 		F33603CD205B0B2A000BDCFC /* bookmarkAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bookmarkAnimation.json; sourceTree = "<group>"; };
 		F33603D1205B0BF8000BDCFC /* infinityLoader.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = infinityLoader.json; sourceTree = "<group>"; };
-		F33603D3205B1190000BDCFC /* BookmarkCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCellController.swift; sourceTree = "<group>"; };
+		F33603D3205B1190000BDCFC /* BookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
+		F33603D5205D7196000BDCFC /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		F34BD2CF20543A4500923C83 /* AddNoteBookController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteBookController.swift; sourceTree = "<group>"; };
 		F35BF4E02034EB5600E2D283 /* SignupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupController.swift; sourceTree = "<group>"; };
 		F35BF4E52036590E00E2D283 /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				F35BF4EA203787BF00E2D283 /* SearchController.swift */,
+				F33603D5205D7196000BDCFC /* SearchCell.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -150,7 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				F35BF4EE2037883100E2D283 /* BookmarkController.swift */,
-				F33603D3205B1190000BDCFC /* BookmarkCellController.swift */,
+				F33603D3205B1190000BDCFC /* BookmarkCell.swift */,
 			);
 			path = Bookmark;
 			sourceTree = "<group>";
@@ -390,9 +393,10 @@
 				F35BF4EB203787BF00E2D283 /* SearchController.swift in Sources */,
 				F3287B112041B93200934EBE /* NoteBookCell.swift in Sources */,
 				F3C1D2AD202F758A009B77DE /* NoteCell.swift in Sources */,
-				F33603D4205B1190000BDCFC /* BookmarkCellController.swift in Sources */,
+				F33603D4205B1190000BDCFC /* BookmarkCell.swift in Sources */,
 				F36C952F20327470007A2666 /* Models.swift in Sources */,
 				F3276AAC2048C81000FB0675 /* NewNoteController.swift in Sources */,
+				F33603D6205D7196000BDCFC /* SearchCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

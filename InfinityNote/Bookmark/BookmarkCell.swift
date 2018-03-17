@@ -8,18 +8,18 @@
 
 import UIKit
 
-class BookmarkCellController: UICollectionViewCell {
-    var note: Note? {
+class BookmarkCell: UICollectionViewCell {
+    var bookmarkNote: Note? {
         didSet{
-            guard let notebookTitle = note?.notebookTitle else { return }
-            let attributedText = NSMutableAttributedString(string: notebookTitle, attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14),NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
+            guard let notebookTitle = bookmarkNote?.noteTitle else { return }
+            let attributedText = NSMutableAttributedString(string: notebookTitle, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16),NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
             self.noteTitle.attributedText = attributedText
         }
     }
     
     let noteImage: UIImageView = {
         let image = UIImageView()
-        image.image = #imageLiteral(resourceName: "notebook")
+        image.image = #imageLiteral(resourceName: "noteIcon")
         image.contentMode = .scaleAspectFit
         return image
     }()

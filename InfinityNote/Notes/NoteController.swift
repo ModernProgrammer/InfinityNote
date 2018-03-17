@@ -88,7 +88,6 @@ class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let noteEditorViewController = NoteEditorViewController()
         noteEditorViewController.note = notes[indexPath.item]
-        print("Yo: ",indexPath.item)
         navigationController?.pushViewController(noteEditorViewController, animated: true)
     }
     
