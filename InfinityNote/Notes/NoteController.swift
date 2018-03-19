@@ -33,6 +33,8 @@ class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     @objc func handleAddNoteButton(){
         print("Add Note")
+        let newNote = NewNoteController()
+        present(newNote, animated: true, completion: nil)
     }
     
     var notes = [Note]()

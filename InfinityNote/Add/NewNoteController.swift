@@ -118,7 +118,7 @@ class NewNoteController: UIViewController {
         guard let title = noteTitle.text, title.count > 0 else { return }
         guard let body = bodyNoteBookTextField.text, body.count > 0 else { return }
         
-        let notebookTitle = "NotebookTitle"
+        let notebookTitle = "Hi"
         let formatter = DateFormatter()
         // initially set the format based on your datepicker date
         formatter.dateFormat = "MM/dd/yyyy"

@@ -13,7 +13,7 @@ import UIKit
 var paletteSystemWhite = UIColor.rgb(red: 253, green: 255, blue: 252)
 var paletteSystemBlue = UIColor.rgb(red: 54, green: 75, blue: 110)
 var paletteSystemGreen = UIColor.rgb(red: 38, green: 196, blue: 133)
-var paletteSystemGrayBlue = UIColor.rgb(red: 72, green: 77, blue: 109)
+var paletteSystemGrayBlue = UIColor.rgb(red: 39, green: 40, blue: 34)
 var paletteSystemTan = UIColor.rgb(red: 241, green: 247, blue: 237)
 
 // Locks view orientation
@@ -51,7 +51,7 @@ struct User {
 
 struct Notebook {
     let notebookTitle: String
-    init(dictionary: [String: Any], notebookTitle: String){
+    init(notebookTitle: String){
         self.notebookTitle = notebookTitle
     }
 }

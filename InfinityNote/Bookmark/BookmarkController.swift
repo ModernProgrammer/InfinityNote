@@ -8,9 +8,17 @@
 
 import UIKit
 import Firebase
+import Lottie
 
 class BookmarkController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     let cellId = "cellId"
+    var animationLoader: LOTAnimationView = {
+        let view = LOTAnimationView(name: "infinityLoader")
+        view.contentMode = .scaleAspectFit
+        view.play()
+        view.loopAnimation = true
+        return view
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,8 +27,8 @@ class BookmarkController: UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.alwaysBounceVertical = true
 
         navigationItem.title = "Bookmarks"
-
-        
+        collectionView?.addSubview(animationLoader)
+        animationLoader.frame = CGRect(x: view.center.x/4, y: view.center.y/3, width: 300, height: 300)
         fetchBookmarkNotes()
     }
     
@@ -46,7 +54,8 @@ class BookmarkController: UICollectionViewController, UICollectionViewDelegateFl
                     }
                 })
             })
-            print(self.notes)
+            self.animationLoader.loopAnimation = false
+            self.animationLoader.removeFromSuperview()
             self.collectionView?.reloadData()
         }
     }

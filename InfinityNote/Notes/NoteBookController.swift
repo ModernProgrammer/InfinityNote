@@ -43,10 +43,10 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
             guard let dictionaries = snapshot.value as? [String: Any] else { return }
             
             dictionaries.forEach({ (key,value) in
-                guard let dictionary = value as? [String: Any] else { return }
                 let keyTitle = key
-                let notebook = Notebook(dictionary: dictionary, notebookTitle: keyTitle)
-                self.notebooks.append(notebook)
+                let notebook = Notebook(notebookTitle: keyTitle)
+                //self.notebooks.append(notebook)
+                self.notebooks.insert(notebook, at: 0)
             })
             
             self.animationView.loopAnimation = false
@@ -56,16 +56,28 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func setupNavigationController() {
-        navigationItem.title = "Notebooks"
+        navigationItem.title = "Infinity"
         let image = UIImage(named: "plusIcon")?.withRenderingMode(.alwaysOriginal)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(handleAddNotebookButton))
         
     }
     
+    // Need this function in order to apend and insert notebook into collectionView
+    func addNotebook(notebook: Notebook) {
+        // 1 - modify your array
+        notebooks.append(notebook)
+
+        // 2 - insert a new index path into your collecionView
+        let newIndexPath = IndexPath(item: notebooks.count-1, section: 0)
+        self.collectionView?.insertItems(at: [newIndexPath])
+    }
+    
     @objc func handleAddNotebookButton() {
         print("Add Notebook")
-        let addNoteBookController = AddNoteBookController()
-        present(addNoteBookController, animated: true, completion: nil)
+        let addNoteBookController = AddNotebookController()
+        addNoteBookController.notebookController = self
+        let addNotebook = UINavigationController(rootViewController: addNoteBookController)
+        present(addNotebook, animated: true, completion: nil)
     }
     
     // For Header
