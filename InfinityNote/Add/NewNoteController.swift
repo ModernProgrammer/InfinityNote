@@ -11,6 +11,16 @@ import Firebase
 import KMPlaceholderTextView
 
 class NewNoteController: UIViewController {
+    var noteController: NoteController?
+    
+    var notebookTitle: String? {
+        didSet{
+            guard let notebook = notebookTitle else { return }
+            let attributedText = NSMutableAttributedString(string: notebook, attributes: [NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor:paletteSystemGreen])
+            selectNoteBookButton.setAttributedTitle(attributedText, for: .normal)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = paletteSystemWhite
@@ -115,10 +125,11 @@ class NewNoteController: UIViewController {
         print("Save")
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        guard let title = noteTitle.text, title.count > 0 else { return }
+        guard let notebookTitle = self.notebookTitle else { return }
+        guard let noteTitle = self.noteTitle.text, noteTitle.count > 0 else { return }
         guard let body = bodyNoteBookTextField.text, body.count > 0 else { return }
         
-        let notebookTitle = "Hi"
+        
         let formatter = DateFormatter()
         // initially set the format based on your datepicker date
         formatter.dateFormat = "MM/dd/yyyy"
@@ -126,7 +137,7 @@ class NewNoteController: UIViewController {
         let date = formatter.string(from: Date())
         print(date)
         let dictionaryValues = ["body": body,"date": date]
-        Database.database().reference().child(uid).child("notebooks").child(notebookTitle).child(title).updateChildValues(dictionaryValues) { (err, ref) in
+        Database.database().reference().child(uid).child("notebooks").child(notebookTitle).child(noteTitle).updateChildValues(dictionaryValues) { (err, ref) in
             if let err = err {
                 print("Something went wrong: ", err)
                 return
@@ -134,7 +145,13 @@ class NewNoteController: UIViewController {
             print("Successful saving")
             self.dismiss(animated: true, completion: nil)
             let dictionaryValues = ["bookmark": false]
+            
             ref.updateChildValues(dictionaryValues)
+            
+            let noteDictionary = ["body": body,"date": date] as [String : Any]
+            
+            let note = Note(dictionary: noteDictionary, noteTitle: noteTitle, notebookTitle: notebookTitle, uid: uid)
+            self.noteController?.addNote(note: note)
         }
     }
     

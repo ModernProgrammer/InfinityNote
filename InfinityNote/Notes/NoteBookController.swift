@@ -66,7 +66,6 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
     func addNotebook(notebook: Notebook) {
         // 1 - modify your array
         notebooks.append(notebook)
-
         // 2 - insert a new index path into your collecionView
         let newIndexPath = IndexPath(item: notebooks.count-1, section: 0)
         self.collectionView?.insertItems(at: [newIndexPath])

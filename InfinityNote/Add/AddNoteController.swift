@@ -68,12 +68,6 @@ class AddNoteController: UIViewController  {
         stackView.distribution = .fillEqually
     }
     
-    @objc func handleNext() {
-        //let sharePhotoController = SharePhotoController()
-        //sharePhotoController.selectedImage = header?.photoImageView.image
-        //navigationController?.pushViewController(sharePhotoController, animated: true)
-    }
-    
     @objc func handleCancel() {
         dismiss(animated: true, completion: nil)
     }

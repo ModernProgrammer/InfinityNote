@@ -12,6 +12,9 @@ import Lottie
 
 class BookmarkController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     let cellId = "cellId"
+    
+    var refreshControl: UIRefreshControl!
+
     var animationLoader: LOTAnimationView = {
         let view = LOTAnimationView(name: "infinityLoader")
         view.contentMode = .scaleAspectFit
@@ -26,9 +29,19 @@ class BookmarkController: UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.register(BookmarkCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.alwaysBounceVertical = true
 
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
+        collectionView?.addSubview(refreshControl)
+        
         navigationItem.title = "Bookmarks"
         collectionView?.addSubview(animationLoader)
         animationLoader.frame = CGRect(x: view.center.x/4, y: view.center.y/3, width: 300, height: 300)
+        fetchBookmarkNotes()
+    }
+    
+    @objc func refresh() {
+        // Code to refresh table view
         fetchBookmarkNotes()
     }
     
@@ -38,6 +51,7 @@ class BookmarkController: UICollectionViewController, UICollectionViewDelegateFl
         
         Database.database().reference().child(uid).child("notebooks").observeSingleEvent(of: .value) { (snapshot) in
             guard let dictionaries = snapshot.value as? [String: AnyObject] else { return }
+            self.notes.removeAll()
 
             dictionaries.forEach({ (key,value) in
                 guard let dictionary = value as? [String: AnyObject] else { return }
@@ -54,6 +68,7 @@ class BookmarkController: UICollectionViewController, UICollectionViewDelegateFl
                     }
                 })
             })
+            self.refreshControl.endRefreshing()
             self.animationLoader.loopAnimation = false
             self.animationLoader.removeFromSuperview()
             self.collectionView?.reloadData()

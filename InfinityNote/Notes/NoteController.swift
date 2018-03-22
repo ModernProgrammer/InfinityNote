@@ -30,10 +30,29 @@ class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLa
         fetchNotes()
     }
     
+    // Need this function in order to apend and insert notebook into collectionView
+    func addNote(note: Note) {
+//        let noteTitle: String
+//        let date: String
+//        let body: String
+//        let bookmark: Bool
+//        let notebookTitle: String
+//        let uid:String
+
+        // 1 - modify your array
+        notes.append(note)
+        // 2 - insert a new index path into your collecionView
+        let newIndexPath = IndexPath(item: notes.count-1, section: 0)
+        
+        self.collectionView?.insertItems(at: [newIndexPath])
+    }
     
     @objc func handleAddNoteButton(){
         print("Add Note")
         let newNote = NewNoteController()
+        guard let notebookTitle = self.notebookTitle else { return }
+        newNote.notebookTitle = notebookTitle
+        newNote.noteController = self
         present(newNote, animated: true, completion: nil)
     }
     
