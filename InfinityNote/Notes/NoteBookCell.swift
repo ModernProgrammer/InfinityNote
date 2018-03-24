@@ -26,7 +26,7 @@ class NoteBookCell: UICollectionViewCell {
     
     let notebookLineSeperator: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.lightGray
+        view.backgroundColor = paletteSystemLineSeparatorColor
         return view
     }()
     

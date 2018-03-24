@@ -140,7 +140,7 @@ open class KMPlaceholderTextView: UITextView {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        placeholderLabel.preferredMaxLayoutWidth = textContainer.size.width - textContainer.lineFragmentPadding * 2.0
+        placeholderLabel.preferredMaxLayoutWidth = textContainer.size.width - textContainer.lineFragmentPadding
     }
     
     deinit {

@@ -14,6 +14,7 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
     lazy var searchBar: UISearchBar = {
         let searchbar = UISearchBar()
         searchbar.placeholder = "Search for Note"
+        searchbar.endEditing(true)
         return searchbar
     }()
     
@@ -26,6 +27,11 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
         let navbar = navigationController?.navigationBar
         searchBar.anchor(topAnchor: navbar?.topAnchor, bottomAnchor: navbar?.bottomAnchor, leadingAnchor: navbar?.leadingAnchor, trailingAnchor: navbar?.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 8, width: 0, height: 0)
         fetchNotes()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        //searchActive = false;
+        self.searchBar.endEditing(true)
     }
     
     
@@ -68,4 +74,9 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
     // sizeForItemAt: Requires an extension of UICollectionViewDelegateFlowLayout
     // didSelectItemAt: Checks to see if you clicked on a cell
     
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.collectionView?.endEditing(true)
+    }
 }

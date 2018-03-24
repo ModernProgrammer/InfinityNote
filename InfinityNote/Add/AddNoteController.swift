@@ -47,7 +47,8 @@ class AddNoteController: UIViewController  {
     @objc func handleAddNote() {
         print("add note")
         let newNoteController = NewNoteController()
-        present(newNoteController, animated: true, completion: nil)
+        let newNoteControllerNav = UINavigationController(rootViewController: newNoteController)
+        present(newNoteControllerNav, animated: true, completion: nil)
         
     }
     

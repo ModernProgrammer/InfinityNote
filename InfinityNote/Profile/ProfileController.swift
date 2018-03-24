@@ -50,7 +50,7 @@ class ProfileController: UIViewController {
     
     let fullnameFieldLineSeparator: UIView = {
         let view = UIView()
-        view.backgroundColor = paletteSystemGrayBlue
+        view.backgroundColor = paletteSystemLineSeparatorColor
         view.heightAnchor.constraint(equalToConstant: 1).isActive = true
         return view
     }()
@@ -74,7 +74,7 @@ class ProfileController: UIViewController {
     
     let emailtextFieldLineSeparator: UIView = {
         let view = UIView()
-        view.backgroundColor = paletteSystemGrayBlue
+        view.backgroundColor = paletteSystemLineSeparatorColor
         view.heightAnchor.constraint(equalToConstant: 1).isActive = true
         return view
     }()

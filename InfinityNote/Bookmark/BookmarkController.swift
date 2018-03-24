@@ -23,6 +23,12 @@ class BookmarkController: UICollectionViewController, UICollectionViewDelegateFl
         return view
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tabBarController?.tabBar.isHidden = false
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = paletteSystemWhite

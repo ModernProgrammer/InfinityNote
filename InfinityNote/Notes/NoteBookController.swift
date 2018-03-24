@@ -113,7 +113,7 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
         return CGSize(width: width, height: 60)
     }
     
-    // For spacing between the cells
+    // For spacing between the cellslgiht
     // minimumLineSpacingForSectionAt
     // minimumInteritemSpacingForSectionAt
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

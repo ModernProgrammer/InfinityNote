@@ -26,7 +26,7 @@ class BookmarkCell: UICollectionViewCell {
     
     let noteLineSeperator: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.lightGray
+        view.backgroundColor = paletteSystemLineSeparatorColor
         return view
     }()
     

@@ -21,6 +21,12 @@ class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLa
     let headerId = "headerId"
     let cellId = "cellId"
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tabBarController?.tabBar.isHidden = false
+
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = paletteSystemTan
@@ -32,13 +38,6 @@ class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     // Need this function in order to apend and insert notebook into collectionView
     func addNote(note: Note) {
-//        let noteTitle: String
-//        let date: String
-//        let body: String
-//        let bookmark: Bool
-//        let notebookTitle: String
-//        let uid:String
-
         // 1 - modify your array
         notes.append(note)
         // 2 - insert a new index path into your collecionView
@@ -53,7 +52,9 @@ class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLa
         guard let notebookTitle = self.notebookTitle else { return }
         newNote.notebookTitle = notebookTitle
         newNote.noteController = self
-        present(newNote, animated: true, completion: nil)
+        
+        let addNote = UINavigationController(rootViewController: newNote)
+        present(addNote, animated: true, completion: nil)
     }
     
     var notes = [Note]()

@@ -11,6 +11,7 @@ import Firebase
 import KMPlaceholderTextView
 
 class NewNoteController: UIViewController {
+
     var noteController: NoteController?
     
     var notebookTitle: String? {
@@ -24,66 +25,10 @@ class NewNoteController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = paletteSystemWhite
+        setupNavBar()
         setupUI()
     }   
-    
-    let scrollContainer: UIScrollView = {
-        let view = UIScrollView()
-        view.backgroundColor = paletteSystemWhite
-        view.bounces = true
-        view.isScrollEnabled = true
-        return view
-    }()
-    
-    let navbarContainer: UIView = {
-        let view = UIView()
-        view.backgroundColor = paletteSystemWhite
-        return view
-    }()
-    
-    let selectNoteBookContainer: UIView = {
-        let view = UIView()
-        view.backgroundColor = paletteSystemWhite
-        return view
-    }()
-    
-    let titleNoteBookContainer: UIView = {
-        let view = UIView()
-        view.backgroundColor = paletteSystemWhite
-        return view
-    }()
-    
-    let bodyNoteBookContainer: UIView = {
-        let view = UIView()
-        view.backgroundColor = paletteSystemWhite
-        return view
-    }()
-    
-    let bodyNoteBookTextField: KMPlaceholderTextView = {
-        let body = KMPlaceholderTextView()
-        body.font = UIFont.systemFont(ofSize: 16)
-        body.textColor = paletteSystemGrayBlue
-        body.backgroundColor = UIColor.init(white: 0, alpha: 0)
-        body.textContainer.lineBreakMode = NSLineBreakMode.byCharWrapping;
-        body.placeholder = "Note"
-        return body
-    }()
-    
-    let selectNoteBookButton: UIButton = {
-        let button = UIButton()
-        let attributedText = NSMutableAttributedString(string: "Select Notebook", attributes: [NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor:paletteSystemGreen])
-        button.setAttributedTitle(attributedText, for: .normal)
-        button.addTarget(self, action: #selector(handleSelectNotebook), for: .touchUpInside)
-        button.layer.borderWidth = 0.0;
-        return button
-    }()
-    
-    let selectNoteBookSeperator: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.lightGray
-        return view
-    }()
-    
+
     let cancelButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "xIcon"), for: .normal)
@@ -99,6 +44,24 @@ class NewNoteController: UIViewController {
         button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
         return button
     }()
+    let selectNoteBookButton: UIButton = {
+        let button = UIButton()
+        let attributedText = NSMutableAttributedString(string: "Select Notebook", attributes: [NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor:paletteSystemGreen])
+        button.setAttributedTitle(attributedText, for: .normal)
+        button.addTarget(self, action: #selector(handleSelectNotebook), for: .touchUpInside)
+        button.layer.borderWidth = 0.0;
+        return button
+    }()
+
+    let bodyNoteBookTextField: KMPlaceholderTextView = {
+        let body = KMPlaceholderTextView()
+        body.font = UIFont.systemFont(ofSize: 16)
+        body.textColor = paletteSystemGrayBlue
+        body.backgroundColor = UIColor.init(white: 0, alpha: 0)
+        body.textContainer.lineBreakMode = NSLineBreakMode.byCharWrapping;
+        body.placeholder = "Note"
+        return body
+    }()
     
     let noteTitle: UITextField = {
         let text = UITextField()
@@ -109,12 +72,22 @@ class NewNoteController: UIViewController {
         return text
     }()
     
-    let noteTitleContainer: UIView = {
+    
+    let selectNoteBookSeperator: UIView = {
         let view = UIView()
-        view.backgroundColor = paletteSystemWhite
+        view.backgroundColor = UIColor(white: 0.0, alpha: 0.05)
         return view
     }()
     
+    
+    let scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.isScrollEnabled = true
+        view.alwaysBounceVertical = true
+        return view
+    }()
+    
+
     @objc func handleSelectNotebook() {
         print("Select Notebook")
         let selectNoteBookController = SelectNoteBookController()
@@ -160,39 +133,7 @@ class NewNoteController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    fileprivate func setupNavBarUI() {
-        view.addSubview(navbarContainer)
-        navbarContainer.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: nil, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 40)
-
-        view.addSubview(cancelButton)
-        view.addSubview(saveButton)
-        cancelButton.anchor(topAnchor: navbarContainer.topAnchor, bottomAnchor: navbarContainer.bottomAnchor, leadingAnchor: navbarContainer.leadingAnchor, trailingAnchor: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 12, paddingRight: 0, width: 15, height: 15)
-        saveButton.anchor(topAnchor: navbarContainer.topAnchor, bottomAnchor: navbarContainer.bottomAnchor, leadingAnchor: nil, trailingAnchor: navbarContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 12, width: 15, height: 15)
-    }
-
-    fileprivate func setupNoteBookSelector() {
-        view.addSubview(selectNoteBookContainer)
-        selectNoteBookContainer.anchor(topAnchor: saveButton.bottomAnchor, bottomAnchor: nil, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 30)
-        view.addSubview(selectNoteBookButton)
-        selectNoteBookButton.anchor(topAnchor: selectNoteBookContainer.topAnchor, bottomAnchor: selectNoteBookContainer.bottomAnchor, leadingAnchor: selectNoteBookContainer.leadingAnchor, trailingAnchor: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 0, width: 120, height: 0)
-
-        view.addSubview(selectNoteBookSeperator)
-        selectNoteBookSeperator.anchor(topAnchor: nil, bottomAnchor: selectNoteBookContainer.bottomAnchor, leadingAnchor: selectNoteBookContainer.leadingAnchor, trailingAnchor: selectNoteBookContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 8, width: 0, height: 0.5)
-    }
-
-    fileprivate func setupNoteBookTitle() {
-        view.addSubview(noteTitleContainer)
-        view.addSubview(noteTitle)
-        noteTitleContainer.anchor(topAnchor: selectNoteBookSeperator.bottomAnchor, bottomAnchor: nil, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 3, paddingRight: 0, width: 0, height: 35)
-        noteTitle.anchor(topAnchor: noteTitleContainer.topAnchor, bottomAnchor: noteTitleContainer.bottomAnchor, leadingAnchor: noteTitleContainer.leadingAnchor, trailingAnchor: noteTitleContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 0, width: 0, height: 0)
-    }
-
-    fileprivate func setupNoteBookBody() {
-        view.addSubview(bodyNoteBookContainer)
-        view.addSubview(bodyNoteBookTextField)
-        bodyNoteBookContainer.anchor(topAnchor: noteTitle.bottomAnchor, bottomAnchor: scrollContainer.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
-        bodyNoteBookTextField.anchor(topAnchor: bodyNoteBookContainer.topAnchor, bottomAnchor: bodyNoteBookContainer.bottomAnchor, leadingAnchor: bodyNoteBookContainer.leadingAnchor, trailingAnchor: bodyNoteBookContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 8, width: 0, height: 0)
-    }
+    
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.noteTitle.resignFirstResponder()
@@ -201,12 +142,31 @@ class NewNoteController: UIViewController {
     }
     
     func setupUI(){
-        view.addSubview(scrollContainer)
-        scrollContainer.anchor(topAnchor: view.topAnchor, bottomAnchor: nil, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 3000)
+        let stackView = UIStackView(arrangedSubviews: [selectNoteBookButton, selectNoteBookSeperator, noteTitle])
+        stackView.distribution = .fillProportionally
+        stackView.axis = .vertical
+        stackView.spacing = 10
         
-        setupNavBarUI()
-        setupNoteBookSelector()
-        setupNoteBookTitle()
-        setupNoteBookBody()
+        view.addSubview(scrollView)
+        view.addSubview(stackView)
+        view.addSubview(bodyNoteBookTextField)
+
+        scrollView.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.safeAreaLayoutGuide.leadingAnchor, trailingAnchor: view.safeAreaLayoutGuide.trailingAnchor, paddingTop: 8, paddingBottom: 8, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+        
+        selectNoteBookSeperator.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+        
+        stackView.anchor(topAnchor: scrollView.topAnchor, bottomAnchor: nil, leadingAnchor: scrollView.leadingAnchor, trailingAnchor: scrollView.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 8, width: 0, height: 0)
+        
+        bodyNoteBookTextField.anchor(topAnchor: noteTitle.bottomAnchor, bottomAnchor: scrollView.bottomAnchor, leadingAnchor: scrollView.leadingAnchor, trailingAnchor: scrollView.trailingAnchor, paddingTop: 0, paddingBottom: 4, paddingLeft: 4, paddingRight: 4, width: 0, height: 0)
     }
+    
+    func setupNavBar() {
+        let cancelButtonImage = UIImage(named: "xIcon")?.withRenderingMode(.alwaysOriginal)
+        let saveButtonImage = UIImage(named: "checkIcon")?.withRenderingMode(.alwaysOriginal)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: cancelButtonImage, style: .plain, target: self, action: #selector(handleCancel))
+        navigationItem.title = "New Note"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: saveButtonImage, style: .plain, target: self, action: #selector(handleSave))
+        navigationController?.navigationBar.tintColor = paletteSystemGrayBlue
+    }
+    
 }
