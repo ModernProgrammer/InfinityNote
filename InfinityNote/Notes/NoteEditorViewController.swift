@@ -71,6 +71,7 @@ class NoteEditorViewController: UIViewController {
         view.addSubview(noteTitleContainer)
         view.addSubview(noteTitle)
         
+
         tabBarController?.tabBar.isHidden = true
         
         noteTitleContainer.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: nil, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 80)

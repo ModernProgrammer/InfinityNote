@@ -10,11 +10,13 @@ import UIKit
 import Firebase
 
 class SearchController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
+    var cellId = "cellId"
     
     lazy var searchBar: UISearchBar = {
         let searchbar = UISearchBar()
         searchbar.placeholder = "Search for Note"
         searchbar.endEditing(true)
+        searchbar.delegate = self
         return searchbar
     }()
     
@@ -22,16 +24,12 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
         super.viewDidLoad()
         collectionView?.backgroundColor = paletteSystemWhite
         navigationController?.navigationBar.addSubview(searchBar)
-        collectionView?.keyboardDismissMode = .onDrag
+        collectionView?.register(SearchCell.self, forCellWithReuseIdentifier: cellId)
 
         let navbar = navigationController?.navigationBar
         searchBar.anchor(topAnchor: navbar?.topAnchor, bottomAnchor: navbar?.bottomAnchor, leadingAnchor: navbar?.leadingAnchor, trailingAnchor: navbar?.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 8, width: 0, height: 0)
         fetchNotes()
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        //searchActive = false;
-        self.searchBar.endEditing(true)
+        collectionView?.keyboardDismissMode = .onDrag
     }
     
     
@@ -44,26 +42,39 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
         
         ref.observeSingleEvent(of: .value) { (snapshot) in
             guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
-            let notebookTitle = snapshot.key
             dictionary.forEach({ (key,value) in
+                print("in dictionary")
+                let notebookTitle = key
                 guard let dic = dictionary[key] as? [String: AnyObject] else { return }
-                let noteTitle = key
-                
-                let bookmarkBool = dic["bookmark"] as? Bool
-                
-                if bookmarkBool == true {
-                    let note = Note(dictionary: dic, noteTitle: noteTitle, notebookTitle: notebookTitle, uid: uid)
+                dic.forEach({ (key, value) in
+                    
+                    guard let noteDic = value as? [String: AnyObject] else { return }
+                    let noteTitle = key
+                    
+                    let note = Note(dictionary: noteDic, noteTitle: noteTitle, notebookTitle: notebookTitle, uid: uid)
                     self.notes.append(note)
-                    print(self.notes)
-                }
+                    
+                })
             })
+            self.filteredNotes = self.notes
+            print(self.notes)
+            self.collectionView?.reloadData()
         }
     }
     
     
     // For Searchbar control
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
+        print("Text: ", searchText.lowercased())
+        if searchText.isEmpty {
+            filteredNotes = notes
+        }
+        else {
+            filteredNotes = self.notes.filter({ (notes) -> Bool in
+                return notes.noteTitle.lowercased().contains(searchText.lowercased())
+            })
+        }
+        self.collectionView?.reloadData()
     }
     
     
@@ -73,10 +84,18 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
     // cellForItemAt
     // sizeForItemAt: Requires an extension of UICollectionViewDelegateFlowLayout
     // didSelectItemAt: Checks to see if you clicked on a cell
-    
-    
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.collectionView?.endEditing(true)
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.filteredNotes.count
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchCell
+        cell.note = self.filteredNotes[indexPath.item]
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 60)
+    }
+
 }
