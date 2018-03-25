@@ -31,6 +31,7 @@ class NoteCell: UICollectionViewCell {
         }
     }
     
+    
     let bookmarkButton: UIButton = {
         let button = UIButton()
         button.setTitle("Bookmark", for: .normal)

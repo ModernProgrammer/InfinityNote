@@ -25,11 +25,16 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
         collectionView?.backgroundColor = paletteSystemWhite
         navigationController?.navigationBar.addSubview(searchBar)
         collectionView?.register(SearchCell.self, forCellWithReuseIdentifier: cellId)
-
+        collectionView?.alwaysBounceVertical = true
+        
         let navbar = navigationController?.navigationBar
         searchBar.anchor(topAnchor: navbar?.topAnchor, bottomAnchor: navbar?.bottomAnchor, leadingAnchor: navbar?.leadingAnchor, trailingAnchor: navbar?.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 8, width: 0, height: 0)
         fetchNotes()
         collectionView?.keyboardDismissMode = .onDrag
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.navigationController?.isToolbarHidden = false;
     }
     
     
@@ -65,7 +70,6 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
     
     // For Searchbar control
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print("Text: ", searchText.lowercased())
         if searchText.isEmpty {
             filteredNotes = notes
         }
@@ -97,5 +101,15 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 60)
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let noteEditor = NoteEditorViewController()
+        let note = self.filteredNotes[indexPath.item]
+        
+        noteEditor.note = note
+        
+        navigationController?.pushViewController(noteEditor, animated: true)
+    }
+    
 
 }

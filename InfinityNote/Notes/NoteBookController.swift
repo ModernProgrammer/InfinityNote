@@ -57,9 +57,9 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
     
     func setupNavigationController() {
         navigationItem.title = "Infinity"
+
         let image = UIImage(named: "plusIcon")?.withRenderingMode(.alwaysOriginal)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(handleAddNotebookButton))
-        
     }
     
     // Need this function in order to apend and insert notebook into collectionView
@@ -78,6 +78,7 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
         let addNotebook = UINavigationController(rootViewController: addNoteBookController)
         present(addNotebook, animated: true, completion: nil)
     }
+    
     
     // For Header
     // ----------------------
@@ -134,5 +135,14 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
         print(notebook)
         
         navigationController?.pushViewController(noteController, animated: true)
+    }
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+        notebooks.remove(at: indexPath.row)
+        collectionView.deleteItems(at: [indexPath])
+        print("Here and stuff")
+        
+        // Here is where I will delete the notebook
     }
 }
