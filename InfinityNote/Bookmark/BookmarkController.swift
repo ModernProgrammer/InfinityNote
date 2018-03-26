@@ -26,7 +26,7 @@ class BookmarkController: UICollectionViewController, UICollectionViewDelegateFl
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tabBarController?.tabBar.isHidden = false
-        
+        refresh()
     }
     
     override func viewDidLoad() {

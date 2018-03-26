@@ -11,6 +11,8 @@ import Firebase
 
 class NoteEditorViewController: UIViewController {
     var image: UIImage?
+    var searchBar: UISearchBar?
+    
     let bookmarkUnselected = "bookmarkUnselected"
     let bookmarkSelected = "bookmarkSelected"
     
@@ -85,6 +87,10 @@ class NoteEditorViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         self.navigationController?.isToolbarHidden = true;
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        searchBar?.isHidden = true
     }
     
     @objc func handleSelectBookmark() {

@@ -14,11 +14,21 @@ class NoteBookHeaderCell: UICollectionViewCell {
     let label: UILabel = {
         let label = UILabel()
         
-        let attributedText = NSMutableAttributedString(string: "Notebooks", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 24), NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
+        let attributedText = NSMutableAttributedString(string: "Notebooks", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20), NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
         label.attributedText = attributedText
-        
         return label
     }()
+    
+    let addNotebookButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "plusIcon"), for: .normal)
+        button.contentMode = .scaleAspectFit
+        button.addTarget(self, action: #selector(handleAddNotebookButton), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func handleAddNotebookButton() {
+    }
     
     let titleContainer: UIView = {
         let view = UIView()
@@ -33,7 +43,11 @@ class NoteBookHeaderCell: UICollectionViewCell {
         titleContainer.anchor(topAnchor: safeAreaLayoutGuide.topAnchor, bottomAnchor: safeAreaLayoutGuide.bottomAnchor, leadingAnchor: safeAreaLayoutGuide.leadingAnchor, trailingAnchor: safeAreaLayoutGuide.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
         
         addSubview(label)
-        label.anchor(topAnchor: safeAreaLayoutGuide.topAnchor, bottomAnchor: safeAreaLayoutGuide.bottomAnchor, leadingAnchor: safeAreaLayoutGuide.leadingAnchor, trailingAnchor: safeAreaLayoutGuide.trailingAnchor, paddingTop: 8, paddingBottom: 8, paddingLeft: 8, paddingRight: 8, width: 0, height: 0)
+        label.anchor(topAnchor: safeAreaLayoutGuide.topAnchor, bottomAnchor: safeAreaLayoutGuide.bottomAnchor, leadingAnchor: safeAreaLayoutGuide.leadingAnchor, trailingAnchor: nil, paddingTop: 8, paddingBottom: 8, paddingLeft: 8, paddingRight: 8, width: 150, height: 0)
+        
+        addSubview(addNotebookButton)
+        addNotebookButton.anchor(topAnchor: safeAreaLayoutGuide.topAnchor, bottomAnchor: safeAreaLayoutGuide.bottomAnchor, leadingAnchor: nil, trailingAnchor: safeAreaLayoutGuide.trailingAnchor, paddingTop: 8, paddingBottom: 8, paddingLeft: 8, paddingRight: 8, width: 35, height: 0)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

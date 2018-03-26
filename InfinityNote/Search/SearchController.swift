@@ -14,7 +14,7 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
     
     lazy var searchBar: UISearchBar = {
         let searchbar = UISearchBar()
-        searchbar.placeholder = "Search for Note"
+        searchbar.placeholder = "Search your notes"
         searchbar.endEditing(true)
         searchbar.delegate = self
         return searchbar
@@ -29,12 +29,14 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
         
         let navbar = navigationController?.navigationBar
         searchBar.anchor(topAnchor: navbar?.topAnchor, bottomAnchor: navbar?.bottomAnchor, leadingAnchor: navbar?.leadingAnchor, trailingAnchor: navbar?.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 8, width: 0, height: 0)
-        fetchNotes()
         collectionView?.keyboardDismissMode = .onDrag
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        self.navigationController?.isToolbarHidden = false;
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
+        searchBar.isHidden = false
+        
+        fetchNotes()
     }
     
     
@@ -43,6 +45,8 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
     fileprivate func fetchNotes() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
 
+        self.notes.removeAll()
+        self.filteredNotes.removeAll()
         let ref = Database.database().reference().child(uid).child("notebooks")
         
         ref.observeSingleEvent(of: .value) { (snapshot) in
@@ -107,6 +111,7 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
         let note = self.filteredNotes[indexPath.item]
         
         noteEditor.note = note
+        noteEditor.searchBar = self.searchBar
         
         navigationController?.pushViewController(noteEditor, animated: true)
     }

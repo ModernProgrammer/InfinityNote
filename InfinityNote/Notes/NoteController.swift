@@ -10,6 +10,9 @@ import UIKit
 import Firebase
 
 class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+    
+    var searchBar: UISearchBar?
+    
     var notebookTitle: String? {
         didSet {
             navigationItem.title = notebookTitle
@@ -24,7 +27,8 @@ class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tabBarController?.tabBar.isHidden = false
-
+        
+        searchBar?.isHidden = true
     }
     
     override func viewDidLoad() {
@@ -33,6 +37,7 @@ class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView?.register(NoteHeaderCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(NoteCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.alwaysBounceVertical = true
+        self.navigationItem.backBarButtonItem?.tintColor = paletteSystemGreen
         fetchNotes()
     }
     
