@@ -51,8 +51,6 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
         print("Fetching 1")
     }
     
-
-    
     var notebooks = [Notebook]()
     var filteredNotebooks = [Notebook]()
     func fetchNotebooks(){

@@ -8,11 +8,11 @@
 
 import UIKit
 
-class NoteHeaderCell: UICollectionViewCell {
-
+class NoteHeaderCell: UICollectionViewCell, UISearchBarDelegate {
+    
     let headerContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = paletteSystemTan
+        view.backgroundColor = UIColor.clear
         return view
     }()
 
