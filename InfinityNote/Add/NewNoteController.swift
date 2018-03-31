@@ -90,8 +90,11 @@ class NewNoteController: UIViewController {
 
     @objc func handleSelectNotebook() {
         print("Select Notebook")
-        let selectNoteBookController = SelectNoteBookController()
-        present(selectNoteBookController, animated: true, completion: nil)
+        
+        let selectNoteBookController = SelectNoteBookController(collectionViewLayout: UICollectionViewFlowLayout())
+        selectNoteBookController.newNoteController = self
+        let selectNoteBookView = UINavigationController(rootViewController:selectNoteBookController)
+        present(selectNoteBookView, animated: true, completion: nil)
     }
     
     @objc func handleSave() {

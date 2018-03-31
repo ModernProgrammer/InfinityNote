@@ -13,6 +13,7 @@ import FirebaseStorage
 class AddNotebookController: UIViewController {
     
     var notebookController: NoteBookController?
+    var selectNoteBookController: SelectNoteBookController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +48,7 @@ class AddNotebookController: UIViewController {
             print("Successful in creating new notebook.")
             let notebook = Notebook(notebookTitle: notebookTitle)
             self.notebookController?.addNotebook(notebook: notebook)
+            self.selectNoteBookController?.addNotebook(notebook: notebook)
             self.dismiss(animated: true, completion: nil)
         }
     }

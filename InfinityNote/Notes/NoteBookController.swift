@@ -33,6 +33,8 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.animationView.frame = CGRect(x: view.center.x/4, y: view.center.y/3, width: 300, height: 300)
+
         collectionView?.backgroundColor = paletteSystemWhite
         collectionView?.register(NoteBookHeaderCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(NoteBookCell.self, forCellWithReuseIdentifier: cellId)
@@ -40,10 +42,8 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
         
         collectionView?.addSubview(animationView)
         navigationController?.navigationBar.addSubview(searchBar)
-
-        fetchNotebooks()
-        animationView.frame = CGRect(x: view.center.x/4, y: view.center.y/3, width: 300, height: 300)
         setupNavigationController()
+        fetchNotebooks()
     }
     
     override func viewWillAppear(_ animated: Bool) {
