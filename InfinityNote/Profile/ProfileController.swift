@@ -11,6 +11,15 @@ import Firebase
 
 class ProfileController: UIViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = paletteSystemTan
+        setupProfileUI()
+        fetchUserInfo()
+        navigationItem.title = "Profile"
+    }
+    
+    
     let profileImageContainer: UIView = {
         let view = UIView()
         view.backgroundColor = paletteSystemGreen
@@ -87,63 +96,46 @@ class ProfileController: UIViewController {
         button.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
         button.backgroundColor = paletteSystemGreen
         button.layer.cornerRadius = 5
+        button.heightAnchor.constraint(equalToConstant: 28).isActive = true
         return button
     }()
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = paletteSystemTan
-        setupProfileUI()
-        navigationItem.title = "Profile"
-
-    }
+    
     
     func setupProfileUI() {
         view.addSubview(profileImageContainer)
         view.addSubview(profileImageView)
-        
-        profileImageContainer.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
-        
-        profileImageContainer.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1/3).isActive = true
-        
-        let profileImageCircleSize = CGFloat(150)
-        
-        profileImageView.anchor(topAnchor: nil, bottomAnchor: nil, leadingAnchor: nil, trailingAnchor: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: profileImageCircleSize, height: profileImageCircleSize)
-        
-        profileImageView.centerXAnchor.constraint(equalTo: profileImageContainer.centerXAnchor).isActive = true
-        profileImageView.centerYAnchor.constraint(equalTo: profileImageContainer.centerYAnchor).isActive = true
-        
-        profileImageView.layer.cornerRadius = profileImageCircleSize/2
-        profileImageView.clipsToBounds = true
-        
         view.addSubview(profileBodyContainer)
-        profileBodyContainer.anchor(topAnchor: profileImageContainer.bottomAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
-        view.addSubview(fullnameLabel)
-        view.addSubview(fullName)
-        fullnameLabel.anchor(topAnchor: profileBodyContainer.topAnchor, bottomAnchor: nil, leadingAnchor: profileBodyContainer.leadingAnchor, trailingAnchor: nil, paddingTop: 30, paddingBottom: 30, paddingLeft: 30, paddingRight: 0, width: 0, height: 0)
-        
-        fullName.anchor(topAnchor: profileBodyContainer.topAnchor, bottomAnchor: nil, leadingAnchor: nil, trailingAnchor: profileBodyContainer.trailingAnchor, paddingTop: 30, paddingBottom: 30, paddingLeft: 0, paddingRight: 30, width: 0, height: 0)
-        
-        view.addSubview(fullnameFieldLineSeparator)
-        fullnameFieldLineSeparator.anchor(topAnchor: fullName.bottomAnchor, bottomAnchor: nil, leadingAnchor: profileBodyContainer.leadingAnchor, trailingAnchor: profileBodyContainer.trailingAnchor, paddingTop: 30, paddingBottom: 30, paddingLeft: 30, paddingRight: 30, width: 0, height: 0)
-        
-        
-        view.addSubview(emailLabel)
-        view.addSubview(email)
-        
-        emailLabel.anchor(topAnchor: fullnameFieldLineSeparator.bottomAnchor, bottomAnchor: nil, leadingAnchor: profileBodyContainer.leadingAnchor, trailingAnchor: nil, paddingTop: 30, paddingBottom: 30, paddingLeft: 30, paddingRight: 30, width: 0, height: 0)
-        
-        email.anchor(topAnchor: fullnameFieldLineSeparator.bottomAnchor, bottomAnchor: nil, leadingAnchor: nil, trailingAnchor: profileBodyContainer.trailingAnchor, paddingTop: 30, paddingBottom: 30, paddingLeft: 30, paddingRight: 30, width: 0, height: 0)
-        
-        view.addSubview(emailtextFieldLineSeparator)
-        emailtextFieldLineSeparator.anchor(topAnchor: emailLabel.bottomAnchor, bottomAnchor: nil, leadingAnchor: profileBodyContainer.leadingAnchor, trailingAnchor: profileBodyContainer.trailingAnchor, paddingTop: 30, paddingBottom: 30, paddingLeft: 30, paddingRight: 30, width: 0, height: 0)
-        
-        
-        view.addSubview(signoutButton)
-        signoutButton.anchor(topAnchor: emailtextFieldLineSeparator.bottomAnchor, bottomAnchor: nil, leadingAnchor: profileBodyContainer.leadingAnchor, trailingAnchor: profileBodyContainer.trailingAnchor, paddingTop: 30, paddingBottom: 30, paddingLeft: 30, paddingRight: 30, width: 0, height: 0)
-        
 
+
+        view.addSubview(signoutButton)
+
+        
+        profileImageContainer.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: nil, leadingAnchor:   view.safeAreaLayoutGuide.leadingAnchor, trailingAnchor: view.safeAreaLayoutGuide.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 200)
+        
+        // add profilee imageview
+//        profileImageView.anchor(topAnchor: nil, bottomAnchor: nil, leadingAnchor: profileImageContainer.leadingAnchor, trailingAnchor: profileImageContainer.trailingAnchor, paddingTop: 8, paddingBottom: 8, paddingLeft: 8, paddingRight: 8, width: 50, height: 50)
+//        profileImageView.centerXAnchor.constraint(equalTo: profileImageContainer.centerXAnchor).isActive = true
+//        profileImageView.centerYAnchor.constraint(equalTo: profileImageContainer.centerYAnchor).isActive = true
+        
+        profileBodyContainer.anchor(topAnchor: profileImageContainer.bottomAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.safeAreaLayoutGuide.leadingAnchor, trailingAnchor: view.safeAreaLayoutGuide.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+        
+        let stackViewFullName = UIStackView(arrangedSubviews: [fullnameLabel,fullName])
+        stackViewFullName.distribution = .equalCentering
+        view.addSubview(stackViewFullName)
+        
+        let stackViewEmail = UIStackView(arrangedSubviews: [emailLabel,email])
+        stackViewEmail.distribution = .equalCentering
+        
+        
+        let stackViewMain = UIStackView(arrangedSubviews: [stackViewFullName,fullnameFieldLineSeparator,stackViewEmail, emailtextFieldLineSeparator,signoutButton])
+        
+        view.addSubview(stackViewMain)
+        stackViewMain.axis = .vertical
+        stackViewMain.distribution = .fill
+        stackViewMain.spacing = 20
+        stackViewMain.anchor(topAnchor: profileBodyContainer.safeAreaLayoutGuide.topAnchor, bottomAnchor: nil, leadingAnchor: profileBodyContainer.safeAreaLayoutGuide.leadingAnchor, trailingAnchor: profileBodyContainer.safeAreaLayoutGuide.trailingAnchor, paddingTop: 20, paddingBottom: 8, paddingLeft: 20, paddingRight: 20, width: 0, height: 0)
     }
     
     @objc func handleLogout(){
@@ -168,11 +160,25 @@ class ProfileController: UIViewController {
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
     }
     
+    var user = [User]()
     fileprivate func fetchUserInfo() {
-        //guard let userId = Auth.auth().currentUser?.uid else  { return }
+        guard let userId = Auth.auth().currentUser?.uid else  { return }
+
+        Database.database().reference().child(userId).child("user").observeSingleEvent(of: .value) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            
+            dictionary.forEach({ (key,value) in
+            
+                let userInfo = User(uid: userId, dictionary: value as! [String : Any])
+                self.email.attributedText = NSMutableAttributedString(string: userInfo.email, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
+                self.fullName.attributedText = NSMutableAttributedString(string: userInfo.fullname, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
+                // set profile image here
+                
+                self.user.append(userInfo)
+                
+            })
+        }
         
-//        Database.fetchUserWithUID(uid: userId) { (user) in
-//            <#code#>
-//        }
     }
 }
+

@@ -32,6 +32,7 @@ class NewNoteController: UIViewController {
     let cancelButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "xIcon"), for: .normal)
+        button.heightAnchor.constraint(equalToConstant: 20).isActive = true
         button.contentMode = .scaleAspectFit
         button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
         return button
@@ -40,6 +41,7 @@ class NewNoteController: UIViewController {
     let saveButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "checkIcon"), for: .normal)
+        button.heightAnchor.constraint(equalToConstant: 20).isActive = true
         button.contentMode = .scaleAspectFit
         button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
         return button

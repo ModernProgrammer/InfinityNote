@@ -144,27 +144,23 @@ class LoginController: UIViewController {
     func setupUserInterface(){
         view.addSubview(backgroundImage)
         view.addSubview(textFieldContainer)
+        view.addSubview(logoTitleImage)
+
         backgroundImage.anchor(topAnchor: view.topAnchor, bottomAnchor: view.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
         
         textFieldContainer.anchor(topAnchor: nil, bottomAnchor: view.bottomAnchor, leadingAnchor: view.safeAreaLayoutGuide.leadingAnchor, trailingAnchor: view.safeAreaLayoutGuide.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 30, paddingRight: 30, width: 0, height: 0)
         textFieldContainer.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 2/3).isActive = true
 
-        let stackView = UIStackView(arrangedSubviews: [emailTextField,passwordTextField,loginButton, signupButton])
+        let stackView = UIStackView(arrangedSubviews: [emailTextField, emailtextFieldLineSeparator,passwordTextField,passwordtextFieldLineSeparator,loginButton,signupButton])
         view.addSubview(stackView)
         stackView.anchor(topAnchor: textFieldContainer.topAnchor, bottomAnchor: nil, leadingAnchor: textFieldContainer.leadingAnchor, trailingAnchor: textFieldContainer.trailingAnchor, paddingTop: 20, paddingBottom: 0, paddingLeft: 20, paddingRight: 20, width: 0, height: 0)
         stackView.axis = .vertical
-        stackView.distribution = .equalSpacing
+        stackView.distribution = .fill
         stackView.spacing = 30
-        
-        view.addSubview(logoTitleImage)
+
 
         logoTitleImage.anchor(topAnchor: nil, bottomAnchor: textFieldContainer.topAnchor, leadingAnchor: textFieldContainer.leadingAnchor, trailingAnchor: textFieldContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 200)
-        
-        view.addSubview(emailtextFieldLineSeparator)
-        emailtextFieldLineSeparator.anchor(topAnchor: nil, bottomAnchor: emailTextField.bottomAnchor, leadingAnchor: emailTextField.leadingAnchor, trailingAnchor: emailTextField.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0.5)
-        
-        view.addSubview(passwordtextFieldLineSeparator)
-        passwordtextFieldLineSeparator.anchor(topAnchor: nil, bottomAnchor: passwordTextField.bottomAnchor, leadingAnchor: passwordTextField.leadingAnchor, trailingAnchor: passwordTextField.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0.5)
+
         
         
         
