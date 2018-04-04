@@ -56,7 +56,7 @@ class SignupController: UIViewController, UIGestureRecognizerDelegate {
         return tf
     }()
     
-    let usernametextFieldLineSeparator: UIView = {
+    let fullnametextFieldLineSeparator: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.init(white: 1, alpha: 0.3)
         view.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
@@ -75,14 +75,14 @@ class SignupController: UIViewController, UIGestureRecognizerDelegate {
     let emailtextFieldLineSeparator: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.init(white: 1, alpha: 0.3)
-        view.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 1).isActive = true
         return view
     }()
     
     let passwordtextFieldLineSeparator: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.init(white: 1, alpha: 0.3)
-        view.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 1).isActive = true
         return view
     }()
     
@@ -158,32 +158,21 @@ class SignupController: UIViewController, UIGestureRecognizerDelegate {
     func setupUserInterface(){
         view.addSubview(backgroundImage)
         view.addSubview(textFieldContainer)
+        view.addSubview(logoImage)
         backgroundImage.anchor(topAnchor: view.topAnchor, bottomAnchor: view.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
         
         
         textFieldContainer.anchor(topAnchor: nil, bottomAnchor: view.bottomAnchor, leadingAnchor: view.safeAreaLayoutGuide.leadingAnchor, trailingAnchor: view.safeAreaLayoutGuide.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 30, paddingRight: 30, width: 0, height: 0)
         textFieldContainer.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 2/3).isActive = true
         
-        let stackView = UIStackView(arrangedSubviews:[fullnameTextField,emailTextField,passwordTextField,signupButton,loginButton])
+        let stackView = UIStackView(arrangedSubviews:[fullnameTextField,fullnametextFieldLineSeparator,emailTextField,emailtextFieldLineSeparator,passwordTextField,passwordtextFieldLineSeparator,signupButton,loginButton])
         
         view.addSubview(stackView)
         stackView.anchor(topAnchor: textFieldContainer.topAnchor, bottomAnchor: nil, leadingAnchor: textFieldContainer.leadingAnchor, trailingAnchor: textFieldContainer.trailingAnchor, paddingTop: 20, paddingBottom: 0, paddingLeft: 20, paddingRight: 20, width: 0, height: 0)
         stackView.axis = .vertical
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 30
+        stackView.distribution = .fill
+        stackView.spacing = 20
         
-        
-        view.addSubview(logoImage)
         logoImage.anchor(topAnchor: nil, bottomAnchor: textFieldContainer.topAnchor, leadingAnchor: textFieldContainer.leadingAnchor, trailingAnchor: textFieldContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 200)
-        
-        view.addSubview(usernametextFieldLineSeparator)
-        view.addSubview(emailtextFieldLineSeparator)
-        view.addSubview(passwordtextFieldLineSeparator)
-        
-        usernametextFieldLineSeparator.anchor(topAnchor: nil, bottomAnchor: fullnameTextField.bottomAnchor, leadingAnchor: fullnameTextField.leadingAnchor, trailingAnchor: fullnameTextField.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0.5)
-        
-        emailtextFieldLineSeparator.anchor(topAnchor: nil, bottomAnchor: emailTextField.bottomAnchor, leadingAnchor: emailTextField.leadingAnchor, trailingAnchor: emailTextField.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0.5)
-        
-        passwordtextFieldLineSeparator.anchor(topAnchor: nil, bottomAnchor: passwordTextField.bottomAnchor, leadingAnchor: passwordTextField.leadingAnchor, trailingAnchor: passwordTextField.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0.5)
     }
 }

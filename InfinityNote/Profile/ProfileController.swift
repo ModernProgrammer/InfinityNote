@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Lottie
 
 class ProfileController: UIViewController {
     
@@ -19,10 +20,18 @@ class ProfileController: UIViewController {
         navigationItem.title = "Profile"
     }
     
+    let infinityLoader: LOTAnimationView = {
+        let lottie = LOTAnimationView(filePath: "infinityLoaderProfile")
+        lottie.play()
+        lottie.loopAnimation = true
+        lottie.contentMode = .scaleAspectFit
+        lottie.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        return lottie
+    }()
     
     let profileImageContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = paletteSystemGreen
+        view.backgroundColor = paletteSystemBlue
         return view
     }()
     
@@ -105,19 +114,14 @@ class ProfileController: UIViewController {
     
     func setupProfileUI() {
         view.addSubview(profileImageContainer)
-        view.addSubview(profileImageView)
+        view.addSubview(infinityLoader)
         view.addSubview(profileBodyContainer)
-
-
         view.addSubview(signoutButton)
 
         
         profileImageContainer.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: nil, leadingAnchor:   view.safeAreaLayoutGuide.leadingAnchor, trailingAnchor: view.safeAreaLayoutGuide.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 200)
         
-        // add profilee imageview
-//        profileImageView.anchor(topAnchor: nil, bottomAnchor: nil, leadingAnchor: profileImageContainer.leadingAnchor, trailingAnchor: profileImageContainer.trailingAnchor, paddingTop: 8, paddingBottom: 8, paddingLeft: 8, paddingRight: 8, width: 50, height: 50)
-//        profileImageView.centerXAnchor.constraint(equalTo: profileImageContainer.centerXAnchor).isActive = true
-//        profileImageView.centerYAnchor.constraint(equalTo: profileImageContainer.centerYAnchor).isActive = true
+        infinityLoader.anchor(topAnchor: profileImageContainer.topAnchor, bottomAnchor: profileImageContainer.bottomAnchor, leadingAnchor: profileImageContainer.leadingAnchor, trailingAnchor: profileImageContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 200, height: 200)
         
         profileBodyContainer.anchor(topAnchor: profileImageContainer.bottomAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.safeAreaLayoutGuide.leadingAnchor, trailingAnchor: view.safeAreaLayoutGuide.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
         

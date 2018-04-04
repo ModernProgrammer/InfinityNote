@@ -12,5 +12,7 @@ target 'InfinityNote' do
   pod 'Firebase/Auth'
   pod 'lottie-ios' 
   pod 'KMPlaceholderTextView', '~> 1.3'
+  pod "RichEditorView"
+  use_frameworks!
 
 end

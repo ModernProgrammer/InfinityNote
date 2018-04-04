@@ -78,6 +78,7 @@ class NewNoteController: UIViewController {
     let selectNoteBookSeperator: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 0.0, alpha: 0.05)
+        view.heightAnchor.constraint(equalToConstant: 1).isActive = true
         return view
     }()
     
@@ -109,11 +110,9 @@ class NewNoteController: UIViewController {
         
         
         let formatter = DateFormatter()
-        // initially set the format based on your datepicker date
         formatter.dateFormat = "MM/dd/yyyy"
         
         let date = formatter.string(from: Date())
-        print(date)
         let dictionaryValues = ["body": body,"date": date]
         Database.database().reference().child(uid).child("notebooks").child(notebookTitle).child(noteTitle).updateChildValues(dictionaryValues) { (err, ref) in
             if let err = err {
@@ -148,7 +147,7 @@ class NewNoteController: UIViewController {
     
     func setupUI(){
         let stackView = UIStackView(arrangedSubviews: [selectNoteBookButton, selectNoteBookSeperator, noteTitle])
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
         stackView.axis = .vertical
         stackView.spacing = 10
         
@@ -157,8 +156,6 @@ class NewNoteController: UIViewController {
         view.addSubview(bodyNoteBookTextField)
 
         scrollView.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.safeAreaLayoutGuide.leadingAnchor, trailingAnchor: view.safeAreaLayoutGuide.trailingAnchor, paddingTop: 8, paddingBottom: 8, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
-        
-        selectNoteBookSeperator.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
         
         stackView.anchor(topAnchor: scrollView.topAnchor, bottomAnchor: nil, leadingAnchor: scrollView.leadingAnchor, trailingAnchor: scrollView.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 8, width: 0, height: 0)
         

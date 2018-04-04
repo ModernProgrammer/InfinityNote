@@ -39,7 +39,6 @@ class SearchController: UICollectionViewController, UICollectionViewDelegateFlow
         fetchNotes()
     }
     
-    
     var notes = [Note]()
     var filteredNotes = [Note]()
     fileprivate func fetchNotes() {

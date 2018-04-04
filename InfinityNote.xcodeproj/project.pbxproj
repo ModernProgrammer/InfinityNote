@@ -28,6 +28,7 @@
 		F35BF4ED203787F400E2D283 /* AddNoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35BF4EC203787F400E2D283 /* AddNoteController.swift */; };
 		F35BF4EF2037883100E2D283 /* BookmarkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35BF4EE2037883100E2D283 /* BookmarkController.swift */; };
 		F36C952F20327470007A2666 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36C952E20327470007A2666 /* Models.swift */; };
+		F38E6A822072E911003A89D2 /* infinityLoaderProfile.json in Resources */ = {isa = PBXBuildFile; fileRef = F38E6A812072E911003A89D2 /* infinityLoaderProfile.json */; };
 		F3A61DE5204DEFEF008AAFA3 /* SelectNoteBookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A61DE4204DEFEF008AAFA3 /* SelectNoteBookController.swift */; };
 		F3C1D298202F6E7F009B77DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C1D297202F6E7F009B77DE /* AppDelegate.swift */; };
 		F3C1D29A202F6E7F009B77DE /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C1D299202F6E7F009B77DE /* MainTabBarController.swift */; };
@@ -63,6 +64,7 @@
 		F35BF4EC203787F400E2D283 /* AddNoteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteController.swift; sourceTree = "<group>"; };
 		F35BF4EE2037883100E2D283 /* BookmarkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkController.swift; sourceTree = "<group>"; };
 		F36C952E20327470007A2666 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		F38E6A812072E911003A89D2 /* infinityLoaderProfile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = infinityLoaderProfile.json; sourceTree = "<group>"; };
 		F3A61DE4204DEFEF008AAFA3 /* SelectNoteBookController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectNoteBookController.swift; sourceTree = "<group>"; };
 		F3C1D294202F6E7F009B77DE /* InfinityNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfinityNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3C1D297202F6E7F009B77DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 		F35354B3203B898E0030C9E7 /* lottie */ = {
 			isa = PBXGroup;
 			children = (
+				F38E6A812072E911003A89D2 /* infinityLoaderProfile.json */,
 				F33603CD205B0B2A000BDCFC /* bookmarkAnimation.json */,
 				F33603D1205B0BF8000BDCFC /* infinityLoader.json */,
 			);
@@ -298,6 +301,7 @@
 				F3C1D2A2202F6E7F009B77DE /* LaunchScreen.storyboard in Resources */,
 				F3C1D29F202F6E7F009B77DE /* Assets.xcassets in Resources */,
 				F3276AAA2048AC1700FB0675 /* GoogleService-Info.plist in Resources */,
+				F38E6A822072E911003A89D2 /* infinityLoaderProfile.json in Resources */,
 				F3C1D29D202F6E7F009B77DE /* Main.storyboard in Resources */,
 				F33603D2205B0BF8000BDCFC /* infinityLoader.json in Resources */,
 			);
@@ -331,6 +335,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/KMPlaceholderTextView/KMPlaceholderTextView.framework",
+				"${BUILT_PRODUCTS_DIR}/RichEditorView/RichEditorView.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -340,6 +345,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KMPlaceholderTextView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RichEditorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",

@@ -156,7 +156,7 @@ class LoginController: UIViewController {
         stackView.anchor(topAnchor: textFieldContainer.topAnchor, bottomAnchor: nil, leadingAnchor: textFieldContainer.leadingAnchor, trailingAnchor: textFieldContainer.trailingAnchor, paddingTop: 20, paddingBottom: 0, paddingLeft: 20, paddingRight: 20, width: 0, height: 0)
         stackView.axis = .vertical
         stackView.distribution = .fill
-        stackView.spacing = 30
+        stackView.spacing = 20
 
 
         logoTitleImage.anchor(topAnchor: nil, bottomAnchor: textFieldContainer.topAnchor, leadingAnchor: textFieldContainer.leadingAnchor, trailingAnchor: textFieldContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 200)
