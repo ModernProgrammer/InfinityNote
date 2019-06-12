@@ -16,11 +16,11 @@ class SelectNoteBookController: UICollectionViewController, UICollectionViewDele
     let cellId = "cellId"
     let headerId = "headerId"
     let ref = Database.database().reference()
-    var animationView: LOTAnimationView = {
-        let view = LOTAnimationView(name: "infinityLoader")
+    var animationView: AnimationView = {
+        let view = AnimationView(name: "infinityLoader")
         view.contentMode = .scaleAspectFit
         view.play()
-        view.loopAnimation = true
+//        view.loopAnimation = true
         return view
     }()
     
@@ -35,7 +35,7 @@ class SelectNoteBookController: UICollectionViewController, UICollectionViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = paletteSystemWhite
-        collectionView?.register(NoteBookHeaderCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView?.register(NoteBookHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(NoteBookCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.alwaysBounceVertical = true
         
@@ -69,7 +69,7 @@ class SelectNoteBookController: UICollectionViewController, UICollectionViewDele
             self.collectionView?.reloadData()
             
         }
-        self.animationView.loopAnimation = false
+//        self.animationView.loopAnimation = false
         self.animationView.removeFromSuperview()
     }
     

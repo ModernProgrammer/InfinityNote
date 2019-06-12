@@ -14,16 +14,15 @@ class ProfileController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = paletteSystemTan
+        view.backgroundColor = paletteSystemWhite
         setupProfileUI()
         fetchUserInfo()
         navigationItem.title = "Profile"
     }
     
-    let infinityLoader: LOTAnimationView = {
-        let lottie = LOTAnimationView(filePath: "infinityLoaderProfile")
+    let infinityLoader: AnimationView = {
+        let lottie = AnimationView(filePath: "infinityLoaderProfile")
         lottie.play()
-        lottie.loopAnimation = true
         lottie.contentMode = .scaleAspectFit
         lottie.heightAnchor.constraint(equalToConstant: 200).isActive = true
         return lottie
@@ -31,27 +30,27 @@ class ProfileController: UIViewController {
     
     let profileImageContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = paletteSystemBlue
+        view.backgroundColor = .clear
         return view
     }()
     
     let profileBodyContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = paletteSystemTan
+        view.backgroundColor = paletteSystemWhite
         return view
     }()
     
-    let profileImageView: UIImageView = {
-        let image = UIImageView()
-        image.backgroundColor = paletteSystemBlue
-        image.contentMode = UIViewContentMode.scaleAspectFill
-        image.layer.masksToBounds = false
-        return image
+    let profileImageView: AnimationView = {
+        let lottie = AnimationView(name: "photo")
+        lottie.play()
+        lottie.loopMode = LottieLoopMode.autoReverse
+        lottie.backgroundBehavior = .pauseAndRestore
+        return lottie
     }()
     
     let fullnameLabel: UILabel = {
         let label = UILabel()
-        let attributedText  = NSMutableAttributedString(string: "Full Name: ", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
+        let attributedText  = NSMutableAttributedString(string: "Full Name: ", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
         label.attributedText = attributedText
         label.textAlignment = .center
         return label
@@ -59,7 +58,7 @@ class ProfileController: UIViewController {
     
     let fullName: UILabel = {
         let label = UILabel()
-        let attributedText  = NSMutableAttributedString(string: "Diego Bustamante", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
+        let attributedText  = NSMutableAttributedString(string: "Diego Bustamante", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
         label.attributedText = attributedText
         label.textAlignment = .center
         return label
@@ -76,7 +75,7 @@ class ProfileController: UIViewController {
     
     let emailLabel: UILabel = {
         let label = UILabel()
-        let attributedText  = NSMutableAttributedString(string: "Email: ", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
+        let attributedText  = NSMutableAttributedString(string: "Email: ", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
         label.attributedText = attributedText
         label.textAlignment = .center
         return label
@@ -84,7 +83,7 @@ class ProfileController: UIViewController {
     
     let email: UILabel = {
         let label = UILabel()
-        let attributedText  = NSMutableAttributedString(string: "diegobust4545@gmail.com", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
+        let attributedText  = NSMutableAttributedString(string: "diegobust4545@gmail.com", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
         label.attributedText = attributedText
         label.textAlignment = .center
         return label
@@ -100,7 +99,7 @@ class ProfileController: UIViewController {
     
     let signoutButton: UIButton = {
         let button = UIButton(type: .system)
-        let attributedText  = NSMutableAttributedString(string: "Sign Out", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: paletteSystemWhite])
+        let attributedText  = NSMutableAttributedString(string: "Sign Out", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: paletteSystemWhite])
         button.setAttributedTitle(attributedText, for: .normal)
         button.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
         button.backgroundColor = paletteSystemGreen
@@ -113,13 +112,27 @@ class ProfileController: UIViewController {
     
     
     func setupProfileUI() {
-        view.addSubview(profileImageContainer)
+        setupNavBar(barTintColor: paletteSystemWhite, tintColor: paletteSystemGrayBlue, textColor: paletteSystemGrayBlue, clearNavBar: true)
+        
         view.addSubview(infinityLoader)
         view.addSubview(profileBodyContainer)
         view.addSubview(signoutButton)
-
+        view.addSubview(profileImageContainer)
+        view.addSubview(profileImageView)
         
-        profileImageContainer.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: nil, leadingAnchor:   view.safeAreaLayoutGuide.leadingAnchor, trailingAnchor: view.safeAreaLayoutGuide.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 200)
+        profileImageContainer.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+        
+        profileImageContainer.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1/3).isActive = true
+        
+        let profileImageCircleSize = CGFloat(150)
+        
+        profileImageView.anchor(topAnchor: nil, bottomAnchor: nil, leadingAnchor: nil, trailingAnchor: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: profileImageCircleSize, height: profileImageCircleSize)
+        
+        profileImageView.centerXAnchor.constraint(equalTo: profileImageContainer.centerXAnchor).isActive = true
+        profileImageView.centerYAnchor.constraint(equalTo: profileImageContainer.centerYAnchor).isActive = true
+        
+        profileImageView.layer.cornerRadius = profileImageCircleSize/2
+        profileImageView.clipsToBounds = true
         
         infinityLoader.anchor(topAnchor: profileImageContainer.topAnchor, bottomAnchor: profileImageContainer.bottomAnchor, leadingAnchor: profileImageContainer.leadingAnchor, trailingAnchor: profileImageContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 200, height: 200)
         
@@ -174,15 +187,13 @@ class ProfileController: UIViewController {
             dictionary.forEach({ (key,value) in
             
                 let userInfo = User(uid: userId, dictionary: value as! [String : Any])
-                self.email.attributedText = NSMutableAttributedString(string: userInfo.email, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
-                self.fullName.attributedText = NSMutableAttributedString(string: userInfo.fullname, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
+                self.email.attributedText = NSMutableAttributedString(string: userInfo.email, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
+                self.fullName.attributedText = NSMutableAttributedString(string: userInfo.fullname, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
                 // set profile image here
-                
                 self.user.append(userInfo)
                 
             })
         }
-        
     }
 }
 

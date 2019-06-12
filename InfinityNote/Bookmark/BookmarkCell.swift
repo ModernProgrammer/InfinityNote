@@ -12,7 +12,7 @@ class BookmarkCell: UICollectionViewCell {
     var bookmarkNote: Note? {
         didSet{
             guard let notebookTitle = bookmarkNote?.noteTitle else { return }
-            let attributedText = NSMutableAttributedString(string: notebookTitle, attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16),NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
+            let attributedText = NSMutableAttributedString(string: notebookTitle, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
             self.noteTitle.attributedText = attributedText
         }
     }
@@ -32,7 +32,7 @@ class BookmarkCell: UICollectionViewCell {
     
     let noteTitle: UILabel = {
         let label = UILabel()
-        let attributedText = NSMutableAttributedString(string: "Title", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14),NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
+        let attributedText = NSMutableAttributedString(string: "Title", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
         label.attributedText = attributedText
         return label
     }()

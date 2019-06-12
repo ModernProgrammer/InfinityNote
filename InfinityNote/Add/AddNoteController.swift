@@ -11,7 +11,7 @@ import UIKit
 class AddNoteController: UIViewController  {
     let addNoteButton: UIButton = {
         let button = UIButton(type: .system)
-        let attributedText = NSMutableAttributedString(string: "Add Note", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: paletteSystemWhite])
+        let attributedText = NSMutableAttributedString(string: "Add Note", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: paletteSystemWhite])
         button.setAttributedTitle(attributedText, for: .normal)
         button.backgroundColor = paletteSystemBlue
         button.layer.cornerRadius = 5
@@ -27,7 +27,7 @@ class AddNoteController: UIViewController  {
     
     let cancelButton: UIButton = {
         let button = UIButton(type: .system)
-        let attributedText = NSMutableAttributedString(string: "Cancel", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: paletteSystemWhite])
+        let attributedText = NSMutableAttributedString(string: "Cancel", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: paletteSystemWhite])
         button.setAttributedTitle(attributedText, for: .normal)
         button.backgroundColor = paletteSystemGrayBlue
         button.layer.cornerRadius = 5

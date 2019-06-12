@@ -14,7 +14,7 @@ class NoteBookHeaderCell: UICollectionViewCell {
     let label: UILabel = {
         let label = UILabel()
         
-        let attributedText = NSMutableAttributedString(string: "Notebooks", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20), NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue])
+        let attributedText = NSMutableAttributedString(string: "Notebooks", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
         label.attributedText = attributedText
         return label
     }()

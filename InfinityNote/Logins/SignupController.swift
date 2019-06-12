@@ -49,7 +49,7 @@ class SignupController: UIViewController, UIGestureRecognizerDelegate {
     
     let fullnameTextField: UITextField = {
         let tf = UITextField()
-        let attributedText = NSMutableAttributedString(string: "Full Name", attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(white: 1, alpha: 0.3), NSAttributedStringKey.font: UIFont.systemFont(ofSize: 24)])
+        let attributedText = NSMutableAttributedString(string: "Full Name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(white: 1, alpha: 0.3), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24)])
         tf.attributedPlaceholder = attributedText
         tf.textColor = paletteSystemWhite
         tf.font = UIFont.boldSystemFont(ofSize: 24)
@@ -65,7 +65,7 @@ class SignupController: UIViewController, UIGestureRecognizerDelegate {
     
     let emailTextField: UITextField = {
         let tf = UITextField()
-        let attributedText = NSMutableAttributedString(string: "Email", attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(white: 1, alpha: 0.3), NSAttributedStringKey.font: UIFont.systemFont(ofSize: 24)])
+        let attributedText = NSMutableAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(white: 1, alpha: 0.3), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24)])
         tf.attributedPlaceholder = attributedText
         tf.textColor = paletteSystemWhite
         tf.font = UIFont.boldSystemFont(ofSize: 24)
@@ -88,7 +88,7 @@ class SignupController: UIViewController, UIGestureRecognizerDelegate {
     
     let passwordTextField: UITextField = {
         let tf = UITextField()
-        let attributedText = NSMutableAttributedString(string: "Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(white: 1, alpha: 0.3), NSAttributedStringKey.font: UIFont.systemFont(ofSize: 24)])
+        let attributedText = NSMutableAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(white: 1, alpha: 0.3), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24)])
         tf.attributedPlaceholder = attributedText
         tf.textColor = paletteSystemWhite
         tf.font = UIFont.boldSystemFont(ofSize: 24)
@@ -99,7 +99,7 @@ class SignupController: UIViewController, UIGestureRecognizerDelegate {
     let signupButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = paletteSystemGreen
-        let attributedText = NSMutableAttributedString(string: "Sign Up", attributes: [NSAttributedStringKey.foregroundColor: paletteSystemWhite, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)])
+        let attributedText = NSMutableAttributedString(string: "Sign Up", attributes: [NSAttributedString.Key.foregroundColor: paletteSystemWhite, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)])
         button.setAttributedTitle(attributedText, for: .normal)
         button.layer.cornerRadius = 2
         button.addTarget(self, action: #selector(handleSignupPress), for: .touchUpInside)
@@ -108,9 +108,9 @@ class SignupController: UIViewController, UIGestureRecognizerDelegate {
     
     let loginButton: UIButton = {
         let button = UIButton()
-        let attributedText = NSMutableAttributedString(string: "Already have an account?", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)])
-        attributedText.append(NSMutableAttributedString(string: "\n\n", attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 10)]))
-        attributedText.append(NSMutableAttributedString(string: "Login", attributes: [NSAttributedStringKey.foregroundColor: paletteSystemGreen, NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)]))
+        let attributedText = NSMutableAttributedString(string: "Already have an account?", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
+        attributedText.append(NSMutableAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 10)]))
+        attributedText.append(NSMutableAttributedString(string: "Login", attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGreen, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)]))
         button.setAttributedTitle(attributedText, for: .normal)
         button.layer.cornerRadius = 2
         button.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping;
@@ -131,9 +131,9 @@ class SignupController: UIViewController, UIGestureRecognizerDelegate {
                 return
             }
             
-            print("Successfully created user with userId: ", user?.uid ?? "")
+            print("Successfully created user with userId: ", user?.user.uid ?? "")
             
-            guard let uid = user?.uid else { return }
+            guard let uid = user?.user.uid else { return }
             let dictionaryValues = ["fullname":fullName, "email":email]
             let values = [uid:dictionaryValues]
             Database.database().reference().child(uid).child("user").updateChildValues(values, withCompletionBlock: { (error, ref) in

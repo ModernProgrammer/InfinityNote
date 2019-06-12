@@ -12,14 +12,12 @@ import Lottie
 
 class BookmarkController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     let cellId = "cellId"
-    
+    var notes = [Note]()
     var refreshControl: UIRefreshControl!
-
-    var animationLoader: LOTAnimationView = {
-        let view = LOTAnimationView(name: "infinityLoader")
+    var animationLoader: AnimationView = {
+        let view = AnimationView(name: "infinityLoader")
         view.contentMode = .scaleAspectFit
         view.play()
-        view.loopAnimation = true
         return view
     }()
     
@@ -31,18 +29,7 @@ class BookmarkController: UICollectionViewController, UICollectionViewDelegateFl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.backgroundColor = paletteSystemWhite
-        collectionView?.register(BookmarkCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.alwaysBounceVertical = true
-
-        refreshControl = UIRefreshControl()
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
-        collectionView?.addSubview(refreshControl)
-        
-        navigationItem.title = "Bookmarks"
-        collectionView?.addSubview(animationLoader)
-        animationLoader.frame = CGRect(x: view.center.x/4, y: view.center.y/3, width: 300, height: 300)
+        setupUI()
         fetchBookmarkNotes()
     }
     
@@ -51,14 +38,32 @@ class BookmarkController: UICollectionViewController, UICollectionViewDelegateFl
         fetchBookmarkNotes()
     }
     
-    var notes = [Note]()
+}
+// MARK: -UI/UX Functions
+extension BookmarkController {
+    func setupUI() {
+        setupNavBar(barTintColor: paletteSystemWhite, tintColor: paletteSystemGrayBlue, textColor: paletteSystemGrayBlue, clearNavBar: true)
+        collectionView?.backgroundColor = paletteSystemWhite
+        collectionView?.register(BookmarkCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.alwaysBounceVertical = true
+        
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        collectionView?.addSubview(refreshControl)
+        
+        navigationItem.title = "Bookmarks"
+        collectionView?.addSubview(animationLoader)
+        animationLoader.frame = CGRect(x: view.center.x/4, y: view.center.y/3, width: 300, height: 300)
+    }
+    
     func fetchBookmarkNotes() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         Database.database().reference().child(uid).child("notebooks").observeSingleEvent(of: .value) { (snapshot) in
             guard let dictionaries = snapshot.value as? [String: AnyObject] else { return }
             self.notes.removeAll()
-
+            
             dictionaries.forEach({ (key,value) in
                 guard let dictionary = value as? [String: AnyObject] else { return }
                 let notebookTitle = key
@@ -75,20 +80,14 @@ class BookmarkController: UICollectionViewController, UICollectionViewDelegateFl
                 })
             })
             self.refreshControl.endRefreshing()
-            self.animationLoader.loopAnimation = false
             self.animationLoader.removeFromSuperview()
             self.collectionView?.reloadData()
         }
     }
-    
-   
-    
-    // For CollectionView You Need...
-    // ----------------------
-    // numberOfItemsInSection
-    // cellForItemAt
-    // sizeForItemAt: Requires an extension of UICollectionViewDelegateFlowLayout
-    // didSelectItemAt: Checks to see if you clicked on a cell
+}
+
+// MARK: -UICollectionView Functions
+extension BookmarkController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return notes.count
     }
@@ -110,9 +109,6 @@ class BookmarkController: UICollectionViewController, UICollectionViewDelegateFl
         navigationController?.pushViewController(noteEditorViewController, animated: true)
     }
     
-    // For spacing between the cells
-    // minimumLineSpacingForSectionAt
-    // minimumInteritemSpacingForSectionAt
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
@@ -120,6 +116,4 @@ class BookmarkController: UICollectionViewController, UICollectionViewDelegateFl
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-    
-    
 }

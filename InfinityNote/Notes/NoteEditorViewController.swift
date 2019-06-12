@@ -23,12 +23,12 @@ class NoteEditorViewController: UIViewController, UITextViewDelegate {
             guard let titleName = note?.noteTitle else { return }
             
             // hide lottie animation
-            let attributedText = NSMutableAttributedString(string: titleName, attributes: [NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue,NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 16)])
+            let attributedText = NSMutableAttributedString(string: titleName, attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue,NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 16)])
             noteTitle.attributedText = attributedText
             
             guard let bodyText = note?.body else { return }
 
-            let bodyAttributedText = NSMutableAttributedString(string: bodyText, attributes: [NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue, NSAttributedStringKey.font:UIFont.systemFont(ofSize: 16)])
+            let bodyAttributedText = NSMutableAttributedString(string: bodyText, attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue, NSAttributedString.Key.font:UIFont.systemFont(ofSize: 16)])
             bodyNoteBookTextField.attributedText = bodyAttributedText
             
             
@@ -59,7 +59,7 @@ class NoteEditorViewController: UIViewController, UITextViewDelegate {
     
     let noteTitle: UITextField = {
         let text = UITextField()
-        let attributedText = NSMutableAttributedString(string: "Title", attributes: [NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 16), NSAttributedStringKey.foregroundColor:UIColor.lightGray])
+        let attributedText = NSMutableAttributedString(string: "Title", attributes: [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor:UIColor.lightGray])
         text.attributedPlaceholder = attributedText
         text.textColor = paletteSystemGrayBlue
         text.font = UIFont.boldSystemFont(ofSize: 16)
@@ -87,7 +87,7 @@ class NoteEditorViewController: UIViewController, UITextViewDelegate {
         toolBar.sizeToFit()
         
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(handleDone))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(handleDone))
         let boldButton = UIBarButtonItem(image: #imageLiteral(resourceName: "bold"), style: .plain, target: self, action: #selector(handleBold))
         let italicButton = UIBarButtonItem(image: #imageLiteral(resourceName: "italicize"), style: .plain, target: self, action: #selector(handleItalic))
         let bulletButton = UIBarButtonItem(image: #imageLiteral(resourceName: "bulletedList"), style: .plain, target: self, action: #selector(handleBulletedList))

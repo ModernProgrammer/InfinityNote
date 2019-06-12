@@ -41,10 +41,9 @@ class LoginController: UIViewController {
         return image
     }()
     
-    let logoImageLottie: LOTAnimationView = {
-        let image = LOTAnimationView(name: "animation-w800-h600")
+    let logoImageLottie: AnimationView = {
+        let image = AnimationView(name: "animation-w800-h600")
         image.play()
-        image.loopAnimation = true
         image.contentMode = .scaleAspectFit
         return image
     }()
@@ -65,7 +64,7 @@ class LoginController: UIViewController {
     
     let emailTextField: UITextField = {
         let tf = UITextField()
-        let attributedText = NSMutableAttributedString(string: "Email", attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(white: 1, alpha: 0.3), NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)])
+        let attributedText = NSMutableAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(white: 1, alpha: 0.3), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)])
         tf.attributedPlaceholder = attributedText
         tf.textColor = paletteSystemWhite
         tf.font = UIFont.boldSystemFont(ofSize: 24)
@@ -82,7 +81,7 @@ class LoginController: UIViewController {
     
     let passwordTextField: UITextField = {
         let tf = UITextField()
-        let attributedText = NSMutableAttributedString(string: "Password", attributes: [NSAttributedStringKey.foregroundColor: UIColor.init(white: 1, alpha: 0.3), NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18)])
+        let attributedText = NSMutableAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.init(white: 1, alpha: 0.3), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)])
         tf.attributedPlaceholder = attributedText
         tf.textColor = paletteSystemWhite
         tf.font = UIFont.boldSystemFont(ofSize: 24)
@@ -93,7 +92,7 @@ class LoginController: UIViewController {
     let loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = paletteSystemGreen
-        let attributedText = NSMutableAttributedString(string: "Login", attributes: [NSAttributedStringKey.foregroundColor: paletteSystemWhite, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)])
+        let attributedText = NSMutableAttributedString(string: "Login", attributes: [NSAttributedString.Key.foregroundColor: paletteSystemWhite, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)])
         button.setAttributedTitle(attributedText, for: .normal)
         button.layer.cornerRadius = 2
         button.addTarget(self, action: #selector(handleLoginPress), for: .touchUpInside)
@@ -102,9 +101,9 @@ class LoginController: UIViewController {
     
     let signupButton: UIButton = {
         let button = UIButton()
-        let attributedText = NSMutableAttributedString(string: "Don't have an account?", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)])
-        attributedText.append(NSMutableAttributedString(string: "\n\n", attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 10)]))
-        attributedText.append(NSMutableAttributedString(string: "Sign Up", attributes: [NSAttributedStringKey.foregroundColor: paletteSystemGreen, NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)]))
+        let attributedText = NSMutableAttributedString(string: "Don't have an account?", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
+        attributedText.append(NSMutableAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 10)]))
+        attributedText.append(NSMutableAttributedString(string: "Sign Up", attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGreen, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)]))
         button.setAttributedTitle(attributedText, for: .normal)
         button.layer.cornerRadius = 2
         button.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping;

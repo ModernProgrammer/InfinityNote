@@ -29,7 +29,8 @@ open class KMPlaceholderTextView: UITextView {
     private struct Constants {
         static let defaultiOSPlaceholderColor = UIColor(red: 0.0, green: 0.0, blue: 0.0980392, alpha: 0.22)
     }
-    open let placeholderLabel: UILabel = UILabel()
+  
+    public let placeholderLabel: UILabel = UILabel()
     
     private var placeholderLabelConstraints = [NSLayoutConstraint]()
     
@@ -95,9 +96,15 @@ open class KMPlaceholderTextView: UITextView {
     }
     
     private func commonInit() {
+        #if swift(>=4.2)
+        let notificationName = UITextView.textDidChangeNotification
+        #else
+        let notificationName = NSNotification.Name.UITextView.textDidChangeNotification
+        #endif
+      
         NotificationCenter.default.addObserver(self,
             selector: #selector(textDidChange),
-            name: NSNotification.Name.UITextViewTextDidChange,
+            name: notificationName,
             object: nil)
         
         placeholderLabel.font = font
@@ -140,12 +147,18 @@ open class KMPlaceholderTextView: UITextView {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        placeholderLabel.preferredMaxLayoutWidth = textContainer.size.width - textContainer.lineFragmentPadding
+        placeholderLabel.preferredMaxLayoutWidth = textContainer.size.width - textContainer.lineFragmentPadding * 2.0
     }
     
     deinit {
+      #if swift(>=4.2)
+      let notificationName = UITextView.textDidChangeNotification
+      #else
+      let notificationName = NSNotification.Name.UITextView.textDidChangeNotification
+      #endif
+      
         NotificationCenter.default.removeObserver(self,
-            name: NSNotification.Name.UITextViewTextDidChange,
+            name: notificationName,
             object: nil)
     }
     

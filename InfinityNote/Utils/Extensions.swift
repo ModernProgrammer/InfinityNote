@@ -60,6 +60,22 @@ extension UIViewController
     {
         view.endEditing(true)
     }
+    
+    func setupNavBar(barTintColor : UIColor, tintColor: UIColor, textColor: UIColor, clearNavBar: Bool) {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.tintColor = tintColor
+        navigationController?.navigationBar.barTintColor = barTintColor
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:textColor]
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor:textColor]
+        if clearNavBar {
+            navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+            navigationController?.navigationBar.shadowImage = UIImage()
+            navigationController?.navigationBar.isTranslucent = true
+        } else {
+            navigationController?.navigationBar.isTranslucent = true
+        }
+        
+    }
 }
 
 extension Database{

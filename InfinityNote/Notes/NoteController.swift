@@ -34,7 +34,7 @@ class NoteController: UICollectionViewController, UICollectionViewDelegateFlowLa
         super.viewDidLoad()
         collectionView?.keyboardDismissMode = .onDrag
         collectionView?.backgroundColor = paletteSystemTan
-        collectionView?.register(NoteHeaderCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView?.register(NoteHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(NoteCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.alwaysBounceVertical = true
         self.navigationItem.backBarButtonItem?.tintColor = paletteSystemGreen

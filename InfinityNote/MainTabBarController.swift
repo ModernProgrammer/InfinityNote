@@ -24,11 +24,22 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
             return
         }
         setUpControllers()
+        setupMenuBar()
+    }
+    
+    
+    fileprivate func setupMenuBar() {
+        tabBar.barTintColor = UIColor.clear
+        tabBar.backgroundImage = UIImage()
+        tabBar.shadowImage = UIImage()
         
+        tabBar.tintColor = paletteSystemGrayBlue
+        tabBar.barTintColor  = UIColor.white
+        tabBar.backgroundColor = paletteSystemWhite
     }
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        let index = viewControllers?.index(of: viewController)
+        let index = viewControllers?.firstIndex(of: viewController)
         
         if index == 2 {
             let addNoteController = AddNoteController()
@@ -41,15 +52,17 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     
     func setUpControllers(){
-        let homeNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "notes"), selectedImage: #imageLiteral(resourceName: "notes"), title: "Home", rootViewController: NoteBookController(collectionViewLayout: UICollectionViewFlowLayout()))
+        let flowlayout = UICollectionViewFlowLayout()
+        flowlayout.scrollDirection = .horizontal
+        let homeNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "notes"), selectedImage: #imageLiteral(resourceName: "notes"), rootViewController: NoteBookController(collectionViewLayout:flowlayout))
         
-        let searchNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "search"), selectedImage: #imageLiteral(resourceName: "search"), title: "Search",rootViewController: SearchController(collectionViewLayout: UICollectionViewFlowLayout()))
+        let searchNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "search"), selectedImage: #imageLiteral(resourceName: "search"), rootViewController: SearchController(collectionViewLayout: UICollectionViewFlowLayout()))
 
-        let addNoteNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "addNote"), selectedImage: #imageLiteral(resourceName: "addNote"), title: "Add Note", rootViewController:AddNoteController())
+        let addNoteNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "addNote"), selectedImage: #imageLiteral(resourceName: "addNote"), rootViewController:AddNoteController())
 
-        let bookMarkController = templateNavController(unselectedImage: #imageLiteral(resourceName: "favUnselected"), selectedImage: #imageLiteral(resourceName: "favSelected"), title: "Bookmarks", rootViewController: BookmarkController(collectionViewLayout: UICollectionViewFlowLayout()))
+        let bookMarkController = templateNavController(unselectedImage: #imageLiteral(resourceName: "favUnselected"), selectedImage: #imageLiteral(resourceName: "favSelected"), rootViewController: BookmarkController(collectionViewLayout: UICollectionViewFlowLayout()))
 
-        let profileController = templateNavController(unselectedImage: #imageLiteral(resourceName: "userUnselected"), selectedImage: #imageLiteral(resourceName: "userSelected"), title: "Profile", rootViewController: ProfileController())
+        let profileController = templateNavController(unselectedImage: #imageLiteral(resourceName: "userUnselected"), selectedImage: #imageLiteral(resourceName: "userSelected"),  rootViewController: ProfileController())
         
         tabBar.tintColor = paletteSystemWhite
         tabBar.barTintColor = paletteSystemGrayBlue
@@ -57,8 +70,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         viewControllers = [homeNavController, searchNavController, addNoteNavController, bookMarkController, profileController]
     }
     
-    fileprivate func templateNavController(unselectedImage: UIImage?, selectedImage: UIImage?, title: String?,
-                                           rootViewController: UIViewController = UIViewController()) -> UINavigationController {
+    fileprivate func templateNavController(unselectedImage: UIImage?, selectedImage: UIImage?, rootViewController: UIViewController = UIViewController()) -> UINavigationController {
         let viewController = rootViewController
         let viewNavController = UINavigationController(rootViewController: viewController)
         

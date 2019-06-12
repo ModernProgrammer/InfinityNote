@@ -17,7 +17,7 @@ class NewNoteController: UIViewController {
     var notebookTitle: String? {
         didSet{
             guard let notebook = notebookTitle else { return }
-            let attributedText = NSMutableAttributedString(string: notebook, attributes: [NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor:paletteSystemGreen])
+            let attributedText = NSMutableAttributedString(string: notebook, attributes: [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 14), NSAttributedString.Key.foregroundColor:paletteSystemGreen])
             selectNoteBookButton.setAttributedTitle(attributedText, for: .normal)
         }
     }
@@ -48,7 +48,7 @@ class NewNoteController: UIViewController {
     }()
     let selectNoteBookButton: UIButton = {
         let button = UIButton()
-        let attributedText = NSMutableAttributedString(string: "Select Notebook", attributes: [NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor:paletteSystemGreen])
+        let attributedText = NSMutableAttributedString(string: "Select Notebook", attributes: [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 14), NSAttributedString.Key.foregroundColor:paletteSystemGreen])
         button.setAttributedTitle(attributedText, for: .normal)
         button.addTarget(self, action: #selector(handleSelectNotebook), for: .touchUpInside)
         button.layer.borderWidth = 0.0;
@@ -67,7 +67,7 @@ class NewNoteController: UIViewController {
     
     let noteTitle: UITextField = {
         let text = UITextField()
-        let attributedText = NSMutableAttributedString(string: "Title", attributes: [NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 16), NSAttributedStringKey.foregroundColor:UIColor.lightGray])
+        let attributedText = NSMutableAttributedString(string: "Title", attributes: [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor:UIColor.lightGray])
         text.attributedPlaceholder = attributedText
         text.textColor = paletteSystemGrayBlue
         text.font = UIFont.boldSystemFont(ofSize: 16)

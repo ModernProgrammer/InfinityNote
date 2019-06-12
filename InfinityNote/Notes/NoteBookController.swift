@@ -15,11 +15,12 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
     let cellId = "cellId"
     let headerId = "headerId"
     let ref = Database.database().reference()
-    var animationView: LOTAnimationView = {
-        let view = LOTAnimationView(name: "infinityLoader")
+    var notebooks = [Notebook]()
+    var filteredNotebooks = [Notebook]()
+    var animationView: AnimationView = {
+        let view = AnimationView(name: "infinityLoader")
         view.contentMode = .scaleAspectFit
         view.play()
-        view.loopAnimation = true
         return view
     }()
 
@@ -33,16 +34,7 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.animationView.frame = CGRect(x: view.center.x/4, y: view.center.y/3, width: 300, height: 300)
-
-        collectionView?.backgroundColor = paletteSystemWhite
-        collectionView?.register(NoteBookHeaderCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
-        collectionView?.register(NoteBookCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.alwaysBounceVertical = true
-        
-        collectionView?.addSubview(animationView)
-        navigationController?.navigationBar.addSubview(searchBar)
-        setupNavigationController()
+        setupUI()
         fetchNotebooks()
     }
     
@@ -50,9 +42,48 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
         searchBar.isHidden = false
         print("Fetching 1")
     }
+}
+
+// MARK: UI/UX Functions
+extension NoteBookController {
+    func setupUI() {
+        self.animationView.frame = CGRect(x: view.center.x/4, y: view.center.y/3, width: 300, height: 300)
+        setupNavBar(barTintColor: paletteSystemBlue, tintColor: paletteSystemGreen, textColor: paletteSystemGrayBlue, clearNavBar: true)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "plusIcon"), style: .plain, target: self, action: #selector(handleAddNotebookButton))
+        view.backgroundColor = paletteSystemWhite
+        collectionView?.backgroundColor = paletteSystemWhite
+        collectionView?.register(NoteBookCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.alwaysBounceVertical = true
+        
+        collectionView?.addSubview(animationView)
+        navigationController?.navigationBar.addSubview(searchBar)
+        navigationItem.title = "Notebooks"
+    }
     
-    var notebooks = [Notebook]()
-    var filteredNotebooks = [Notebook]()
+    
+    
+    func setupNavigationController() {
+        let navbar = navigationController?.navigationBar
+        searchBar.anchor(topAnchor: navbar?.topAnchor, bottomAnchor: navbar?.bottomAnchor, leadingAnchor: navbar?.leadingAnchor, trailingAnchor: navbar?.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 8, width: 0, height: 0)
+        collectionView?.keyboardDismissMode = .onDrag
+    }
+}
+
+// MARK: Notebook functions
+extension NoteBookController {
+    // For Searchbar control
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            filteredNotebooks = notebooks
+        }
+        else {
+            filteredNotebooks = self.notebooks.filter({ (notebooks) -> Bool in
+                return notebooks.notebookTitle.lowercased().contains(searchText.lowercased())
+            })
+        }
+        self.collectionView?.reloadData()
+    }
+    
     func fetchNotebooks(){
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
@@ -70,29 +101,7 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
             self.collectionView?.reloadData()
             
         }
-        self.animationView.loopAnimation = false
         self.animationView.removeFromSuperview()
-    }
-    
-    // For Searchbar control
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
-            filteredNotebooks = notebooks
-        }
-        else {
-            filteredNotebooks = self.notebooks.filter({ (notebooks) -> Bool in
-                return notebooks.notebookTitle.lowercased().contains(searchText.lowercased())
-            })
-        }
-        self.collectionView?.reloadData()
-    }
-    
-    func setupNavigationController() {
-        //navigationItem.title = "Infinity"
-        let navbar = navigationController?.navigationBar
-        searchBar.anchor(topAnchor: navbar?.topAnchor, bottomAnchor: navbar?.bottomAnchor, leadingAnchor: navbar?.leadingAnchor, trailingAnchor: navbar?.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 8, width: 0, height: 0)
-        collectionView?.keyboardDismissMode = .onDrag
-        
     }
     
     // Need this function in order to apend and insert notebook into collectionView
@@ -113,28 +122,20 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
         let addNotebook = UINavigationController(rootViewController: addNoteBookController)
         present(addNotebook, animated: true, completion: nil)
     }
+}
+
+// MARK: UICollectionView Functions
+extension NoteBookController {
+//    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! NoteBookHeaderCell
+//
+//        return header
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+//        return CGSize(width: view.frame.width, height: 60)
+//    }
     
-    
-    // For Header
-    // ----------------------
-    // viewForSupplementaryElementOfKind
-    // referenceSizeForHeaderInSection
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! NoteBookHeaderCell
-        
-        return header
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 60)
-    }
-    
-    // For CollectionView You Need...
-    // ----------------------
-    // numberOfItemsInSection
-    // cellForItemAt
-    // sizeForItemAt: Requires an extension of UICollectionViewDelegateFlowLayout
-    // didSelectItemAt: Checks to see if you clicked on a cell
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filteredNotebooks.count
     }
@@ -146,13 +147,11 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = view.frame.width
-        return CGSize(width: width, height: 60)
+        let width = view.safeAreaLayoutGuide.layoutFrame.width
+        let height = view.safeAreaLayoutGuide.layoutFrame.height
+        return CGSize(width: width, height: height)
     }
     
-    // For spacing between the cellslgiht
-    // minimumLineSpacingForSectionAt
-    // minimumInteritemSpacingForSectionAt
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
@@ -161,7 +160,6 @@ class NoteBookController: UICollectionViewController, UICollectionViewDelegateFl
         return 0
     }
     
-    // For selecting a cell
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let noteController = NoteController(collectionViewLayout: UICollectionViewFlowLayout())
         

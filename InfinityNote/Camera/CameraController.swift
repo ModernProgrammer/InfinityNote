@@ -35,8 +35,8 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
         return button
     }()
     
-    let captureButtonAnimation: LOTAnimationView = {
-        let button = LOTAnimationView(name: "capture_green")
+    let captureButtonAnimation: AnimationView = {
+        let button = AnimationView(name: "capture_green")
         button.contentMode = .scaleAspectFit
         return button
     }()
@@ -108,5 +108,6 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate {
         
         //let previewImage = UIImage(data: imageData!)
         print("Finish Processing Photo Sample Buffer...")
+        
     }
 }

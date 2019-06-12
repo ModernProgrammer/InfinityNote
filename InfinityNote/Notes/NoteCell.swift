@@ -17,15 +17,15 @@ class NoteCell: UICollectionViewCell {
             guard let noteDate = note?.date else { return }
             guard let body = note?.body else { return }
             
-            let attributedText = NSMutableAttributedString(string: noteDate, attributes: [NSAttributedStringKey.foregroundColor: paletteSystemGreen, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 11)])
+            let attributedText = NSMutableAttributedString(string: noteDate, attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGreen, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11)])
             
-            attributedText.append(NSMutableAttributedString(string: "\n\n", attributes: [NSAttributedStringKey.foregroundColor: paletteSystemGreen, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 4)]))
+            attributedText.append(NSMutableAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGreen, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 4)]))
             
-            attributedText.append(NSMutableAttributedString(string: noteTitle, attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 16),NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue]))
+            attributedText.append(NSMutableAttributedString(string: noteTitle, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue]))
             
-            attributedText.append(NSMutableAttributedString(string: "\n\n", attributes: [NSAttributedStringKey.foregroundColor: paletteSystemGreen, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 4)]))
+            attributedText.append(NSMutableAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGreen, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 4)]))
 
-            attributedText.append(NSMutableAttributedString(string: body  , attributes: [NSAttributedStringKey.foregroundColor: paletteSystemGrayBlue, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)]))
+            attributedText.append(NSMutableAttributedString(string: body  , attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]))
             self.noteTitle.attributedText = attributedText
         }
     }
