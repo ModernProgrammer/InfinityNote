@@ -53,8 +53,8 @@ extension NoteBookController {
         view.backgroundColor = paletteSystemWhite
         collectionView?.backgroundColor = paletteSystemWhite
         collectionView?.register(NoteBookCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.alwaysBounceVertical = true
-        
+        collectionView?.alwaysBounceVertical = false
+        collectionView?.alwaysBounceHorizontal = true
         collectionView?.addSubview(animationView)
         navigationController?.navigationBar.addSubview(searchBar)
         navigationItem.title = "Notebooks"
