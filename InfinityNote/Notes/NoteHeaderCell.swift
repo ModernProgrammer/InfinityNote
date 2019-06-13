@@ -19,7 +19,7 @@ class NoteHeaderCell: UICollectionViewCell, UISearchBarDelegate {
     let searchBar: UISearchBar = {
         let bar = UISearchBar()
         bar.placeholder = "Search Notes"
-        bar.barTintColor = paletteSystemTan
+        bar.barTintColor = paletteSystemWhite
         bar.searchBarStyle = .minimal
         bar.textColor = paletteSystemGrayBlue
         return bar

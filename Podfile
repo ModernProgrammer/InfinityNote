@@ -11,8 +11,7 @@ target 'InfinityNote' do
   pod 'Firebase/Storage'
   pod 'Firebase/Auth'
   pod 'lottie-ios' 
-  pod 'KMPlaceholderTextView', '~> 1.3'
-  pod "RichEditorView"
+  pod 'UICollectionViewParallaxCell'
   use_frameworks!
 
 end

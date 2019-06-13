@@ -29,13 +29,12 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     
     fileprivate func setupMenuBar() {
-        tabBar.barTintColor = UIColor.clear
         tabBar.backgroundImage = UIImage()
         tabBar.shadowImage = UIImage()
         
         tabBar.tintColor = paletteSystemGrayBlue
-        tabBar.barTintColor  = UIColor.white
-        tabBar.backgroundColor = paletteSystemWhite
+        tabBar.barTintColor  = UIColor.clear
+        tabBar.backgroundColor = UIColor.clear
     }
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
@@ -52,11 +51,10 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     
     func setUpControllers(){
-        let flowlayout = UICollectionViewFlowLayout()
-        flowlayout.scrollDirection = .horizontal
-        let homeNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "notes"), selectedImage: #imageLiteral(resourceName: "notes"), rootViewController: NoteBookController(collectionViewLayout:flowlayout))
+
+        let homeNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "notes"), selectedImage: #imageLiteral(resourceName: "notes"), rootViewController: NoteBookController())
         
-        let searchNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "search"), selectedImage: #imageLiteral(resourceName: "search"), rootViewController: SearchController(collectionViewLayout: UICollectionViewFlowLayout()))
+        let searchNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "search"), selectedImage: #imageLiteral(resourceName: "search"), rootViewController: SearchController())
 
         let addNoteNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "addNote"), selectedImage: #imageLiteral(resourceName: "addNote"), rootViewController:AddNoteController())
 

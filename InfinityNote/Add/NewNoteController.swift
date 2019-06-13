@@ -8,7 +8,6 @@
 
 import UIKit
 import Firebase
-import KMPlaceholderTextView
 
 class NewNoteController: UIViewController {
 
@@ -55,13 +54,13 @@ class NewNoteController: UIViewController {
         return button
     }()
 
-    let bodyNoteBookTextField: KMPlaceholderTextView = {
-        let body = KMPlaceholderTextView()
+    let bodyNoteBookTextField: UITextView = {
+        let body = UITextView()
         body.font = UIFont.systemFont(ofSize: 16)
         body.textColor = paletteSystemGrayBlue
         body.backgroundColor = UIColor.init(white: 0, alpha: 0)
         body.textContainer.lineBreakMode = NSLineBreakMode.byCharWrapping;
-        body.placeholder = "Note"
+//        body.placeholder = "Note"
         return body
     }()
     
