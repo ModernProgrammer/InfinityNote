@@ -8,7 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		6387BBD7B0B6433339D33FA1 /* Pods_InfinityNote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 368E428683FEF94BF33DFEA3 /* Pods_InfinityNote.framework */; };
+		B21EE79722B3F8A8005D1EA0 /* LoginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21EE79622B3F8A8005D1EA0 /* LoginCell.swift */; };
+		B21EE79922B3F9C5005D1EA0 /* MainLoginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21EE79822B3F9C5005D1EA0 /* MainLoginCell.swift */; };
+		B21EE79B22B3F9CF005D1EA0 /* SignUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21EE79A22B3F9CF005D1EA0 /* SignUpCell.swift */; };
+		B21EE79D22B416D9005D1EA0 /* animation-w300-h300.json in Resources */ = {isa = PBXBuildFile; fileRef = B21EE79C22B416D9005D1EA0 /* animation-w300-h300.json */; };
 		B2CA779B22B1A76C00DFAD83 /* photo.json in Resources */ = {isa = PBXBuildFile; fileRef = B2CA779A22B1A76C00DFAD83 /* photo.json */; };
+		B2CA77A322B3F17B00DFAD83 /* infinityLoaderMain.json in Resources */ = {isa = PBXBuildFile; fileRef = B2CA77A222B3F17B00DFAD83 /* infinityLoaderMain.json */; };
+		B2CA77A522B3F56A00DFAD83 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = B2CA77A422B3F56A00DFAD83 /* data.json */; };
 		F324AA69203253FB007551B1 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F324AA68203253FB007551B1 /* LoginController.swift */; };
 		F3276AAA2048AC1700FB0675 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F3276AA92048AC1600FB0675 /* GoogleService-Info.plist */; };
 		F3276AAC2048C81000FB0675 /* NewNoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3276AAB2048C81000FB0675 /* NewNoteController.swift */; };
@@ -44,7 +50,13 @@
 /* Begin PBXFileReference section */
 		368E428683FEF94BF33DFEA3 /* Pods_InfinityNote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InfinityNote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E17400A23F3A2C691322E10 /* Pods-InfinityNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InfinityNote.release.xcconfig"; path = "Pods/Target Support Files/Pods-InfinityNote/Pods-InfinityNote.release.xcconfig"; sourceTree = "<group>"; };
+		B21EE79622B3F8A8005D1EA0 /* LoginCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCell.swift; sourceTree = "<group>"; };
+		B21EE79822B3F9C5005D1EA0 /* MainLoginCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoginCell.swift; sourceTree = "<group>"; };
+		B21EE79A22B3F9CF005D1EA0 /* SignUpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCell.swift; sourceTree = "<group>"; };
+		B21EE79C22B416D9005D1EA0 /* animation-w300-h300.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "animation-w300-h300.json"; sourceTree = "<group>"; };
 		B2CA779A22B1A76C00DFAD83 /* photo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = photo.json; path = "../../../../../../../Downloads/5856-image-picture/photo.json"; sourceTree = "<group>"; };
+		B2CA77A222B3F17B00DFAD83 /* infinityLoaderMain.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = infinityLoaderMain.json; sourceTree = "<group>"; };
+		B2CA77A422B3F56A00DFAD83 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		B6AEEADCD8C534763B95CAF8 /* Pods-InfinityNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InfinityNote.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InfinityNote/Pods-InfinityNote.debug.xcconfig"; sourceTree = "<group>"; };
 		F324AA68203253FB007551B1 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		F3276AA92048AC1600FB0675 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -105,6 +117,9 @@
 			children = (
 				F324AA68203253FB007551B1 /* LoginController.swift */,
 				F35BF4E02034EB5600E2D283 /* SignupController.swift */,
+				B21EE79622B3F8A8005D1EA0 /* LoginCell.swift */,
+				B21EE79822B3F9C5005D1EA0 /* MainLoginCell.swift */,
+				B21EE79A22B3F9CF005D1EA0 /* SignUpCell.swift */,
 			);
 			path = Logins;
 			sourceTree = "<group>";
@@ -124,6 +139,9 @@
 				F33603CD205B0B2A000BDCFC /* bookmarkAnimation.json */,
 				F33603D1205B0BF8000BDCFC /* infinityLoader.json */,
 				B2CA779A22B1A76C00DFAD83 /* photo.json */,
+				B2CA77A222B3F17B00DFAD83 /* infinityLoaderMain.json */,
+				B2CA77A422B3F56A00DFAD83 /* data.json */,
+				B21EE79C22B416D9005D1EA0 /* animation-w300-h300.json */,
 			);
 			path = lottie;
 			sourceTree = "<group>";
@@ -302,9 +320,12 @@
 			files = (
 				F33603CF205B0B2B000BDCFC /* bookmarkAnimation.json in Resources */,
 				F3C1D2A2202F6E7F009B77DE /* LaunchScreen.storyboard in Resources */,
+				B21EE79D22B416D9005D1EA0 /* animation-w300-h300.json in Resources */,
 				F3C1D29F202F6E7F009B77DE /* Assets.xcassets in Resources */,
+				B2CA77A522B3F56A00DFAD83 /* data.json in Resources */,
 				F3276AAA2048AC1700FB0675 /* GoogleService-Info.plist in Resources */,
 				B2CA779B22B1A76C00DFAD83 /* photo.json in Resources */,
+				B2CA77A322B3F17B00DFAD83 /* infinityLoaderMain.json in Resources */,
 				F38E6A822072E911003A89D2 /* infinityLoaderProfile.json in Resources */,
 				F3C1D29D202F6E7F009B77DE /* Main.storyboard in Resources */,
 				F33603D2205B0BF8000BDCFC /* infinityLoader.json in Resources */,
@@ -370,7 +391,9 @@
 				F3287B0F2041B88A00934EBE /* NoteBookHeaderCell.swift in Sources */,
 				F34BD2D020543A4500923C83 /* AddNotebookController.swift in Sources */,
 				F3C1D2B0202FBB87009B77DE /* Extensions.swift in Sources */,
+				B21EE79B22B3F9CF005D1EA0 /* SignUpCell.swift in Sources */,
 				F3287B172041C4CA00934EBE /* NoteHeaderCell.swift in Sources */,
+				B21EE79922B3F9C5005D1EA0 /* MainLoginCell.swift in Sources */,
 				F324AA69203253FB007551B1 /* LoginController.swift in Sources */,
 				F3287B092040C5F200934EBE /* CameraController.swift in Sources */,
 				F3C1D29A202F6E7F009B77DE /* MainTabBarController.swift in Sources */,
@@ -378,6 +401,7 @@
 				F3287B192041CE7100934EBE /* NoteEditorViewController.swift in Sources */,
 				F35BF4EF2037883100E2D283 /* BookmarkController.swift in Sources */,
 				F35BF4E12034EB5600E2D283 /* SignupController.swift in Sources */,
+				B21EE79722B3F8A8005D1EA0 /* LoginCell.swift in Sources */,
 				F35BF4ED203787F400E2D283 /* AddNoteController.swift in Sources */,
 				F3287B152041C4B000934EBE /* NoteController.swift in Sources */,
 				F35BF4E62036590E00E2D283 /* ProfileController.swift in Sources */,

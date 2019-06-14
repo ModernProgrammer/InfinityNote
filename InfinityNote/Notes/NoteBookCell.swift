@@ -20,7 +20,7 @@ class NoteBookCell: UICollectionViewParallaxCell, UIGestureRecognizerDelegate {
             let image = UIImage(named: "pic8")
             notebookImage.image = image
             setupbackgroundParallax(imageView: notebookImage, cornerRadius: cornerRadius, paddingOffset: paddingOffset, topConstraint: contraint, bottomConstraint: contraint, leadingConstraint: contraint, trailingConstraint: contraint)
-            setupCellUI()
+//            setupCellUI()
         }
     }
     let container: UIView = {

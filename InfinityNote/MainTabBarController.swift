@@ -15,6 +15,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         
         self.delegate = self
+        setupMenuBar()
         if Auth.auth().currentUser == nil {
             DispatchQueue.main.async {
                 let loginController = LoginController()
@@ -24,7 +25,6 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
             return
         }
         setUpControllers()
-        setupMenuBar()
     }
     
     
@@ -63,7 +63,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         let profileController = templateNavController(unselectedImage: #imageLiteral(resourceName: "userUnselected"), selectedImage: #imageLiteral(resourceName: "userSelected"),  rootViewController: ProfileController())
         
         tabBar.tintColor = paletteSystemWhite
-        tabBar.barTintColor = paletteSystemGrayBlue
+        tabBar.barTintColor = .clear
         
         viewControllers = [homeNavController, searchNavController, addNoteNavController, bookMarkController, profileController]
     }
