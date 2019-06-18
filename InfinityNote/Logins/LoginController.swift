@@ -54,7 +54,7 @@ class LoginController: UIViewController, UICollectionViewDataSource, UICollectio
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavBar(barTintColor: paletteSystemGreen, tintColor: paletteSystemWhite, textColor: paletteSystemWhite, clearNavBar: true)
+        setupNavBar(barTintColor: paletteSystemGreen, tintColor: paletteSystemWhite, textColor: paletteSystemWhite, clearNavBar: true, largeTitle: true)
         setupUserInterface()
         setupKeyboardDismissal()
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismissKeyboard)))

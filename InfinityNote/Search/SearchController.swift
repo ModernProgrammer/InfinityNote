@@ -36,7 +36,7 @@ class SearchController: UIViewController, UICollectionViewDataSource, UICollecti
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavBar(barTintColor: paletteSystemWhite, tintColor: paletteSystemGrayBlue, textColor: paletteSystemGrayBlue, clearNavBar: true)
+        setupNavBar(barTintColor: paletteSystemWhite, tintColor: paletteSystemGrayBlue, textColor: paletteSystemGrayBlue, clearNavBar: true, largeTitle: true)
         setupUI()
     }
     

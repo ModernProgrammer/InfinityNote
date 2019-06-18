@@ -25,6 +25,33 @@ class NoteBookController: UIViewController, UICollectionViewDataSource, UICollec
         return view
     }()
     
+    let welcomeLabel : UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let weatherContainer : UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    let weatherLabel : UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    let weatherIcon : UIImageView = {
+        let imageView = UIImageView()
+        return imageView
+    }()
+    
+    let topContrainer : UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     lazy var collectionView : UICollectionView = {
         let flowlayout = UICollectionViewFlowLayout()
         flowlayout.scrollDirection = .horizontal
@@ -36,7 +63,14 @@ class NoteBookController: UIViewController, UICollectionViewDataSource, UICollec
         collectionView.alwaysBounceHorizontal = true
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(NoteBookCell.self, forCellWithReuseIdentifier: cellId)
         return collectionView
+    }()
+    
+    
+    let bottomContainer : UIView = {
+        let view = UIView()
+        return view
     }()
     
     override func viewDidLoad() {
@@ -52,23 +86,66 @@ class NoteBookController: UIViewController, UICollectionViewDataSource, UICollec
 
 // MARK: UI/UX Functions
 extension NoteBookController {
-    func setupUI() {
-        self.animationView.frame = CGRect(x: view.center.x/4, y: view.center.y/3, width: 300, height: 300)
-        setupNavBar(barTintColor: paletteSystemBlue, tintColor: paletteSystemGreen, textColor: paletteSystemGrayBlue, clearNavBar: true)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "plusIcon"), style: .plain, target: self, action: #selector(handleAddNotebookButton))
-        view.backgroundColor = paletteSystemWhite
-        collectionView.register(NoteBookCell.self, forCellWithReuseIdentifier: cellId)
-        view.addSubview(collectionView)
-        collectionView.anchor(topAnchor: view.topAnchor, bottomAnchor: view.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+    fileprivate func setupWeatherContainer() {
+        bottomContainer.addSubview(weatherContainer)
+        weatherContainer.translatesAutoresizingMaskIntoConstraints = false
+        weatherContainer.centerXAnchor.constraint(equalTo: bottomContainer.centerXAnchor).isActive = true
+        weatherContainer.centerYAnchor.constraint(equalTo: bottomContainer.centerYAnchor).isActive = true
+        weatherContainer.widthAnchor.constraint(equalToConstant: view.frame.width/3+80).isActive = true
+        weatherContainer.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        weatherContainer.layer.cornerRadius = 40
+        weatherContainer.layer.borderWidth = 1
+        weatherContainer.layer.borderColor = UIColor.black.cgColor
+        let attributedText  = NSMutableAttributedString(string: "Today\n", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .thin), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
+        attributedText.append(NSMutableAttributedString(string: "Aug 12, 2019", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .bold), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue]))
+        weatherLabel.attributedText = attributedText
+        weatherContainer.addSubview(weatherLabel)
+        weatherLabel.translatesAutoresizingMaskIntoConstraints = false
+        weatherLabel.centerXAnchor.constraint(equalTo: weatherContainer.centerXAnchor).isActive = true
+        weatherLabel.centerYAnchor.constraint(equalTo: weatherContainer.centerYAnchor).isActive = true
+    }
+    
+    fileprivate func setupWelcomeLabel() {
+        topContrainer.addSubview(welcomeLabel)
+        welcomeLabel.anchor(topAnchor: topContrainer.topAnchor, bottomAnchor: topContrainer.bottomAnchor, leadingAnchor: topContrainer.leadingAnchor, trailingAnchor: topContrainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 20, paddingRight: 0, width: 0, height: 0)
+        
+        let attributedText = NSMutableAttributedString(string: "Welcome, \n", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 32, weight: .thin),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
+        let name = String((Auth.auth().currentUser?.email)!)
+        attributedText.append(NSMutableAttributedString(string: "\( String(describing: name))", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22, weight: .ultraLight),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue]))
+        welcomeLabel.attributedText = attributedText
+    }
+    
+    fileprivate func setupStackView() {
+        let stackView = UIStackView(arrangedSubviews: [topContrainer,collectionView])
+        view.addSubview(stackView)
+        stackView.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+        stackView.distribution = .fill
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        
+        collectionView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        collectionView.heightAnchor.constraint(equalToConstant: view.frame.height).isActive = true
+        topContrainer.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        topContrainer.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         collectionView.alpha = 0
         navigationItem.title = "Notebooks"
+    }
+    
+    func setupUI() {
+        self.animationView.frame = CGRect(x: view.center.x/4, y: view.center.y/3, width: 300, height: 300)
+        view.backgroundColor = paletteSystemWhite
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "plusIcon"), style: .plain, target: self, action: #selector(handleAddNotebookButton))
+        
+        setupNavBar(barTintColor: paletteSystemBlue, tintColor: paletteSystemGreen, textColor: paletteSystemGrayBlue, clearNavBar: true, largeTitle: true)
+        setupStackView()
+        setupWelcomeLabel()
+//        setupWeatherContainer()
     }
 
 }
 
 // MARK: Notebook functions
 extension NoteBookController {
-    
     func fetchNotebooks(){
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
@@ -133,7 +210,7 @@ extension NoteBookController {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = view.safeAreaLayoutGuide.layoutFrame.width
-        let height = view.safeAreaLayoutGuide.layoutFrame.height
+        let height = view.safeAreaLayoutGuide.layoutFrame.height-160
         return CGSize(width: width, height: height)
     }
     

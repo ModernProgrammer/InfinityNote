@@ -112,7 +112,7 @@ class ProfileController: UIViewController {
     
     
     func setupProfileUI() {
-        setupNavBar(barTintColor: paletteSystemWhite, tintColor: paletteSystemGrayBlue, textColor: paletteSystemGrayBlue, clearNavBar: true)
+        setupNavBar(barTintColor: paletteSystemWhite, tintColor: paletteSystemGrayBlue, textColor: paletteSystemGrayBlue, clearNavBar: true, largeTitle: true)
         
         view.addSubview(infinityLoader)
         view.addSubview(profileBodyContainer)

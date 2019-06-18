@@ -15,20 +15,38 @@ class NoteBookCell: UICollectionViewParallaxCell, UIGestureRecognizerDelegate {
     var notebook: Notebook? {
         didSet{
             guard let notebookTitle = notebook?.notebookTitle else { return }
-            let attributedText = NSMutableAttributedString(string: notebookTitle, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),NSAttributedString.Key.foregroundColor: paletteSystemWhite])
+            let attributedText = NSMutableAttributedString(string: notebookTitle, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26, weight: .bold),NSAttributedString.Key.foregroundColor: paletteSystemWhite])
             self.notebookTitle.attributedText = attributedText
             let image = UIImage(named: "pic8")
             notebookImage.image = image
             setupbackgroundParallax(imageView: notebookImage, cornerRadius: cornerRadius, paddingOffset: paddingOffset, topConstraint: contraint, bottomConstraint: contraint, leadingConstraint: contraint, trailingConstraint: contraint)
-//            setupCellUI()
+            setupCellUI()
         }
     }
+    
+
+    let gradientTop : CAGradientLayer = {
+        let gradient = CAGradientLayer()
+        return gradient
+    }()
+
+    let gradientBottom : CAGradientLayer = {
+        let gradient = CAGradientLayer()
+        return gradient
+    }()
+
     let container: UIView = {
         let view = UIView()
         view.backgroundColor = .blue
         return view
     }()
     
+    let menuButton : UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "icons8-menu"), for: .normal)
+        button.tintColor = .white
+        return button
+    }()
     
     let notebookImage: UIImageView = {
         let image = UIImageView()
@@ -57,6 +75,12 @@ class NoteBookCell: UICollectionViewParallaxCell, UIGestureRecognizerDelegate {
         return image
     }()
     
+    var gradientContrainer : UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupShadow()
@@ -66,10 +90,31 @@ class NoteBookCell: UICollectionViewParallaxCell, UIGestureRecognizerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc func handleButtonPress() {
+        print("BUTTON PRESS")
+    }
+    
+    func setupGradient() {
+        gradientContrainer.frame = CGRect(x: 0, y: 0, width: frame.width-(contraint * 2), height: frame.height-(contraint * 2))
+        gradientBottom.frame = gradientContrainer.bounds
+        gradientBottom.cornerRadius = cornerRadius
+        gradientBottom.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+    }
+    
+    override func layoutSubviews() {
+        setupGradient()
+    }
     
     func setupCellUI() {
-        addSubview(notebookTitle)
-        notebookTitle.anchor(topAnchor: topAnchor, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor, trailingAnchor: trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+        addSubview(gradientContrainer)
+        gradientContrainer.anchor(topAnchor: topAnchor, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor, trailingAnchor: trailingAnchor, paddingTop: contraint, paddingBottom: contraint, paddingLeft: contraint, paddingRight: contraint, width: 0, height: 0)
+        gradientContrainer.layer.insertSublayer(gradientBottom, at: 0)
+
+        let stackView = UIStackView(arrangedSubviews: [notebookTitle, UIView(), menuButton])
+        addSubview(stackView)
+        menuButton.addTarget(self, action: #selector(handleButtonPress), for: .touchUpInside)
+        menuButton.alpha = 0.8
+        stackView.anchor(topAnchor: nil, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor, trailingAnchor: trailingAnchor, paddingTop: 0, paddingBottom: 20, paddingLeft: 30, paddingRight: 25, width: 0, height: 44)
     }
     
     func setupShadow() {

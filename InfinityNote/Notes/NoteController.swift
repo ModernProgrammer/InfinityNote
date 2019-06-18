@@ -9,7 +9,9 @@
 import UIKit
 import Firebase
 
-class NoteController:  UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class NoteController:  UIViewController, UITableViewDataSource, UITableViewDelegate {
+
+    
     
     let headerId = "headerId"
     let cellId = "cellId"
@@ -25,17 +27,14 @@ class NoteController:  UIViewController, UICollectionViewDataSource, UICollectio
         }
     }
     
-    lazy var collectionView : UICollectionView = {
-        let flowlayout = UICollectionViewFlowLayout()
-        flowlayout.scrollDirection = .vertical
-        let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: flowlayout)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.backgroundColor = paletteSystemWhite
-        collectionView.alwaysBounceVertical = true
-        collectionView.isPagingEnabled = false
-        collectionView.register(NoteCell.self, forCellWithReuseIdentifier: cellId)
-        return collectionView
+    lazy var tableView : UITableView = {
+        let tableView = UITableView(frame: view.frame)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = paletteSystemWhite
+        tableView.register(NoteCell.self, forCellReuseIdentifier: cellId)
+        tableView.tableFooterView = UIView()
+        return tableView
     }()
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,13 +46,13 @@ class NoteController:  UIViewController, UICollectionViewDataSource, UICollectio
         super.viewDidLoad()
         fetchNotes()
         anchorCollectionView()
-        collectionView.fadeIn()
+        tableView.fadeIn()
     }
     
     func anchorCollectionView() {
-        view.addSubview(collectionView)
-        collectionView.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
-        collectionView.alpha = 0
+        view.addSubview(tableView)
+        tableView.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+        tableView.alpha = 0
     }
 }
 
@@ -69,7 +68,7 @@ extension NoteController {
         // 2 - insert a new index path into your collecionView
         let newIndexPath = IndexPath(item: filteredNotes.count-1, section: 0)
         
-        self.collectionView.insertItems(at: [newIndexPath])
+        self.tableView.insertRows(at: [newIndexPath], with: .automatic)
     }
     
     @objc func handleAddNoteButton(){
@@ -95,36 +94,37 @@ extension NoteController {
                 self.notes.append(note)
             })
             self.filteredNotes = self.notes
-            self.collectionView.reloadData()
+            self.tableView.reloadData()
         }
     }
 }
 
-// MARK: -UICollectionView Functions
+// MARK: -UITableView Functions
 extension  NoteController {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredNotes.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! NoteCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! NoteCell
         cell.note = filteredNotes[indexPath.item]
+        cell.colorBoarder.backgroundColor = indexPath.item % 2 == 0 ? paletteSystemGreen : paletteSystemBlue
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         print("Cell Index: ", indexPath.item)
-        
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = view.frame.width
-        return CGSize(width: width, height: width/3)
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
         let noteEditorViewController = NoteEditorViewController()
         noteEditorViewController.note = filteredNotes[indexPath.item]
-        
-        navigationController?.pushViewController(noteEditorViewController, animated: true)
+        let navNoteEditor = UINavigationController(rootViewController: noteEditorViewController)
+        present(navNoteEditor, animated: true)
     }
-    
+
 }
 

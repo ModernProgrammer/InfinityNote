@@ -22,19 +22,19 @@ class NoteEditorViewController: UIViewController, UITextViewDelegate {
             guard let titleName = note?.noteTitle else { return }
             
             // hide lottie animation
-            let attributedText = NSMutableAttributedString(string: titleName, attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue,NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 16)])
+            let attributedText = NSMutableAttributedString(string: titleName, attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue,NSAttributedString.Key.font:UIFont.systemFont(ofSize: 32, weight: .bold)])
             noteTitle.attributedText = attributedText
             
             guard let bodyText = note?.body else { return }
 
-            let bodyAttributedText = NSMutableAttributedString(string: bodyText, attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue, NSAttributedString.Key.font:UIFont.systemFont(ofSize: 16)])
+            let bodyAttributedText = NSMutableAttributedString(string: bodyText, attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue, NSAttributedString.Key.font:UIFont.systemFont(ofSize: 22, weight: .thin)])
             bodyNoteBookTextField.attributedText = bodyAttributedText
             
             
             if note?.bookmark == false{
-                self.image = UIImage(named: bookmarkUnselected)?.withRenderingMode(.alwaysOriginal)
+                self.image = UIImage(named: bookmarkUnselected)
             } else {
-                self.image = UIImage(named: bookmarkSelected)?.withRenderingMode(.alwaysOriginal)
+                self.image = UIImage(named: bookmarkSelected)
             }
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: self.image, style: .plain, target: self, action: #selector(handleSelectBookmark))
         }
@@ -48,7 +48,7 @@ class NoteEditorViewController: UIViewController, UITextViewDelegate {
     
     let bodyNoteBookTextField: UITextView = {
         let body = UITextView()
-        body.font = UIFont.systemFont(ofSize: 16)
+        body.font = UIFont.systemFont(ofSize: 22, weight: .thin)
         body.textColor = paletteSystemGrayBlue
         body.backgroundColor = UIColor.init(white: 0, alpha: 0)
         body.textContainer.lineBreakMode = NSLineBreakMode.byCharWrapping;
@@ -58,9 +58,10 @@ class NoteEditorViewController: UIViewController, UITextViewDelegate {
     
     let noteTitle: UITextField = {
         let text = UITextField()
-        let attributedText = NSMutableAttributedString(string: "Title", attributes: [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor:UIColor.lightGray])
+        let attributedText = NSMutableAttributedString(string: "Title", attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 32, weight: .bold), NSAttributedString.Key.foregroundColor:UIColor.lightGray])
         text.attributedPlaceholder = attributedText
         text.textColor = paletteSystemGrayBlue
+        text.textAlignment = .center
         text.font = UIFont.boldSystemFont(ofSize: 16)
         return text
     }()
@@ -98,7 +99,16 @@ class NoteEditorViewController: UIViewController, UITextViewDelegate {
         return toolBar
     }()
     
+    @objc func handleDismiss() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     fileprivate func setupUI() {
+        setupNavBar(barTintColor: paletteSystemWhite, tintColor: paletteSystemGreen, textColor: paletteSystemGrayBlue, clearNavBar: true, largeTitle: false)
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "xIcon"), style: .plain, target: self, action: #selector(handleDismiss))
+
+        
         let stackView = UIStackView(arrangedSubviews: [noteTitle, selectNoteBookSeperator])
         stackView.distribution = .fill
         stackView.axis = .vertical
@@ -184,12 +194,12 @@ class NoteEditorViewController: UIViewController, UITextViewDelegate {
     @objc func handleSelectBookmark() {
         guard let note = self.note else { return }
         
-        if navigationItem.rightBarButtonItem?.image == UIImage(named: bookmarkUnselected)?.withRenderingMode(.alwaysOriginal) {
-            self.image = UIImage(named: bookmarkSelected)?.withRenderingMode(.alwaysOriginal)
+        if navigationItem.rightBarButtonItem?.image == UIImage(named: bookmarkUnselected) {
+            self.image = UIImage(named: bookmarkSelected)
             // Use firebase to set bookmark for note
             Database.setNoteBookmark(note: note, bookmarkBool: true)
         } else {
-            self.image = UIImage(named: bookmarkUnselected)?.withRenderingMode(.alwaysOriginal)
+            self.image = UIImage(named: bookmarkUnselected)
             // Use firebase to remove bookmark for note
             Database.setNoteBookmark(note: note, bookmarkBool: false)
         }

@@ -42,7 +42,7 @@ class BookmarkController: UICollectionViewController, UICollectionViewDelegateFl
 // MARK: -UI/UX Functions
 extension BookmarkController {
     func setupUI() {
-        setupNavBar(barTintColor: paletteSystemWhite, tintColor: paletteSystemGrayBlue, textColor: paletteSystemGrayBlue, clearNavBar: true)
+        setupNavBar(barTintColor: paletteSystemWhite, tintColor: paletteSystemGrayBlue, textColor: paletteSystemGrayBlue, clearNavBar: true, largeTitle: true)
         collectionView?.backgroundColor = paletteSystemWhite
         collectionView?.register(BookmarkCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.alwaysBounceVertical = true

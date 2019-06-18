@@ -9,53 +9,45 @@
 import UIKit
 import Lottie
 
-class NoteCell: UICollectionViewCell {
+class NoteCell: UITableViewCell {
     
     var note: Note? {
         didSet{
             guard let noteTitle = note?.noteTitle else { return }
-            guard let noteDate = note?.date else { return }
             guard let body = note?.body else { return }
             
-            let attributedText = NSMutableAttributedString(string: noteDate, attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGreen, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11)])
-            
-            attributedText.append(NSMutableAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGreen, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 4)]))
-            
-            attributedText.append(NSMutableAttributedString(string: noteTitle, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue]))
+            let attributedText = NSMutableAttributedString(string: noteTitle, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .bold),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
             
             attributedText.append(NSMutableAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGreen, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 4)]))
 
-            attributedText.append(NSMutableAttributedString(string: body  , attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]))
+            attributedText.append(NSMutableAttributedString(string: body, attributes: [NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .thin)]))
             self.noteTitle.attributedText = attributedText
         }
     }
     
-    let noteContainer: UIView = {
+    let colorBoarder : UIView = {
         let view = UIView()
-        view.backgroundColor = paletteSystemWhite
-        view.layer.borderColor = UIColor.lightGray.cgColor
-        view.layer.borderWidth = 1.0
-        view.layer.cornerRadius = 5
+        view.backgroundColor = paletteSystemGreen
         return view
     }()
     
-    let noteTitle: UITextView = {
-        let label = UITextView()
-        label.isEditable = false
-        label.isSelectable = false
+    
+    let noteTitle: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 3
+        label.textAlignment = .left
         label.isUserInteractionEnabled = false
-        label.isScrollEnabled = false
         return label
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        addSubview(noteContainer)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        addSubview(colorBoarder)
+        colorBoarder.anchor(topAnchor: topAnchor, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor, trailingAnchor: nil, paddingTop: 0, paddingBottom: 1, paddingLeft: 15, paddingRight: 0, width: 4, height: 0)
+        
         addSubview(noteTitle)
-        
-        noteContainer.anchor(topAnchor: topAnchor, bottomAnchor: safeAreaLayoutGuide.bottomAnchor, leadingAnchor: safeAreaLayoutGuide.leadingAnchor, trailingAnchor: safeAreaLayoutGuide.trailingAnchor, paddingTop: 8, paddingBottom: 0, paddingLeft: 8, paddingRight: 8, width: 0, height: 0)
-        
-        noteTitle.anchor(topAnchor: noteContainer.topAnchor, bottomAnchor: noteContainer.bottomAnchor, leadingAnchor: noteContainer.leadingAnchor, trailingAnchor: noteContainer.trailingAnchor, paddingTop: 8, paddingBottom: 8, paddingLeft: 8, paddingRight: 8, width: 0, height: 0)
+
+        noteTitle.anchor(topAnchor: topAnchor, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor, trailingAnchor: trailingAnchor, paddingTop: 8, paddingBottom: 8, paddingLeft: 28, paddingRight: 16, width: frame.width-20, height: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {

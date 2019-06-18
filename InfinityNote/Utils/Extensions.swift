@@ -80,8 +80,8 @@ extension UIViewController
         view.endEditing(true)
     }
     
-    func setupNavBar(barTintColor : UIColor, tintColor: UIColor, textColor: UIColor, clearNavBar: Bool) {
-        navigationController?.navigationBar.prefersLargeTitles = true
+    func setupNavBar(barTintColor : UIColor, tintColor: UIColor, textColor: UIColor, clearNavBar: Bool, largeTitle: Bool) {
+        navigationController?.navigationBar.prefersLargeTitles = largeTitle
         navigationController?.navigationBar.tintColor = tintColor
         navigationController?.navigationBar.barTintColor = barTintColor
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:textColor]
