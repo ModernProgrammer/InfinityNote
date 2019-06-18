@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import Lottie
 
-class BookmarkController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class BookmarkController:  UIViewController, UITableViewDataSource, UITableViewDelegate{
     let cellId = "cellId"
     var notes = [Note]()
     var refreshControl: UIRefreshControl!
@@ -20,6 +20,17 @@ class BookmarkController: UICollectionViewController, UICollectionViewDelegateFl
         view.play()
         return view
     }()
+    
+    lazy var tableView : UITableView = {
+        let tableView = UITableView(frame: view.frame)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = paletteSystemWhite
+        tableView.register(NoteCell.self, forCellReuseIdentifier: cellId)
+        tableView.tableFooterView = UIView()
+        return tableView
+    }()
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -42,19 +53,16 @@ class BookmarkController: UICollectionViewController, UICollectionViewDelegateFl
 // MARK: -UI/UX Functions
 extension BookmarkController {
     func setupUI() {
+        view.backgroundColor = paletteSystemWhite
+        view.addSubview(tableView)
+        tableView.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
         setupNavBar(barTintColor: paletteSystemWhite, tintColor: paletteSystemGrayBlue, textColor: paletteSystemGrayBlue, clearNavBar: true, largeTitle: true)
-        collectionView?.backgroundColor = paletteSystemWhite
-        collectionView?.register(BookmarkCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.alwaysBounceVertical = true
-        
         refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
-        collectionView?.addSubview(refreshControl)
-        
         navigationItem.title = "Bookmarks"
-        collectionView?.addSubview(animationLoader)
         animationLoader.frame = CGRect(x: view.center.x/4, y: view.center.y/3, width: 300, height: 300)
+        
     }
     
     func fetchBookmarkNotes() {
@@ -81,39 +89,30 @@ extension BookmarkController {
             })
             self.refreshControl.endRefreshing()
             self.animationLoader.removeFromSuperview()
-            self.collectionView?.reloadData()
+            self.tableView.reloadData()
         }
     }
 }
 
 // MARK: -UICollectionView Functions
 extension BookmarkController {
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notes.count
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! BookmarkCell
-        cell.bookmarkNote = self.notes[indexPath.item]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! NoteCell
+        cell.note = self.notes[indexPath.item]
+        cell.colorBoarder.backgroundColor = indexPath.item % 2 == 0 ? paletteSystemGreen : paletteSystemBlue
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 60)
-    }
     
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let noteEditorViewController = NoteEditorViewController()
         noteEditorViewController.note = notes[indexPath.item]
-        navigationController?.pushViewController(noteEditorViewController, animated: true)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        let navNoteEditor = UINavigationController(rootViewController: noteEditorViewController)
+        present(navNoteEditor, animated: true)
     }
 }

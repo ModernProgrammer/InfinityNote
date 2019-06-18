@@ -56,20 +56,19 @@ class NewNoteController: UIViewController {
 
     let bodyNoteBookTextField: UITextView = {
         let body = UITextView()
-        body.font = UIFont.systemFont(ofSize: 16)
+        body.font = UIFont.systemFont(ofSize: 22, weight: .thin)
         body.textColor = paletteSystemGrayBlue
         body.backgroundColor = UIColor.init(white: 0, alpha: 0)
         body.textContainer.lineBreakMode = NSLineBreakMode.byCharWrapping;
-//        body.placeholder = "Note"
         return body
     }()
     
     let noteTitle: UITextField = {
         let text = UITextField()
-        let attributedText = NSMutableAttributedString(string: "Title", attributes: [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor:UIColor.lightGray])
+        let attributedText = NSMutableAttributedString(string: "Title", attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 32, weight: .bold), NSAttributedString.Key.foregroundColor:UIColor.lightGray])
         text.attributedPlaceholder = attributedText
         text.textColor = paletteSystemGrayBlue
-        text.font = UIFont.boldSystemFont(ofSize: 16)
+        text.textAlignment = .center
         return text
     }()
     
@@ -92,8 +91,7 @@ class NewNoteController: UIViewController {
 
     @objc func handleSelectNotebook() {
         print("Select Notebook")
-        
-        let selectNoteBookController = SelectNoteBookController(collectionViewLayout: UICollectionViewFlowLayout())
+        let selectNoteBookController = SelectNoteBookController()
         selectNoteBookController.newNoteController = self
         let selectNoteBookView = UINavigationController(rootViewController:selectNoteBookController)
         present(selectNoteBookView, animated: true, completion: nil)
@@ -162,12 +160,11 @@ class NewNoteController: UIViewController {
     }
     
     func setupNavBar() {
-        let cancelButtonImage = UIImage(named: "xIcon")?.withRenderingMode(.alwaysOriginal)
-        let saveButtonImage = UIImage(named: "checkIcon")?.withRenderingMode(.alwaysOriginal)
+        setupNavBar(barTintColor: paletteSystemWhite, tintColor: paletteSystemGreen, textColor: paletteSystemGrayBlue, clearNavBar: true, largeTitle: false)
+        let cancelButtonImage = UIImage(named: "xIcon")
+        let saveButtonImage = UIImage(named: "checkIcon")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: cancelButtonImage, style: .plain, target: self, action: #selector(handleCancel))
         navigationItem.title = "New Note"
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: saveButtonImage, style: .plain, target: self, action: #selector(handleSave))
-        navigationController?.navigationBar.tintColor = paletteSystemGrayBlue
     }
-    
 }

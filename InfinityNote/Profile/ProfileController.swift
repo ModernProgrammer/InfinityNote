@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import Lottie
 
-class ProfileController: UIViewController {
+class ProfileController: UIViewController, UIImagePickerControllerDelegate,  UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,12 +40,23 @@ class ProfileController: UIViewController {
         return view
     }()
     
-    let profileImageView: AnimationView = {
+    let profileImageView: AnimatedButton = {
         let lottie = AnimationView(name: "photo")
         lottie.play()
         lottie.loopMode = LottieLoopMode.autoReverse
         lottie.backgroundBehavior = .pauseAndRestore
-        return lottie
+        let button = AnimatedButton(animation: lottie.animation!)
+        button.addTarget(self, action: #selector(presentPhotoLibrary), for: .touchUpInside)
+        return button
+    }()
+    
+    let profileImageButton: AnimatedButton = {
+        let lottie = AnimationView(name: "photo")
+        lottie.play()
+        lottie.loopMode = LottieLoopMode.autoReverse
+        lottie.backgroundBehavior = .pauseAndRestore
+        let button = AnimatedButton(animation: lottie.animation!)
+        return button
     }()
     
     let fullnameLabel: UILabel = {
@@ -107,8 +118,6 @@ class ProfileController: UIViewController {
         button.heightAnchor.constraint(equalToConstant: 28).isActive = true
         return button
     }()
-    
-    
     
     
     func setupProfileUI() {
@@ -194,6 +203,32 @@ class ProfileController: UIViewController {
                 
             })
         }
+    }
+}
+
+extension ProfileController {
+    @objc func presentPhotoLibrary() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.navigationBar.tintColor = paletteSystemGreen
+        imagePicker.allowsEditing = true
+        self.present(imagePicker, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let editImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            setSelectImage(image: editImage)
+        }else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            setSelectImage(image: originalImage)
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func setSelectImage(image: UIImage) {
+//        selectImage.setImage(image, for: .normal)
+//        selectImage.contentHorizontalAlignment = .center
+//        selectImage.contentVerticalAlignment = .center
+//        selectImage.imageView?.contentMode = .scaleAspectFill
     }
 }
 

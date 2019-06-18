@@ -58,11 +58,11 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
 
         let addNoteNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "addNote"), selectedImage: #imageLiteral(resourceName: "addNote"), rootViewController:AddNoteController())
 
-        let bookMarkController = templateNavController(unselectedImage: #imageLiteral(resourceName: "favUnselected"), selectedImage: #imageLiteral(resourceName: "favSelected"), rootViewController: BookmarkController(collectionViewLayout: UICollectionViewFlowLayout()))
+        let bookMarkController = templateNavController(unselectedImage: #imageLiteral(resourceName: "favUnselected"), selectedImage: #imageLiteral(resourceName: "favSelected"), rootViewController: BookmarkController())
 
         let profileController = templateNavController(unselectedImage: #imageLiteral(resourceName: "userUnselected"), selectedImage: #imageLiteral(resourceName: "userSelected"),  rootViewController: ProfileController())
         
-        tabBar.tintColor = paletteSystemWhite
+        tabBar.tintColor = paletteSystemGreen
         tabBar.barTintColor = .clear
         
         viewControllers = [homeNavController, searchNavController, addNoteNavController, bookMarkController, profileController]

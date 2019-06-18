@@ -125,6 +125,14 @@ extension  NoteController {
         let navNoteEditor = UINavigationController(rootViewController: noteEditorViewController)
         present(navNoteEditor, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let removeAction = UITableViewRowAction(style: .normal, title: "-") { (_, indexPath) in
+//            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        removeAction.backgroundColor = .red
+        return [removeAction]
+    }
 
 }
 

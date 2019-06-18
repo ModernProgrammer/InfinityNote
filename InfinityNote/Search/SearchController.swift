@@ -9,7 +9,9 @@
 import UIKit
 import Firebase
 
-class SearchController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
+class SearchController: UIViewController, UITableViewDataSource, UITableViewDelegate,  UISearchBarDelegate {
+
+    
     var cellId = "cellId"
     var notes = [Note]()
     var filteredNotes = [Note]()
@@ -21,17 +23,14 @@ class SearchController: UIViewController, UICollectionViewDataSource, UICollecti
         return searchbar
     }()
     
-    lazy var collectionView : UICollectionView = {
-        let flowlayout = UICollectionViewFlowLayout()
-        flowlayout.scrollDirection = .vertical
-        let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: flowlayout)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.backgroundColor = paletteSystemWhite
-        collectionView.alwaysBounceVertical = true
-        collectionView.isPagingEnabled = false
-        collectionView.register(SearchCell.self, forCellWithReuseIdentifier: cellId)
-        return collectionView
+    lazy var tableView : UITableView = {
+        let tableView = UITableView(frame: view.frame)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = paletteSystemWhite
+        tableView.register(NoteCell.self, forCellReuseIdentifier: cellId)
+        tableView.tableFooterView = UIView()
+        return tableView
     }()
     
     override func viewDidLoad() {
@@ -43,8 +42,8 @@ class SearchController: UIViewController, UICollectionViewDataSource, UICollecti
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
         searchBar.isHidden = false
-        collectionView.alpha = 0
-        collectionView.keyboardDismissMode = .onDrag
+        tableView.alpha = 0
+        tableView.keyboardDismissMode = .onDrag
         fetchNotes()
     }
     
@@ -55,10 +54,10 @@ class SearchController: UIViewController, UICollectionViewDataSource, UICollecti
         searchBar.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: nil, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 44)
         searchBar.barTintColor = paletteSystemWhite
         searchBar.backgroundColor = paletteSystemWhite
-        view.addSubview(collectionView)
+        view.addSubview(tableView)
         view.backgroundColor = paletteSystemWhite
-        collectionView.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 44, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
-        collectionView.alpha = 0
+        tableView.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 44, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+        tableView.alpha = 0
     }
 }
 
@@ -89,8 +88,8 @@ extension SearchController {
             })
             self.filteredNotes = self.notes
             print(self.notes)
-            self.collectionView.reloadData()
-            self.collectionView.fadeIn()
+            self.tableView.reloadData()
+            self.tableView.fadeIn()
         }
     }
     
@@ -104,33 +103,29 @@ extension SearchController {
                 return notes.noteTitle.lowercased().contains(searchText.lowercased())
             })
         }
-        self.collectionView.reloadData()
+        self.tableView.reloadData()
     }
 }
 
-// MARK: -UICollectionView functions
+// MARK: -UITableView functions
 extension SearchController {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.filteredNotes.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! NoteCell
         cell.note = self.filteredNotes[indexPath.item]
+        cell.colorBoarder.backgroundColor = indexPath.item % 2 == 0 ? paletteSystemGreen : paletteSystemBlue
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 60)
-    }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let noteEditor = NoteEditorViewController()
-        let note = self.filteredNotes[indexPath.item]
-        
-        noteEditor.note = note
-        noteEditor.searchBar = self.searchBar
-        
-        navigationController?.pushViewController(noteEditor, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let noteEditorViewController = NoteEditorViewController()
+        noteEditorViewController.note = filteredNotes[indexPath.item]
+        let navNoteEditor = UINavigationController(rootViewController: noteEditorViewController)
+        present(navNoteEditor, animated: true)
     }
 }

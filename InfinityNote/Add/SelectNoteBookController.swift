@@ -9,10 +9,12 @@
 import UIKit
 import Firebase
 import Lottie
-class SelectNoteBookController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
+class SelectNoteBookController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+
     
+    var notebooks = [Notebook]()
+
     var newNoteController: NewNoteController?
-    
     let cellId = "cellId"
     let headerId = "headerId"
     let ref = Database.database().reference()
@@ -20,39 +22,65 @@ class SelectNoteBookController: UICollectionViewController, UICollectionViewDele
         let view = AnimationView(name: "infinityLoader")
         view.contentMode = .scaleAspectFit
         view.play()
-//        view.loopAnimation = true
         return view
     }()
     
-    lazy var searchBar: UISearchBar = {
-        let searchbar = UISearchBar()
-        searchbar.placeholder = "Search for Notebooks"
-        searchbar.endEditing(true)
-        searchbar.delegate = self
-        return searchbar
+    lazy var tableView : UITableView = {
+        let tableView = UITableView(frame: view.frame)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = paletteSystemWhite
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.tableFooterView = UIView()
+        return tableView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.backgroundColor = paletteSystemWhite
-        collectionView?.register(NoteBookHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
-        collectionView?.register(NoteBookCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.alwaysBounceVertical = true
-        
-        collectionView?.addSubview(animationView)
-        navigationController?.navigationBar.addSubview(searchBar)
-        
         fetchNotebooks()
         animationView.frame = CGRect(x: view.center.x/4, y: view.center.y/3, width: 300, height: 300)
         setupNavigationController()
+        view.backgroundColor = paletteSystemWhite
+        view.addSubview(tableView)
+        tableView.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        searchBar.isHidden = false
         print("Fetching 1")
     }
     
-    var notebooks = [Notebook]()
+
+    func setupNavigationController() {
+        setupNavBar(barTintColor: paletteSystemBlue, tintColor: paletteSystemGreen, textColor: paletteSystemGrayBlue, clearNavBar: true, largeTitle: true)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "plusIcon"), style: .plain, target: self, action: #selector(handleAddNotebookButton))
+        navigationItem.title = "Select Notebook"
+    }
+
+}
+
+// MARK: -Notebook Functions
+extension SelectNoteBookController {
+    @objc func handleCancel() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func addNotebook(notebook: Notebook) {
+        // 1 - modify your array
+        notebooks.append(notebook)
+        // 2 - insert a new index path into your collecionView
+        let newIndexPath = IndexPath(item: notebooks.count-1, section: 0)
+        self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+    }
+    
+    @objc func handleAddNotebookButton() {
+        print("Add Notebook")
+        let addNoteBookController = AddNotebookController()
+        addNoteBookController.selectNoteBookController = self
+        let addNotebook = UINavigationController(rootViewController: addNoteBookController)
+        present(addNotebook, animated: true, completion: nil)
+    }
+    
     func fetchNotebooks(){
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
@@ -66,114 +94,48 @@ class SelectNoteBookController: UICollectionViewController, UICollectionViewDele
                 self.notebooks.insert(notebook, at: 0)
             })
             print("Fetching 2")
-            self.collectionView?.reloadData()
+            self.tableView.reloadData()
             
         }
-//        self.animationView.loopAnimation = false
+        //        self.animationView.loopAnimation = false
         self.animationView.removeFromSuperview()
     }
     
-    func setupNavigationController() {
-        //navigationItem.title = "Infinity"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
-        navigationItem.title = "Select Notebook"
-        navigationController?.navigationBar.tintColor = paletteSystemGrayBlue
-    }
-    
-    @objc func handleCancel() {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    // Need this function in order to apend and insert notebook into collectionView
-    func addNotebook(notebook: Notebook) {
-        // 1 - modify your array
-        notebooks.append(notebook)
-        // 2 - insert a new index path into your collecionView
-        let newIndexPath = IndexPath(item: notebooks.count-1, section: 0)
-        
-        self.collectionView?.insertItems(at: [newIndexPath])
-    }
-    
-    @objc func handleAddNotebookButton() {
-        print("Add Notebook")
-        let addNoteBookController = AddNotebookController()
-        addNoteBookController.selectNoteBookController = self
-        let addNotebook = UINavigationController(rootViewController: addNoteBookController)
-        present(addNotebook, animated: true, completion: nil)
-    }
-    
-    
-    // For Header
-    // ----------------------
-    // viewForSupplementaryElementOfKind
-    // referenceSizeForHeaderInSection
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! NoteBookHeaderCell
-        
-        return header
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 60)
-    }
-    
-    // For CollectionView You Need...
-    // ----------------------
-    // numberOfItemsInSection
-    // cellForItemAt
-    // sizeForItemAt: Requires an extension of UICollectionViewDelegateFlowLayout
-    // didSelectItemAt: Checks to see if you clicked on a cell
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+}
+
+// MARK: -UITableView Functions
+extension SelectNoteBookController {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notebooks.count
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! NoteBookCell
-        cell.notebook = notebooks[indexPath.item]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        cell.textLabel?.attributedText =  NSMutableAttributedString(string: notebooks[indexPath.item].notebookTitle, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26, weight: .thin),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue ])
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = view.frame.width
-        return CGSize(width: width, height: 60)
-    }
     
-    // For spacing between the cellslgiht
-    // minimumLineSpacingForSectionAt
-    // minimumInteritemSpacingForSectionAt
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    // For selecting a cell
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let notebook = self.notebooks[indexPath.item]
-        
         newNoteController?.notebookTitle = notebook.notebookTitle
         self.dismiss(animated: true, completion: nil)
-
     }
     
     
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-        let notebookpart = self.notebooks[indexPath.item]
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        self.ref.child(uid).child("notebooks").child(notebookpart.notebookTitle).removeValue { (err, ref) in
-            if let err = err {
-                print("Oops, looks like something went wrong: ", err)
-            }
-            print("Successfully removed: ", notebookpart)
-            self.notebooks.remove(at: indexPath.item)
-            collectionView.deleteItems(at: [indexPath])
-            print("Here and stuff")
-        }
-        
-        
-    }
+    
+    //    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+    //        let notebookpart = self.notebooks[indexPath.item]
+    //        guard let uid = Auth.auth().currentUser?.uid else { return }
+    //
+    //        self.ref.child(uid).child("notebooks").child(notebookpart.notebookTitle).removeValue { (err, ref) in
+    //            if let err = err {
+    //                print("Oops, looks like something went wrong: ", err)
+    //            }
+    //            print("Successfully removed: ", notebookpart)
+    //            self.notebooks.remove(at: indexPath.item)
+    //            collectionView.deleteItems(at: [indexPath])
+    //            print("Here and stuff")
+    //        }
+    //    }
 }

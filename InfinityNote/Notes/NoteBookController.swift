@@ -139,7 +139,6 @@ extension NoteBookController {
         setupNavBar(barTintColor: paletteSystemBlue, tintColor: paletteSystemGreen, textColor: paletteSystemGrayBlue, clearNavBar: true, largeTitle: true)
         setupStackView()
         setupWelcomeLabel()
-//        setupWeatherContainer()
     }
 
 }

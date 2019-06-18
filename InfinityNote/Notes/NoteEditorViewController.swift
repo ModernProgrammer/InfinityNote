@@ -52,7 +52,6 @@ class NoteEditorViewController: UIViewController, UITextViewDelegate {
         body.textColor = paletteSystemGrayBlue
         body.backgroundColor = UIColor.init(white: 0, alpha: 0)
         body.textContainer.lineBreakMode = NSLineBreakMode.byCharWrapping;
-//        body.placeholder = "Note"
         return body
     }()
     
@@ -62,7 +61,6 @@ class NoteEditorViewController: UIViewController, UITextViewDelegate {
         text.attributedPlaceholder = attributedText
         text.textColor = paletteSystemGrayBlue
         text.textAlignment = .center
-        text.font = UIFont.boldSystemFont(ofSize: 16)
         return text
     }()
     
