@@ -12,6 +12,10 @@
 		B21EE79922B3F9C5005D1EA0 /* MainLoginCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21EE79822B3F9C5005D1EA0 /* MainLoginCell.swift */; };
 		B21EE79B22B3F9CF005D1EA0 /* SignUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21EE79A22B3F9CF005D1EA0 /* SignUpCell.swift */; };
 		B21EE79D22B416D9005D1EA0 /* animation-w300-h300.json in Resources */ = {isa = PBXBuildFile; fileRef = B21EE79C22B416D9005D1EA0 /* animation-w300-h300.json */; };
+		B2814A2722BC2AD4003A32FF /* Notebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2814A2622BC2AD4003A32FF /* Notebook.swift */; };
+		B2814A2922BC2AF4003A32FF /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2814A2822BC2AF4003A32FF /* Note.swift */; };
+		B2814A2B22BC2B0F003A32FF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2814A2A22BC2B0F003A32FF /* User.swift */; };
+		B2814A2D22BC2B67003A32FF /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2814A2C22BC2B67003A32FF /* UserManager.swift */; };
 		B2CA779B22B1A76C00DFAD83 /* photo.json in Resources */ = {isa = PBXBuildFile; fileRef = B2CA779A22B1A76C00DFAD83 /* photo.json */; };
 		B2CA77A322B3F17B00DFAD83 /* infinityLoaderMain.json in Resources */ = {isa = PBXBuildFile; fileRef = B2CA77A222B3F17B00DFAD83 /* infinityLoaderMain.json */; };
 		B2CA77A522B3F56A00DFAD83 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = B2CA77A422B3F56A00DFAD83 /* data.json */; };
@@ -34,7 +38,6 @@
 		F35BF4EB203787BF00E2D283 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35BF4EA203787BF00E2D283 /* SearchController.swift */; };
 		F35BF4ED203787F400E2D283 /* AddNoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35BF4EC203787F400E2D283 /* AddNoteController.swift */; };
 		F35BF4EF2037883100E2D283 /* BookmarkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35BF4EE2037883100E2D283 /* BookmarkController.swift */; };
-		F36C952F20327470007A2666 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36C952E20327470007A2666 /* Models.swift */; };
 		F38E6A822072E911003A89D2 /* infinityLoaderProfile.json in Resources */ = {isa = PBXBuildFile; fileRef = F38E6A812072E911003A89D2 /* infinityLoaderProfile.json */; };
 		F3A61DE5204DEFEF008AAFA3 /* SelectNoteBookController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A61DE4204DEFEF008AAFA3 /* SelectNoteBookController.swift */; };
 		F3C1D298202F6E7F009B77DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C1D297202F6E7F009B77DE /* AppDelegate.swift */; };
@@ -54,6 +57,10 @@
 		B21EE79822B3F9C5005D1EA0 /* MainLoginCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoginCell.swift; sourceTree = "<group>"; };
 		B21EE79A22B3F9CF005D1EA0 /* SignUpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCell.swift; sourceTree = "<group>"; };
 		B21EE79C22B416D9005D1EA0 /* animation-w300-h300.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "animation-w300-h300.json"; sourceTree = "<group>"; };
+		B2814A2622BC2AD4003A32FF /* Notebook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notebook.swift; sourceTree = "<group>"; };
+		B2814A2822BC2AF4003A32FF /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		B2814A2A22BC2B0F003A32FF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B2814A2C22BC2B67003A32FF /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		B2CA779A22B1A76C00DFAD83 /* photo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = photo.json; path = "../../../../../../../Downloads/5856-image-picture/photo.json"; sourceTree = "<group>"; };
 		B2CA77A222B3F17B00DFAD83 /* infinityLoaderMain.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = infinityLoaderMain.json; sourceTree = "<group>"; };
 		B2CA77A422B3F56A00DFAD83 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
@@ -77,7 +84,6 @@
 		F35BF4EA203787BF00E2D283 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		F35BF4EC203787F400E2D283 /* AddNoteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteController.swift; sourceTree = "<group>"; };
 		F35BF4EE2037883100E2D283 /* BookmarkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkController.swift; sourceTree = "<group>"; };
-		F36C952E20327470007A2666 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		F38E6A812072E911003A89D2 /* infinityLoaderProfile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = infinityLoaderProfile.json; sourceTree = "<group>"; };
 		F3A61DE4204DEFEF008AAFA3 /* SelectNoteBookController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectNoteBookController.swift; sourceTree = "<group>"; };
 		F3C1D294202F6E7F009B77DE /* InfinityNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfinityNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,6 +116,16 @@
 				368E428683FEF94BF33DFEA3 /* Pods_InfinityNote.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B2814A2522BC24D4003A32FF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B2814A2622BC2AD4003A32FF /* Notebook.swift */,
+				B2814A2822BC2AF4003A32FF /* Note.swift */,
+				B2814A2A22BC2B0F003A32FF /* User.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		F324AA67203253E7007551B1 /* Logins */ = {
@@ -203,6 +219,7 @@
 		F3C1D296202F6E7F009B77DE /* InfinityNote */ = {
 			isa = PBXGroup;
 			children = (
+				B2814A2522BC24D4003A32FF /* Models */,
 				F35354B3203B898E0030C9E7 /* lottie */,
 				F3C1D2AE202FBB7B009B77DE /* Utils */,
 				F35BF4E8203786B800E2D283 /* Add */,
@@ -242,7 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				F3C1D2AF202FBB87009B77DE /* Extensions.swift */,
-				F36C952E20327470007A2666 /* Models.swift */,
+				B2814A2C22BC2B67003A32FF /* UserManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -392,9 +409,12 @@
 				F34BD2D020543A4500923C83 /* AddNotebookController.swift in Sources */,
 				F3C1D2B0202FBB87009B77DE /* Extensions.swift in Sources */,
 				B21EE79B22B3F9CF005D1EA0 /* SignUpCell.swift in Sources */,
+				B2814A2722BC2AD4003A32FF /* Notebook.swift in Sources */,
 				F3287B172041C4CA00934EBE /* NoteHeaderCell.swift in Sources */,
 				B21EE79922B3F9C5005D1EA0 /* MainLoginCell.swift in Sources */,
+				B2814A2D22BC2B67003A32FF /* UserManager.swift in Sources */,
 				F324AA69203253FB007551B1 /* LoginController.swift in Sources */,
+				B2814A2B22BC2B0F003A32FF /* User.swift in Sources */,
 				F3287B092040C5F200934EBE /* CameraController.swift in Sources */,
 				F3C1D29A202F6E7F009B77DE /* MainTabBarController.swift in Sources */,
 				F3A61DE5204DEFEF008AAFA3 /* SelectNoteBookController.swift in Sources */,
@@ -410,8 +430,8 @@
 				F35BF4EB203787BF00E2D283 /* SearchController.swift in Sources */,
 				F3287B112041B93200934EBE /* NoteBookCell.swift in Sources */,
 				F3C1D2AD202F758A009B77DE /* NoteCell.swift in Sources */,
+				B2814A2922BC2AF4003A32FF /* Note.swift in Sources */,
 				F33603D4205B1190000BDCFC /* BookmarkCell.swift in Sources */,
-				F36C952F20327470007A2666 /* Models.swift in Sources */,
 				F3276AAC2048C81000FB0675 /* NewNoteController.swift in Sources */,
 				F33603D6205D7196000BDCFC /* SearchCell.swift in Sources */,
 			);

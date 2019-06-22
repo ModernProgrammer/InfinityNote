@@ -17,9 +17,9 @@ class NoteBookCell: UICollectionViewParallaxCell, UIGestureRecognizerDelegate {
             guard let notebookTitle = notebook?.notebookTitle else { return }
             let attributedText = NSMutableAttributedString(string: notebookTitle, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26, weight: .bold),NSAttributedString.Key.foregroundColor: paletteSystemWhite])
             self.notebookTitle.attributedText = attributedText
-            let image = UIImage(named: "pic8")
-            notebookImage.image = image
-            setupbackgroundParallax(imageView: notebookImage, cornerRadius: cornerRadius, paddingOffset: paddingOffset, topConstraint: contraint, bottomConstraint: contraint, leadingConstraint: contraint, trailingConstraint: contraint)
+//            let image = UIImage(named: "pic8")
+//            notebookImage.image = image
+//            setupbackgroundParallax(imageView: notebookImage, cornerRadius: cornerRadius, paddingOffset: paddingOffset, topConstraint: contraint, bottomConstraint: contraint, leadingConstraint: contraint, trailingConstraint: contraint)
             setupCellUI()
         }
     }

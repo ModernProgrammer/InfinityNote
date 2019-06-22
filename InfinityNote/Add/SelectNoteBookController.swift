@@ -83,13 +83,12 @@ extension SelectNoteBookController {
     
     func fetchNotebooks(){
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        
         self.ref.child(uid).child("notebooks").observeSingleEvent(of: .value) { (snapshot) in
             guard let dictionaries = snapshot.value as? [String: Any] else { return }
             
             dictionaries.forEach({ (key,value) in
                 let keyTitle = key
-                let notebook = Notebook(notebookTitle: keyTitle)
+                let notebook = Notebook(notebookTitle: keyTitle, dictionary: dictionaries)
                 //self.notebooks.append(notebook)
                 self.notebooks.insert(notebook, at: 0)
             })
@@ -121,21 +120,4 @@ extension SelectNoteBookController {
         newNoteController?.notebookTitle = notebook.notebookTitle
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
-    
-    //    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    //        let notebookpart = self.notebooks[indexPath.item]
-    //        guard let uid = Auth.auth().currentUser?.uid else { return }
-    //
-    //        self.ref.child(uid).child("notebooks").child(notebookpart.notebookTitle).removeValue { (err, ref) in
-    //            if let err = err {
-    //                print("Oops, looks like something went wrong: ", err)
-    //            }
-    //            print("Successfully removed: ", notebookpart)
-    //            self.notebooks.remove(at: indexPath.item)
-    //            collectionView.deleteItems(at: [indexPath])
-    //            print("Here and stuff")
-    //        }
-    //    }
 }

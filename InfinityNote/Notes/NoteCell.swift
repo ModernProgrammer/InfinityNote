@@ -47,7 +47,7 @@ class NoteCell: UITableViewCell {
         
         addSubview(noteTitle)
 
-        noteTitle.anchor(topAnchor: topAnchor, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor, trailingAnchor: trailingAnchor, paddingTop: 8, paddingBottom: 8, paddingLeft: 28, paddingRight: 16, width: frame.width-20, height: 0)
+        noteTitle.anchor(topAnchor: topAnchor, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor, trailingAnchor: nil, paddingTop: 8, paddingBottom: 8, paddingLeft: 28, paddingRight: 16, width: frame.width-20, height: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {

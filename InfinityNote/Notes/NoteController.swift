@@ -17,7 +17,7 @@ class NoteController:  UIViewController, UITableViewDataSource, UITableViewDeleg
     let cellId = "cellId"
     var notes = [Note]()
     var filteredNotes = [Note]()
-    
+    let ref = Database.database().reference()
     var notebookTitle: String? {
         didSet {
             navigationItem.title = notebookTitle
@@ -129,9 +129,24 @@ extension  NoteController {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let removeAction = UITableViewRowAction(style: .normal, title: "-") { (_, indexPath) in
 //            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            self.removeNote(indexPath: indexPath)
         }
         removeAction.backgroundColor = .red
         return [removeAction]
+    }
+    
+    func removeNote(indexPath: IndexPath) {
+        let note = self.filteredNotes[indexPath.item]
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        self.ref.child(uid).child("notebooks").child(note.notebookTitle).child(note.noteTitle).removeValue { (err, ref) in
+            if let err = err {
+                print("Oops, looks like something went wrong: ", err)
+            }
+            print("Successfully removed: ", note)
+            self.filteredNotes.remove(at: indexPath.item)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            print("Here and stuff")
+        }
     }
 
 }

@@ -40,13 +40,17 @@ class AddNotebookController: UIViewController {
         guard let notebookTitle = newNotebookTextField.text, notebookTitle.count > 0 else { return }
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        Database.database().reference().child(uid).child("notebooks").child(notebookTitle).setValue("") { (err, ref) in
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
+        let date = formatter.string(from: Date())
+        let dictionaryValues = ["date": date]
+        Database.database().reference().child(uid).child("notebooks").child(notebookTitle).updateChildValues(dictionaryValues){ (err, ref) in
             if let err = err {
                 print("Oops, looks like something went wrong: ", err)
                 return
             }
             print("Successful in creating new notebook.")
-            let notebook = Notebook(notebookTitle: notebookTitle)
+            let notebook = Notebook(notebookTitle: notebookTitle, dictionary: dictionaryValues)
             self.notebookController?.addNotebook(notebook: notebook)
             self.selectNoteBookController?.addNotebook(notebook: notebook)
             self.dismiss(animated: true, completion: nil)

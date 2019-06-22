@@ -13,45 +13,47 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.delegate = self
         setupMenuBar()
         if Auth.auth().currentUser == nil {
             DispatchQueue.main.async {
-                let loginController = LoginController()
-                let navController = UINavigationController(rootViewController: loginController)
-                self.present(navController, animated: true, completion: nil)
+                self.presentLoginController()
             }
             return
         }
         setUpControllers()
     }
     
+    fileprivate func presentLoginController() {
+        let loginController = LoginController()
+        let navController = UINavigationController(rootViewController: loginController)
+        self.present(navController, animated: true, completion: nil)
+    }
     
     fileprivate func setupMenuBar() {
         tabBar.backgroundImage = UIImage()
         tabBar.shadowImage = UIImage()
-        
         tabBar.tintColor = paletteSystemGrayBlue
         tabBar.barTintColor  = UIColor.clear
         tabBar.backgroundColor = UIColor.clear
     }
     
+    fileprivate func presentAddNoteController() {
+        let addNoteController = AddNoteController()
+        let navController = UINavigationController(rootViewController: addNoteController)
+        present(navController, animated: true, completion: nil)
+    }
+    
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         let index = viewControllers?.firstIndex(of: viewController)
-        
         if index == 2 {
-            let addNoteController = AddNoteController()
-            let navController = UINavigationController(rootViewController: addNoteController)
-            present(navController, animated: true, completion: nil)
+            presentAddNoteController()
             return false
         }
-        
         return true
     }
     
     func setUpControllers(){
-
         let homeNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "notes"), selectedImage: #imageLiteral(resourceName: "notes"), rootViewController: NoteBookController())
         
         let searchNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "search"), selectedImage: #imageLiteral(resourceName: "search"), rootViewController: SearchController())

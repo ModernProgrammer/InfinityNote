@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 // Locks view orientation
 struct AppUtility {
@@ -26,43 +27,4 @@ struct AppUtility {
         UIDevice.current.setValue(rotateOrientation.rawValue, forKey: "orientation")
     }
     
-}
-
-struct User {
-    let fullname: String
-    let email: String
-    //let profileImageURL: String
-    let uid:String
-    
-    init(uid: String, dictionary: [String: Any]) {
-        self.uid = uid
-        self.fullname = dictionary["fullname"] as? String ?? ""
-        self.email = dictionary["email"] as? String ?? ""
-        //self.profileImageURL = dictionary["profileImageURL"] as? String ?? ""
-    }
-}
-
-struct Notebook {
-    let notebookTitle: String
-    init(notebookTitle: String){
-        self.notebookTitle = notebookTitle
-    }
-}
-
-struct Note {
-    let noteTitle: String
-    let date: String
-    let body: String
-    let bookmark: Bool
-    let notebookTitle: String
-    let uid:String
-    
-    init(dictionary: [String: Any], noteTitle: String, notebookTitle: String, uid: String){
-        self.uid = uid
-        self.noteTitle = noteTitle
-        self.date =  dictionary["date"] as? String ?? ""
-        self.body =  dictionary["body"] as? String ?? ""
-        self.notebookTitle = notebookTitle
-        self.bookmark = dictionary["bookmark"] as? Bool ?? false
-    }
 }

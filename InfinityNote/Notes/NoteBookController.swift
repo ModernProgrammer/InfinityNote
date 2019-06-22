@@ -52,13 +52,16 @@ class NoteBookController: UIViewController, UICollectionViewDataSource, UICollec
         return view
     }()
     
+    
     lazy var collectionView : UICollectionView = {
         let flowlayout = UICollectionViewFlowLayout()
         flowlayout.scrollDirection = .horizontal
+        flowlayout.minimumLineSpacing = 0
+        flowlayout.minimumInteritemSpacing = 0
         let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: flowlayout)
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = paletteSystemWhite
+        collectionView.backgroundColor = .clear
         collectionView.alwaysBounceVertical = false
         collectionView.alwaysBounceHorizontal = true
         collectionView.isPagingEnabled = true
@@ -78,55 +81,24 @@ class NoteBookController: UIViewController, UICollectionViewDataSource, UICollec
         setupUI()
         fetchNotebooks()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        print("Fetching 1")
-    }
 }
 
 // MARK: UI/UX Functions
 extension NoteBookController {
-    fileprivate func setupWeatherContainer() {
-        bottomContainer.addSubview(weatherContainer)
-        weatherContainer.translatesAutoresizingMaskIntoConstraints = false
-        weatherContainer.centerXAnchor.constraint(equalTo: bottomContainer.centerXAnchor).isActive = true
-        weatherContainer.centerYAnchor.constraint(equalTo: bottomContainer.centerYAnchor).isActive = true
-        weatherContainer.widthAnchor.constraint(equalToConstant: view.frame.width/3+80).isActive = true
-        weatherContainer.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        weatherContainer.layer.cornerRadius = 40
-        weatherContainer.layer.borderWidth = 1
-        weatherContainer.layer.borderColor = UIColor.black.cgColor
-        let attributedText  = NSMutableAttributedString(string: "Today\n", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .thin), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
-        attributedText.append(NSMutableAttributedString(string: "Aug 12, 2019", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .bold), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue]))
-        weatherLabel.attributedText = attributedText
-        weatherContainer.addSubview(weatherLabel)
-        weatherLabel.translatesAutoresizingMaskIntoConstraints = false
-        weatherLabel.centerXAnchor.constraint(equalTo: weatherContainer.centerXAnchor).isActive = true
-        weatherLabel.centerYAnchor.constraint(equalTo: weatherContainer.centerYAnchor).isActive = true
-    }
-    
     fileprivate func setupWelcomeLabel() {
-        topContrainer.addSubview(welcomeLabel)
-        welcomeLabel.anchor(topAnchor: topContrainer.topAnchor, bottomAnchor: topContrainer.bottomAnchor, leadingAnchor: topContrainer.leadingAnchor, trailingAnchor: topContrainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 20, paddingRight: 0, width: 0, height: 0)
+        view.addSubview(welcomeLabel)
+        welcomeLabel.anchor(topAnchor: view.topAnchor, bottomAnchor: view.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 20, paddingRight: 0, width: 0, height: 80)
         
         let attributedText = NSMutableAttributedString(string: "Welcome, \n", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 32, weight: .thin),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
-        let name = String((Auth.auth().currentUser?.email)!)
-        attributedText.append(NSMutableAttributedString(string: "\( String(describing: name))", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22, weight: .ultraLight),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue]))
+        // Get User Full Name
+        guard let name = UserManager.shared.user?.fullname else { return }
+        attributedText.append(NSMutableAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22, weight: .ultraLight),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue]))
         welcomeLabel.attributedText = attributedText
     }
     
-    fileprivate func setupStackView() {
-        let stackView = UIStackView(arrangedSubviews: [topContrainer,collectionView])
-        view.addSubview(stackView)
-        stackView.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
-        stackView.distribution = .fill
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        
-        collectionView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        collectionView.heightAnchor.constraint(equalToConstant: view.frame.height).isActive = true
-        topContrainer.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        topContrainer.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+    fileprivate func setupCollectionView() {
+        view.addSubview(collectionView)
+        collectionView.anchor(topAnchor: view.topAnchor, bottomAnchor: view.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
         collectionView.alpha = 0
         navigationItem.title = "Notebooks"
     }
@@ -137,10 +109,12 @@ extension NoteBookController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "plusIcon"), style: .plain, target: self, action: #selector(handleAddNotebookButton))
         
         setupNavBar(barTintColor: paletteSystemBlue, tintColor: paletteSystemGreen, textColor: paletteSystemGrayBlue, clearNavBar: true, largeTitle: true)
-        setupStackView()
-        setupWelcomeLabel()
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        UserManager.shared.setUserInfo(userId: userId) {
+            self.setupWelcomeLabel()
+        }
+        self.setupCollectionView()
     }
-
 }
 
 // MARK: Notebook functions
@@ -153,15 +127,23 @@ extension NoteBookController {
             
             dictionaries.forEach({ (key,value) in
                 let keyTitle = key
-                let notebook = Notebook(notebookTitle: keyTitle)
+                guard let dictionary = value as? [String: Any] else { return }
+                let notebook = Notebook(notebookTitle: keyTitle, dictionary: dictionary)
                 //self.notebooks.append(notebook)
                 self.notebooks.insert(notebook, at: 0)
             })
             self.filteredNotebooks = self.notebooks
-            print("Fetching 2")
+            self.collectionView.alpha = 0
             self.collectionView.reloadData()
             self.collectionView.fadeIn()            
         }
+    }
+    
+    func sortByDate(notebooks: [Notebook]) ->[Notebook] {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd+HH:mm"
+        let nowString = formatter.string(from: Date())
+        return notebooks
     }
     
     // Need this function in order to apend and insert notebook into collectionView
@@ -198,6 +180,7 @@ extension NoteBookController {
         }
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! NoteBookCell
         cell.notebook = filteredNotebooks[indexPath.item]
@@ -211,14 +194,6 @@ extension NoteBookController {
         let width = view.safeAreaLayoutGuide.layoutFrame.width
         let height = view.safeAreaLayoutGuide.layoutFrame.height-160
         return CGSize(width: width, height: height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

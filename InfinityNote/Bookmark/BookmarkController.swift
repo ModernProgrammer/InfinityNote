@@ -48,6 +48,9 @@ class BookmarkController:  UIViewController, UITableViewDataSource, UITableViewD
         // Code to refresh table view
         fetchBookmarkNotes()
     }
+    override func viewDidDisappear(_ animated: Bool) {
+        tableView.alpha = 0
+    }
     
 }
 // MARK: -UI/UX Functions
@@ -89,7 +92,9 @@ extension BookmarkController {
             })
             self.refreshControl.endRefreshing()
             self.animationLoader.removeFromSuperview()
+            self.tableView.alpha = 0
             self.tableView.reloadData()
+            self.tableView.fadeIn()
         }
     }
 }

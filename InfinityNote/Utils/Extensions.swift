@@ -23,6 +23,13 @@ extension UIColor{
     }
 }
 
+extension UIApplication {
+    static func mainTabBarController() -> MainTabBarController? {
+        return shared.keyWindow?.rootViewController as? MainTabBarController
+    }
+    
+}
+
 extension UIView {
     func anchor(topAnchor: NSLayoutYAxisAnchor?, bottomAnchor: NSLayoutYAxisAnchor?, leadingAnchor: NSLayoutXAxisAnchor?, trailingAnchor: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingBottom: CGFloat, paddingLeft: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat){
         

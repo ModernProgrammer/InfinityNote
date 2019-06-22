@@ -15,9 +15,8 @@ class ProfileController: UIViewController, UIImagePickerControllerDelegate,  UIN
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = paletteSystemWhite
+        setUserInfo()
         setupProfileUI()
-        fetchUserInfo()
-        navigationItem.title = "Profile"
     }
     
     let infinityLoader: AnimationView = {
@@ -30,13 +29,13 @@ class ProfileController: UIViewController, UIImagePickerControllerDelegate,  UIN
     
     let profileImageContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = paletteSystemBlue
         return view
     }()
     
     let profileBodyContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = paletteSystemWhite
+        view.backgroundColor = paletteSystemGreen
         return view
     }()
     
@@ -118,50 +117,27 @@ class ProfileController: UIViewController, UIImagePickerControllerDelegate,  UIN
         button.heightAnchor.constraint(equalToConstant: 28).isActive = true
         return button
     }()
-    
+}
+
+extension ProfileController {
+    func setUserInfo() {
+        guard let userInfo = UserManager.shared.user else  { return }
+        self.email.attributedText = NSMutableAttributedString(string: userInfo.email, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
+        self.fullName.attributedText = NSMutableAttributedString(string: userInfo.fullname, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
+        print("Testing: \(userInfo.email) and \(userInfo.fullname)")
+        // set profile image here
+    }
     
     func setupProfileUI() {
         setupNavBar(barTintColor: paletteSystemWhite, tintColor: paletteSystemGrayBlue, textColor: paletteSystemGrayBlue, clearNavBar: true, largeTitle: true)
+        navigationItem.title = "Profile"
         
-        view.addSubview(infinityLoader)
-        view.addSubview(profileBodyContainer)
-        view.addSubview(signoutButton)
-        view.addSubview(profileImageContainer)
-        view.addSubview(profileImageView)
+        let stackView = UIStackView(arrangedSubviews: [profileImageContainer, profileBodyContainer])
+        stackView.distribution = .fillEqually
+        stackView.axis = .vertical
+        view.addSubview(stackView)
+        stackView.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
         
-        profileImageContainer.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
-        
-        profileImageContainer.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1/3).isActive = true
-        
-        let profileImageCircleSize = CGFloat(150)
-        
-        profileImageView.anchor(topAnchor: nil, bottomAnchor: nil, leadingAnchor: nil, trailingAnchor: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: profileImageCircleSize, height: profileImageCircleSize)
-        
-        profileImageView.centerXAnchor.constraint(equalTo: profileImageContainer.centerXAnchor).isActive = true
-        profileImageView.centerYAnchor.constraint(equalTo: profileImageContainer.centerYAnchor).isActive = true
-        
-        profileImageView.layer.cornerRadius = profileImageCircleSize/2
-        profileImageView.clipsToBounds = true
-        
-        infinityLoader.anchor(topAnchor: profileImageContainer.topAnchor, bottomAnchor: profileImageContainer.bottomAnchor, leadingAnchor: profileImageContainer.leadingAnchor, trailingAnchor: profileImageContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 200, height: 200)
-        
-        profileBodyContainer.anchor(topAnchor: profileImageContainer.bottomAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.safeAreaLayoutGuide.leadingAnchor, trailingAnchor: view.safeAreaLayoutGuide.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
-        
-        let stackViewFullName = UIStackView(arrangedSubviews: [fullnameLabel,fullName])
-        stackViewFullName.distribution = .equalCentering
-        view.addSubview(stackViewFullName)
-        
-        let stackViewEmail = UIStackView(arrangedSubviews: [emailLabel,email])
-        stackViewEmail.distribution = .equalCentering
-        
-        
-        let stackViewMain = UIStackView(arrangedSubviews: [stackViewFullName,fullnameFieldLineSeparator,stackViewEmail, emailtextFieldLineSeparator,signoutButton])
-        
-        view.addSubview(stackViewMain)
-        stackViewMain.axis = .vertical
-        stackViewMain.distribution = .fill
-        stackViewMain.spacing = 20
-        stackViewMain.anchor(topAnchor: profileBodyContainer.safeAreaLayoutGuide.topAnchor, bottomAnchor: nil, leadingAnchor: profileBodyContainer.safeAreaLayoutGuide.leadingAnchor, trailingAnchor: profileBodyContainer.safeAreaLayoutGuide.trailingAnchor, paddingTop: 20, paddingBottom: 8, paddingLeft: 20, paddingRight: 20, width: 0, height: 0)
     }
     
     @objc func handleLogout(){
@@ -170,39 +146,20 @@ class ProfileController: UIViewController, UIImagePickerControllerDelegate,  UIN
         
         alertController.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { (_) in
             print("Perform Logout")
-            
             do{
                 try Auth.auth().signOut()
-                
                 let loginController = LoginController()
                 let navController = UINavigationController(rootViewController: loginController)
-                self.present(navController, animated: true, completion: nil)
-                
-            }catch let signOutErr {
+                self.present(navController, animated: true, completion: {
+                    let mainTabBarController = UIApplication.mainTabBarController()
+                    mainTabBarController?.selectedIndex = 0
+                })
+            } catch let signOutErr {
                 print("Failed to signout", signOutErr)
             }
         }))
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-    }
-    
-    var user = [User]()
-    fileprivate func fetchUserInfo() {
-        guard let userId = Auth.auth().currentUser?.uid else  { return }
-
-        Database.database().reference().child(userId).child("user").observeSingleEvent(of: .value) { (snapshot) in
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            
-            dictionary.forEach({ (key,value) in
-            
-                let userInfo = User(uid: userId, dictionary: value as! [String : Any])
-                self.email.attributedText = NSMutableAttributedString(string: userInfo.email, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
-                self.fullName.attributedText = NSMutableAttributedString(string: userInfo.fullname, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
-                // set profile image here
-                self.user.append(userInfo)
-                
-            })
-        }
     }
 }
 

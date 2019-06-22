@@ -21,11 +21,5 @@ class SignupController: UIViewController, UIGestureRecognizerDelegate {
         super.viewWillDisappear(animated)
         
         // Don't forget to reset when view is being removed
-        AppUtility.lockOrientation(.all)
     }
-    
-
-    
-
-
 }
