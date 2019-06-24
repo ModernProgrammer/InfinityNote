@@ -10,9 +10,9 @@ import UIKit
 
 struct Notebook {
     let notebookTitle: String
-    let dictionary: String
+    let date: String
     init(notebookTitle: String, dictionary: [String: Any]){
         self.notebookTitle = notebookTitle
-        self.dictionary = dictionary["date"] as? String ?? ""
+        self.date = dictionary["date"] as? String ?? ""
     }
 }

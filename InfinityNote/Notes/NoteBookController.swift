@@ -114,6 +114,7 @@ extension NoteBookController {
             self.setupWelcomeLabel()
         }
         self.setupCollectionView()
+
     }
 }
 
@@ -128,11 +129,19 @@ extension NoteBookController {
             dictionaries.forEach({ (key,value) in
                 let keyTitle = key
                 guard let dictionary = value as? [String: Any] else { return }
+                dictionary.forEach({ (arg0) in
+
+                    let (key, value) = arg0
+                    print("\(key) and \(value)")
+                })
                 let notebook = Notebook(notebookTitle: keyTitle, dictionary: dictionary)
-                //self.notebooks.append(notebook)
                 self.notebooks.insert(notebook, at: 0)
             })
-            self.filteredNotebooks = self.notebooks
+            let sortedNotebooks = self.sortByDate(notebooks: self.notebooks)
+            self.filteredNotebooks = sortedNotebooks
+            self.filteredNotebooks.forEach({ (notebook) in
+                print("Notebook:\(notebook.notebookTitle) : \(notebook.date)")
+            })
             self.collectionView.alpha = 0
             self.collectionView.reloadData()
             self.collectionView.fadeIn()            
@@ -140,20 +149,21 @@ extension NoteBookController {
     }
     
     func sortByDate(notebooks: [Notebook]) ->[Notebook] {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd+HH:mm"
-        let nowString = formatter.string(from: Date())
-        return notebooks
+        let sortedNotebooks = notebooks.sorted{
+            let d1 = $0.date, d2 = $1.date
+            return d1 > d2
+        }
+        sortedNotebooks.forEach { (notebook) in
+            print(notebook)
+        }
+        return sortedNotebooks
     }
     
     // Need this function in order to apend and insert notebook into collectionView
     func addNotebook(notebook: Notebook) {
-        // 1 - modify your array
         filteredNotebooks.append(notebook)
         notebooks.append(notebook)
-        // 2 - insert a new index path into your collecionView
-        let newIndexPath = IndexPath(item: filteredNotebooks.count-1, section: 0)
-        
+        let newIndexPath = IndexPath(item: 0, section: 0)
         self.collectionView.insertItems(at: [newIndexPath])
     }
     

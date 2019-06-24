@@ -15,15 +15,18 @@ class NoteBookCell: UICollectionViewParallaxCell, UIGestureRecognizerDelegate {
     var notebook: Notebook? {
         didSet{
             guard let notebookTitle = notebook?.notebookTitle else { return }
-            let attributedText = NSMutableAttributedString(string: notebookTitle, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26, weight: .bold),NSAttributedString.Key.foregroundColor: paletteSystemWhite])
+            let attributedText = NSMutableAttributedString(string: notebookTitle, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26, weight: .regular),NSAttributedString.Key.foregroundColor: paletteSystemWhite])
             self.notebookTitle.attributedText = attributedText
-//            let image = UIImage(named: "pic8")
-//            notebookImage.image = image
-//            setupbackgroundParallax(imageView: notebookImage, cornerRadius: cornerRadius, paddingOffset: paddingOffset, topConstraint: contraint, bottomConstraint: contraint, leadingConstraint: contraint, trailingConstraint: contraint)
+            guard let date = notebook?.date else { return }
+            let formattedDate = dateFormatter(date: date)
+            let attributedDateText = NSMutableAttributedString(string: formattedDate, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26, weight: .ultraLight),NSAttributedString.Key.foregroundColor: paletteSystemWhite])
+            dateTitle.attributedText = attributedDateText
+            let image = UIImage(named: "pic8")
+            notebookImage.image = image
+            setupbackgroundParallax(imageView: notebookImage, cornerRadius: cornerRadius, paddingOffset: paddingOffset, topConstraint: contraint, bottomConstraint: contraint, leadingConstraint: contraint, trailingConstraint: contraint)
             setupCellUI()
         }
     }
-    
 
     let gradientTop : CAGradientLayer = {
         let gradient = CAGradientLayer()
@@ -60,6 +63,15 @@ class NoteBookCell: UICollectionViewParallaxCell, UIGestureRecognizerDelegate {
         return view
     }()
     
+    let dateTitle: UILabel = {
+        let label = UILabel()
+        let attributedText = NSMutableAttributedString(string: "Title", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14),NSAttributedString.Key.foregroundColor: paletteSystemWhite])
+        label.attributedText = attributedText
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        return label
+    }()
+    
     let notebookTitle: UILabel = {
         let label = UILabel()
         let attributedText = NSMutableAttributedString(string: "Title", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14),NSAttributedString.Key.foregroundColor: paletteSystemWhite])
@@ -94,6 +106,15 @@ class NoteBookCell: UICollectionViewParallaxCell, UIGestureRecognizerDelegate {
         print("BUTTON PRESS")
     }
     
+    func dateFormatter(date: String) -> String {
+        let formatterDate = DateFormatter()
+        formatterDate.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let yourDate = formatterDate.date(from: date)
+        formatterDate.dateFormat = "dd\nMMM"
+        let formattedDateString = formatterDate.string(from: yourDate!)
+        return formattedDateString
+    }
+    
     func setupGradient() {
         gradientContrainer.frame = CGRect(x: 0, y: 0, width: frame.width-(contraint * 2), height: frame.height-(contraint * 2))
         gradientBottom.frame = gradientContrainer.bounds
@@ -109,6 +130,9 @@ class NoteBookCell: UICollectionViewParallaxCell, UIGestureRecognizerDelegate {
         addSubview(gradientContrainer)
         gradientContrainer.anchor(topAnchor: topAnchor, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor, trailingAnchor: trailingAnchor, paddingTop: contraint, paddingBottom: contraint, paddingLeft: contraint, paddingRight: contraint, width: 0, height: 0)
         gradientContrainer.layer.insertSublayer(gradientBottom, at: 0)
+        
+        addSubview(dateTitle)
+        dateTitle.anchor(topAnchor: topAnchor, bottomAnchor: nil, leadingAnchor: leadingAnchor, trailingAnchor: trailingAnchor, paddingTop: 20, paddingBottom: 0, paddingLeft: 30, paddingRight: 0, width: 0, height: 64)
 
         let stackView = UIStackView(arrangedSubviews: [notebookTitle, UIView(), menuButton])
         addSubview(stackView)

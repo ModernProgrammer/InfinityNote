@@ -41,7 +41,7 @@ class AddNotebookController: UIViewController {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy"
+        formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
         let date = formatter.string(from: Date())
         let dictionaryValues = ["date": date]
         Database.database().reference().child(uid).child("notebooks").child(notebookTitle).updateChildValues(dictionaryValues){ (err, ref) in
