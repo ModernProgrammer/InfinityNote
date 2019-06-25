@@ -183,23 +183,20 @@ class NoteEditorViewController: UIViewController, UITextViewDelegate {
             })
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        searchBar?.isHidden = true
-        tabBarController?.tabBar.isHidden = true
-    }
-    
+
     @objc func handleSelectBookmark() {
         guard let note = self.note else { return }
-        
         if navigationItem.rightBarButtonItem?.image == UIImage(named: bookmarkUnselected) {
             self.image = UIImage(named: bookmarkSelected)
             // Use firebase to set bookmark for note
-            Database.setNoteBookmark(note: note, bookmarkBool: true)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+            let date = formatter.string(from: Date())
+            Database.setNoteBookmark(note: note, bookmarkBool: true, bookmarkDate: date)
         } else {
             self.image = UIImage(named: bookmarkUnselected)
             // Use firebase to remove bookmark for note
-            Database.setNoteBookmark(note: note, bookmarkBool: false)
+            Database.setNoteBookmark(note: note, bookmarkBool: false, bookmarkDate: "")
         }
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: self.image, style: .plain, target: self, action: #selector(handleSelectBookmark))
     }

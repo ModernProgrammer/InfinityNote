@@ -12,6 +12,8 @@ import UICollectionViewParallaxCell
 class NoteBookCell: UICollectionViewParallaxCell, UIGestureRecognizerDelegate {
     let contraint: CGFloat = 20
     let cornerRadius: CGFloat = 20
+    var indexPath: IndexPath?
+    var notebookDelegate : NotebookDelegate?
     var notebook: Notebook? {
         didSet{
             guard let notebookTitle = notebook?.notebookTitle else { return }
@@ -103,7 +105,8 @@ class NoteBookCell: UICollectionViewParallaxCell, UIGestureRecognizerDelegate {
     }
     
     @objc func handleButtonPress() {
-        print("BUTTON PRESS")
+        guard let indexPath = indexPath else { return }
+        notebookDelegate?.presentAlertController(indexPath: indexPath)
     }
     
     func dateFormatter(date: String) -> String {

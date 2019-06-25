@@ -13,6 +13,7 @@ struct Note {
     let date: String
     let body: String
     let bookmark: Bool
+    let bookmarkDate: String
     let notebookTitle: String
     let uid:String
     
@@ -23,5 +24,6 @@ struct Note {
         self.body =  dictionary["body"] as? String ?? ""
         self.notebookTitle = notebookTitle
         self.bookmark = dictionary["bookmark"] as? Bool ?? false
+        self.bookmarkDate = dictionary["bookmarkDate"] as? String ?? ""
     }
 }

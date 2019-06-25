@@ -59,16 +59,14 @@ class NoteController:  UIViewController, UITableViewDataSource, UITableViewDeleg
 
 // MARK: -Note Functions
 extension NoteController {
-    // Need this function in order to apend and insert notebook into collectionView
     func addNote(note: Note) {
-        // 1 - modify your array
-        filteredNotes.append(note)
-        
-        print("Count: ", filteredNotes.count-1)
-        // 2 - insert a new index path into your collecionView
-        let newIndexPath = IndexPath(item: filteredNotes.count-1, section: 0)
-        
-        self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+        self.tableView.performBatchUpdates({
+            let indexPath = IndexPath(row: 0, section: 0)
+            filteredNotes.insert(note, at: indexPath.item)
+            self.tableView.insertRows(at: [indexPath], with: .automatic)
+        }, completion: { (done) in
+            self.tableView.reloadData()
+        })
     }
     
     @objc func handleAddNoteButton(){
@@ -93,9 +91,18 @@ extension NoteController {
                 let note = Note(dictionary: dictionary, noteTitle: key, notebookTitle: notebookTitle, uid: uid)
                 self.notes.append(note)
             })
-            self.filteredNotes = self.notes
+            let sortedNotes = self.sortByDate(notes: self.notes)
+            self.filteredNotes = sortedNotes
             self.tableView.reloadData()
         }
+    }
+    
+    func sortByDate(notes: [Note]) ->[Note] {
+        let sortedNotes = notes.sorted{
+            let d1 = $0.date, d2 = $1.date
+            return d1 > d2
+        }
+        return sortedNotes
     }
 }
 

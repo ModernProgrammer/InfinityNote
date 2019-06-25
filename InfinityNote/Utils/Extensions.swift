@@ -105,11 +105,11 @@ extension UIViewController
 }
 
 extension Database{
-    static func setNoteBookmark(note: Note, bookmarkBool: Bool){
+    static func setNoteBookmark(note: Note, bookmarkBool: Bool, bookmarkDate: String){
         let uid = note.uid
         let notebookTitle = note.notebookTitle
         let noteTitle = note.noteTitle
-        let dictionaryValues = ["bookmark": bookmarkBool]
+        let dictionaryValues = ["bookmark": bookmarkBool, "bookmarkDate": bookmarkDate] as [String : Any]
         Database.database().reference().child(uid).child("notebooks").child(notebookTitle).child(noteTitle).updateChildValues(dictionaryValues, withCompletionBlock: { (err, ref) in
             if let err = err {
                 print("Oops... looks like something went wrong: ", err)

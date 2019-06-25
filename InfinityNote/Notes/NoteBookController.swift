@@ -10,8 +10,11 @@ import UIKit
 import Firebase
 import Lottie
 
-class NoteBookController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
+protocol NotebookDelegate {
+    func presentAlertController(indexPath: IndexPath)
+}
+
+class NoteBookController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NotebookDelegate {
     let cellId = "cellId"
     let headerId = "headerId"
     let scrollDirection : UICollectionView.ScrollDirection = .horizontal
@@ -116,6 +119,24 @@ extension NoteBookController {
         self.setupCollectionView()
 
     }
+    
+    func presentAlertController(indexPath: IndexPath) {
+        let alertController = UIAlertController(title: "Notebook Options", message: nil, preferredStyle: .actionSheet)
+        alertController.modalPresentationStyle = .popover
+        alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (_) in
+            self.deleteNotebook(indexPath: indexPath)
+        }))
+        
+        if let presenter = alertController.popoverPresentationController {
+            presenter.sourceView = self.view
+            presenter.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            presenter.permittedArrowDirections = []
+        }
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .default))
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
 }
 
 // MARK: Notebook functions
@@ -148,6 +169,21 @@ extension NoteBookController {
         }
     }
     
+    func deleteNotebook(indexPath: IndexPath) {
+        let notebookpart = self.filteredNotebooks[indexPath.item]
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        self.ref.child(uid).child("notebooks").child(notebookpart.notebookTitle).removeValue { (err, ref) in
+            if let err = err {
+                print("Oops, looks like something went wrong: ", err)
+            }
+            print("Successfully removed: ", notebookpart)
+            self.filteredNotebooks.remove(at: indexPath.item)
+            self.collectionView.deleteItems(at: [indexPath])
+            print("Here and stuff")
+        }
+    }
+
+    
     func sortByDate(notebooks: [Notebook]) ->[Notebook] {
         let sortedNotebooks = notebooks.sorted{
             let d1 = $0.date, d2 = $1.date
@@ -161,10 +197,13 @@ extension NoteBookController {
     
     // Need this function in order to apend and insert notebook into collectionView
     func addNotebook(notebook: Notebook) {
-        filteredNotebooks.append(notebook)
-        notebooks.append(notebook)
-        let newIndexPath = IndexPath(item: 0, section: 0)
-        self.collectionView.insertItems(at: [newIndexPath])
+        self.collectionView.performBatchUpdates({
+            let indexPath = IndexPath(row: 0, section: 0)
+            filteredNotebooks.insert(notebook, at: indexPath.item)
+            self.collectionView.insertItems(at: [indexPath])
+        }, completion: { (done) in
+            self.collectionView.reloadData()
+        })
     }
     
     @objc func handleAddNotebookButton() {
@@ -190,9 +229,10 @@ extension NoteBookController {
         }
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! NoteBookCell
+        cell.indexPath = indexPath
+        cell.notebookDelegate = self
         cell.notebook = filteredNotebooks[indexPath.item]
         cell.paddingOffset = 150
         let bounds = collectionView.bounds
@@ -213,19 +253,5 @@ extension NoteBookController {
         print(notebook)
         navigationController?.pushViewController(noteController, animated: true)
     }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-        let notebookpart = self.filteredNotebooks[indexPath.item]
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        self.ref.child(uid).child("notebooks").child(notebookpart.notebookTitle).removeValue { (err, ref) in
-            if let err = err {
-                print("Oops, looks like something went wrong: ", err)
-            }
-            print("Successfully removed: ", notebookpart)
-            self.filteredNotebooks.remove(at: indexPath.item)
-            collectionView.deleteItems(at: [indexPath])
-            print("Here and stuff")
-        }
-    }
+
 }

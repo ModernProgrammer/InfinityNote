@@ -107,7 +107,7 @@ class NewNoteController: UIViewController {
         
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy"
+        formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
         
         let date = formatter.string(from: Date())
         let dictionaryValues = ["body": body,"date": date]
@@ -122,7 +122,7 @@ class NewNoteController: UIViewController {
             
             ref.updateChildValues(dictionaryValues)
             
-            let noteDictionary = ["body": body,"date": date] as [String : Any]
+            let noteDictionary = ["body": body,"date": date, "bookmarkDate": ""] as [String : Any]
             
             let note = Note(dictionary: noteDictionary, noteTitle: noteTitle, notebookTitle: notebookTitle, uid: uid)
             self.noteController?.addNote(note: note)
