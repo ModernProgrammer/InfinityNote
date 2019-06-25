@@ -13,6 +13,7 @@ import Lottie
 class BookmarkController:  UIViewController, UITableViewDataSource, UITableViewDelegate{
     let cellId = "cellId"
     var notes = [Note]()
+    var fetchedNotes = [Note]()
     var refreshControl: UIRefreshControl!
     var animationLoader: AnimationView = {
         let view = AnimationView(name: "infinityLoader")
@@ -74,7 +75,8 @@ extension BookmarkController {
         Database.database().reference().child(uid).child("notebooks").observeSingleEvent(of: .value) { (snapshot) in
             guard let dictionaries = snapshot.value as? [String: AnyObject] else { return }
             self.notes.removeAll()
-            
+            self.fetchedNotes.removeAll()
+
             dictionaries.forEach({ (key,value) in
                 guard let dictionary = value as? [String: AnyObject] else { return }
                 let notebookTitle = key
@@ -86,10 +88,11 @@ extension BookmarkController {
                     
                     if bookmarkBool == true {
                         let note = Note(dictionary: dic, noteTitle: noteTitle, notebookTitle: notebookTitle, uid: uid)
-                        self.notes.append(note)
+                        self.fetchedNotes.append(note)
                     }
                 })
             })
+            self.notes = self.sortNoteByDate(notes: self.fetchedNotes)
             self.refreshControl.endRefreshing()
             self.animationLoader.removeFromSuperview()
             self.tableView.alpha = 0

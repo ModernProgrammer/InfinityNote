@@ -158,7 +158,7 @@ extension NoteBookController {
                 let notebook = Notebook(notebookTitle: keyTitle, dictionary: dictionary)
                 self.notebooks.insert(notebook, at: 0)
             })
-            let sortedNotebooks = self.sortByDate(notebooks: self.notebooks)
+            let sortedNotebooks = self.sortNotebookByDate(notebooks: self.notebooks)
             self.filteredNotebooks = sortedNotebooks
             self.filteredNotebooks.forEach({ (notebook) in
                 print("Notebook:\(notebook.notebookTitle) : \(notebook.date)")
@@ -181,18 +181,6 @@ extension NoteBookController {
             self.collectionView.deleteItems(at: [indexPath])
             print("Here and stuff")
         }
-    }
-
-    
-    func sortByDate(notebooks: [Notebook]) ->[Notebook] {
-        let sortedNotebooks = notebooks.sorted{
-            let d1 = $0.date, d2 = $1.date
-            return d1 > d2
-        }
-        sortedNotebooks.forEach { (notebook) in
-            print(notebook)
-        }
-        return sortedNotebooks
     }
     
     // Need this function in order to apend and insert notebook into collectionView

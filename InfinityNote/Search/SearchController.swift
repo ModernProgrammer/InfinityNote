@@ -86,8 +86,7 @@ extension SearchController {
                     
                 })
             })
-            self.filteredNotes = self.notes
-            print(self.notes)
+            self.filteredNotes = self.sortNoteByDate(notes: self.notes)
             self.tableView.reloadData()
             self.tableView.fadeIn()
         }

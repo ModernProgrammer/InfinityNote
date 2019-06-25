@@ -91,19 +91,13 @@ extension NoteController {
                 let note = Note(dictionary: dictionary, noteTitle: key, notebookTitle: notebookTitle, uid: uid)
                 self.notes.append(note)
             })
-            let sortedNotes = self.sortByDate(notes: self.notes)
+            let sortedNotes = self.sortNoteByDate(notes: self.notes)
             self.filteredNotes = sortedNotes
             self.tableView.reloadData()
         }
     }
     
-    func sortByDate(notes: [Note]) ->[Note] {
-        let sortedNotes = notes.sorted{
-            let d1 = $0.date, d2 = $1.date
-            return d1 > d2
-        }
-        return sortedNotes
-    }
+
 }
 
 // MARK: -UITableView Functions

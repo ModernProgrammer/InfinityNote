@@ -71,8 +71,23 @@ extension UIView {
     }
 }
 
-extension UIViewController
-{
+extension UIViewController {
+    func sortNotebookByDate(notebooks: [Notebook]) ->[Notebook] {
+        let sortedNotebooks = notebooks.sorted{
+            let d1 = $0.date, d2 = $1.date
+            return d1 > d2
+        }
+        return sortedNotebooks
+    }
+    
+    func sortNoteByDate(notes: [Note]) ->[Note] {
+        let sortedNotes = notes.sorted{
+            let d1 = $0.date, d2 = $1.date
+            return d1 > d2
+        }
+        return sortedNotes
+    }
+    
     func hideKeyboard()
     {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(
@@ -122,7 +137,6 @@ extension Database{
 
 
 extension UISearchBar {
-    
     var textColor:UIColor? {
         get {
             if let textField = self.value(forKey: "searchField") as?
