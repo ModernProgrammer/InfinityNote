@@ -88,6 +88,14 @@ extension UIViewController {
         return sortedNotes
     }
     
+    func sortBookmarkByDate(notes: [Note]) ->[Note] {
+        let sortedNotes = notes.sorted{
+            let d1 = $0.bookmarkDate, d2 = $1.bookmarkDate
+            return d1 > d2
+        }
+        return sortedNotes
+    }
+    
     func hideKeyboard()
     {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(

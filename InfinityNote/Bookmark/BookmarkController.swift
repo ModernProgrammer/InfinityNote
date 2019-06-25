@@ -92,7 +92,7 @@ extension BookmarkController {
                     }
                 })
             })
-            self.notes = self.sortNoteByDate(notes: self.fetchedNotes)
+            self.notes = self.sortBookmarkByDate(notes: self.fetchedNotes)
             self.refreshControl.endRefreshing()
             self.animationLoader.removeFromSuperview()
             self.tableView.alpha = 0
