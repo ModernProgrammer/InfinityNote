@@ -11,13 +11,14 @@ import UIKit
 struct User {
     let fullname: String
     let email: String
-    //    let profileImageURL: String
+    let profileImageUID: String
     let uid:String
     
     init(uid: String, dictionary: [String: Any]) {
         self.uid = uid
         self.fullname = dictionary["fullname"] as? String ?? ""
         self.email = dictionary["email"] as? String ?? ""
+        self.profileImageUID = dictionary["profileImageUID"] as? String ?? ""
     }
 }
 

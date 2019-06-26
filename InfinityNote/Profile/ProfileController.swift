@@ -32,6 +32,13 @@ class ProfileController: UIViewController, UIImagePickerControllerDelegate,  UIN
         return view
     }()
     
+    let profileImage : UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(presentPhotoLibrary), for: .touchUpInside)
+        return button
+        
+    }()
+    
     let profileBodyContainer: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
@@ -95,9 +102,14 @@ extension ProfileController {
     
     fileprivate func setupProfileImage() {
         profileImageContainer.addSubview(profileImageView)
+        // If Image does not exist
         profileImageView.anchor(topAnchor: profileImageContainer.topAnchor, bottomAnchor: profileImageContainer.bottomAnchor, leadingAnchor: profileImageContainer.leadingAnchor, trailingAnchor: profileImageContainer.trailingAnchor, paddingTop: 30, paddingBottom: 30, paddingLeft: 30, paddingRight: 30, width: 0, height: 0)
         profileImageView.addSubview(profileImageButton)
         profileImageButton.anchor(topAnchor: profileImageView.topAnchor, bottomAnchor: profileImageView.bottomAnchor, leadingAnchor: profileImageView.leadingAnchor, trailingAnchor: profileImageView.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+        // Else set image as profile pic
+        
+//        profileImageContainer.addSubview(profileImage)
+//        profileImage.anchor(topAnchor: profileImageContainer.topAnchor, bottomAnchor: profileImageContainer.bottomAnchor, leadingAnchor: profileImageContainer.leadingAnchor, trailingAnchor: profileImageContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     func setupProfileUI() {
@@ -157,11 +169,43 @@ extension ProfileController {
         dismiss(animated: true, completion: nil)
     }
     
+    func updateUser(uid: String, imageName: String) {
+        let dictionaryValues = ["profileImageUID":imageName]
+        let values = [uid:dictionaryValues]
+        Database.database().reference().child(uid).updateChildValues(values) { (error, ref) in
+            if let error = error {
+                print("Oops, looks like something went wrong: ", error)
+                return
+            }
+            print("Successful Upload")
+        }
+
+    }
+    
     func setSelectImage(image: UIImage) {
-//        selectImage.setImage(image, for: .normal)
-//        selectImage.contentHorizontalAlignment = .center
-//        selectImage.contentVerticalAlignment = .center
-//        selectImage.imageView?.contentMode = .scaleAspectFill
+        // Upload to Firebase
+        let imageName = NSUUID().uuidString
+        let uid = String(Auth.auth().currentUser!.uid)
+        guard let data = image.pngData() else { return }
+        let storageRef = Storage.storage().reference().child(uid).child("\(imageName).png")
+        storageRef.putData(data, metadata: nil) { (meta, error) in
+            if error != nil {
+                print(error as Any)
+                return
+            }
+            self.updateUser(uid: uid, imageName: imageName)
+            print("Update User")
+            
+        }
+        
+        
+        // Set image as profile Pic
+        profileImageContainer.addSubview(profileImage)
+        profileImage.anchor(topAnchor: profileImageContainer.topAnchor, bottomAnchor: profileImageContainer.bottomAnchor, leadingAnchor: profileImageContainer.leadingAnchor, trailingAnchor: profileImageContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+        profileImage.setImage(image, for: .normal)
+        profileImage.contentHorizontalAlignment = .center
+        profileImage.contentVerticalAlignment = .center
+        profileImage.imageView?.contentMode = .scaleAspectFill
     }
 }
 
