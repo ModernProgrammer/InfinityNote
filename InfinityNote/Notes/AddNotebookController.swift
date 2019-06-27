@@ -33,6 +33,7 @@ class AddNotebookController: UIViewController {
     }()
     
     @objc func handleCancel() {
+        dismissKeyboard()
         dismiss(animated: true, completion: nil)
     }
     
@@ -53,6 +54,7 @@ class AddNotebookController: UIViewController {
             let notebook = Notebook(notebookTitle: notebookTitle, dictionary: dictionaryValues)
             self.notebookController?.addNotebook(notebook: notebook)
             self.selectNoteBookController?.addNotebook(notebook: notebook)
+            self.dismissKeyboard()
             self.dismiss(animated: true, completion: nil)
         }
     }

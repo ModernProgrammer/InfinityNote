@@ -12,6 +12,7 @@ import Lottie
 
 protocol NotebookDelegate {
     func presentAlertController(indexPath: IndexPath)
+    func addNotebook(notebook: Notebook)
 }
 
 class NoteBookController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NotebookDelegate {
@@ -19,6 +20,7 @@ class NoteBookController: UIViewController, UICollectionViewDataSource, UICollec
     let headerId = "headerId"
     let scrollDirection : UICollectionView.ScrollDirection = .horizontal
     let ref = Database.database().reference()
+    var user : User?
     var notebooks = [Notebook]()
     var filteredNotebooks = [Notebook]()
     var animationView: AnimationView = {
@@ -81,6 +83,9 @@ class NoteBookController: UIViewController, UICollectionViewDataSource, UICollec
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        user = Database.getUserInfo()
+        print("User: \(user?.uid)")
+        setupWelcomeLabel()
         setupUI()
         fetchNotebooks()
     }
@@ -90,11 +95,10 @@ class NoteBookController: UIViewController, UICollectionViewDataSource, UICollec
 extension NoteBookController {
     fileprivate func setupWelcomeLabel() {
         view.addSubview(welcomeLabel)
-        welcomeLabel.anchor(topAnchor: view.topAnchor, bottomAnchor: view.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 20, paddingRight: 0, width: 0, height: 80)
+        welcomeLabel.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: nil, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 20, paddingRight: 0, width: 0, height: 80)
         
         let attributedText = NSMutableAttributedString(string: "Welcome, \n", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 32, weight: .thin),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
-        // Get User Full Name
-        guard let name = UserManager.shared.user?.fullname else { return }
+        guard let name = user?.fullname else { return }
         attributedText.append(NSMutableAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22, weight: .ultraLight),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue]))
         welcomeLabel.attributedText = attributedText
     }
@@ -110,12 +114,7 @@ extension NoteBookController {
         self.animationView.frame = CGRect(x: view.center.x/4, y: view.center.y/3, width: 300, height: 300)
         view.backgroundColor = paletteSystemWhite
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "plusIcon"), style: .plain, target: self, action: #selector(handleAddNotebookButton))
-        
         setupNavBar(barTintColor: paletteSystemBlue, tintColor: paletteSystemGreen, textColor: paletteSystemGrayBlue, clearNavBar: true, largeTitle: true)
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-        UserManager.shared.setUserInfo(userId: userId) {
-            self.setupWelcomeLabel()
-        }
         self.setupCollectionView()
 
     }
@@ -191,6 +190,7 @@ extension NoteBookController {
             self.collectionView.insertItems(at: [indexPath])
         }, completion: { (done) in
             self.collectionView.reloadData()
+            self.collectionView.fadeIn()
         })
     }
     

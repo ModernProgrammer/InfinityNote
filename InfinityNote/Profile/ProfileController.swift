@@ -18,6 +18,7 @@ class ProfileController: UIViewController, UIImagePickerControllerDelegate,  UIN
         setupProfileUI()
     }
     
+    var user: User?
     let infinityLoader: AnimationView = {
         let lottie = AnimationView(filePath: "infinityLoaderProfile")
         lottie.play()
@@ -82,14 +83,11 @@ class ProfileController: UIViewController, UIImagePickerControllerDelegate,  UIN
 
 extension ProfileController {
     func setUserInfo() {
-//        guard let userInfo = UserManager.shared.user else  { return }
-        let attributedText = NSMutableAttributedString(string: "Diego Bustamante\n", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22, weight: .bold), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
-        attributedText.append(NSMutableAttributedString(string: "diegobust4545@gmail.com", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .light), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue]))
-//        self.email.attributedText = NSMutableAttributedString(string: userInfo.email, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
-//        self.fullName.attributedText = NSMutableAttributedString(string: userInfo.fullname, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
+        guard let userInfo = Database.getUserInfo() else { return }
+        let attributedText = NSMutableAttributedString(string: userInfo.fullname, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22, weight: .bold), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
+        attributedText.append(NSMutableAttributedString(string:  userInfo.email, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .light), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue]))
         self.userInfoLabel.attributedText = attributedText
-//        print("Testing: \(userInfo.email) and \(userInfo.fullname)")
-        // set profile image here
+
     }
     
     fileprivate func setupMainStackView() {
@@ -170,16 +168,17 @@ extension ProfileController {
     }
     
     func updateUser(uid: String, imageName: String) {
-        let dictionaryValues = ["profileImageUID":imageName]
+        let name = user?.fullname
+        let email = user?.email
+        let dictionaryValues = ["fullname": name, "email": email, "profileImageUID": imageName]
         let values = [uid:dictionaryValues]
-        Database.database().reference().child(uid).updateChildValues(values) { (error, ref) in
+        Database.database().reference().child(uid).child("user").updateChildValues(values) { (error, ref) in
             if let error = error {
                 print("Oops, looks like something went wrong: ", error)
                 return
             }
             print("Successful Upload")
         }
-
     }
     
     func setSelectImage(image: UIImage) {
