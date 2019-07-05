@@ -141,7 +141,7 @@ extension Database{
         })
     }
     
-    static func getUserInfo() -> User? {
+    static func getUserInfo(completion:  @escaping (_ user: User) -> Void) {
         let userId = Auth.auth().currentUser?.uid
         var user : User?
         Database.database().reference().child(userId!).child("user").observeSingleEvent(of: .value) { (snapshot) in
@@ -150,9 +150,9 @@ extension Database{
                 let (_, value) = values
                 user = User(uid: userId!, dictionary: value as! [String : Any])
             })
+            completion(user!)
         }
-        return user
-    }
+   }
 }
 
 

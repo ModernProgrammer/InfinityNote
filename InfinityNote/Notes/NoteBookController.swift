@@ -83,11 +83,12 @@ class NoteBookController: UIViewController, UICollectionViewDataSource, UICollec
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        user = Database.getUserInfo()
-        print("User: \(user?.uid)")
+//        user = Database.getUserInfo()
+//        print("User: \(user?.uid)")
         setupWelcomeLabel()
         setupUI()
         fetchNotebooks()
+        getUserInfo()
     }
 }
 
@@ -98,7 +99,7 @@ extension NoteBookController {
         welcomeLabel.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: nil, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 20, paddingRight: 0, width: 0, height: 80)
         
         let attributedText = NSMutableAttributedString(string: "Welcome, \n", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 32, weight: .thin),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
-        guard let name = user?.fullname else { return }
+        guard let name = Auth.auth().currentUser?.email else { return }
         attributedText.append(NSMutableAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22, weight: .ultraLight),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue]))
         welcomeLabel.attributedText = attributedText
     }
@@ -200,6 +201,11 @@ extension NoteBookController {
         addNoteBookController.notebookController = self
         let addNotebook = UINavigationController(rootViewController: addNoteBookController)
         present(addNotebook, animated: true, completion: nil)
+    }
+    
+    func getUserInfo() {
+        let userName = Auth.auth().currentUser?.email
+        print(userName)
     }
 }
 

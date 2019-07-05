@@ -11,13 +11,6 @@ import Firebase
 import Lottie
 
 class ProfileController: UIViewController, UIImagePickerControllerDelegate,  UINavigationControllerDelegate {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = paletteSystemWhite
-        setupProfileUI()
-    }
-    
     var user: User?
     let infinityLoader: AnimationView = {
         let lottie = AnimationView(filePath: "infinityLoaderProfile")
@@ -79,11 +72,19 @@ class ProfileController: UIViewController, UIImagePickerControllerDelegate,  UIN
         button.heightAnchor.constraint(equalToConstant: 28).isActive = true
         return button
     }()
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = paletteSystemWhite
+        setupProfileUI()
+    }
 }
 
 extension ProfileController {
     func setUserInfo() {
-        guard let userInfo = Database.getUserInfo() else { return }
+        guard let userInfo = user else { return }
+        
         let attributedText = NSMutableAttributedString(string: userInfo.fullname, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22, weight: .bold), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
         attributedText.append(NSMutableAttributedString(string:  userInfo.email, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .light), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue]))
         self.userInfoLabel.attributedText = attributedText

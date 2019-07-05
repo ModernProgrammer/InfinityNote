@@ -71,6 +71,4 @@ class AddNotebookController: UIViewController {
         navigationController?.navigationBar.barStyle = UIBarStyle.black
         navigationController?.navigationBar.tintColor = paletteSystemWhite
     }
-    
-
 }

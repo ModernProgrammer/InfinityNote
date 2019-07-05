@@ -15,13 +15,23 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         self.delegate = self
         setupMenuBar()
+        view.backgroundColor = .white
         if Auth.auth().currentUser == nil {
             DispatchQueue.main.async {
                 self.presentLoginController()
             }
             return
+        } else {
+//            getuserInfo
+            Database.getUserInfo(completion: { (user) in
+                print("Current User: \(user)")
+                // set global user info
+                
+                self.setUpControllers()
+                self.fadeInView()
+            })
+
         }
-        setUpControllers()
     }
     
     fileprivate func presentLoginController() {
@@ -44,6 +54,13 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         present(navController, animated: true, completion: nil)
     }
     
+    fileprivate func fadeInView() {
+        viewControllers?.forEach({ (view) in
+            view.view.fadeIn()
+            tabBar.fadeIn()
+        })
+    }
+    
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         let index = viewControllers?.firstIndex(of: viewController)
         if index == 2 {
@@ -54,6 +71,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     
     func setUpControllers(){
+        tabBar.alpha = 0
         let homeNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "notes"), selectedImage: #imageLiteral(resourceName: "notes"), rootViewController: NoteBookController())
         
         let searchNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "search"), selectedImage: #imageLiteral(resourceName: "search"), rootViewController: SearchController())
@@ -73,7 +91,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     fileprivate func templateNavController(unselectedImage: UIImage?, selectedImage: UIImage?, rootViewController: UIViewController = UIViewController()) -> UINavigationController {
         let viewController = rootViewController
         let viewNavController = UINavigationController(rootViewController: viewController)
-        
+        viewNavController.view.alpha = 0
         if selectedImage == #imageLiteral(resourceName: "addNote") {
             let image: UIImage? = unselectedImage?.withRenderingMode(.alwaysOriginal)
              viewNavController.tabBarItem.title = title

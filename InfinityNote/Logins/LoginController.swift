@@ -130,7 +130,7 @@ extension LoginController {
             print("Successfully created user with userId: ", user?.user.uid ?? "")
             
             guard let uid = user?.user.uid else { return }
-            let dictionaryValues = ["fullname":fullname, "email":email]
+            let dictionaryValues = ["displayname":fullname, "email":email]
             let values = [uid:dictionaryValues]
             Database.database().reference().child(uid).child("user").updateChildValues(values, withCompletionBlock: { (error, ref) in
                 if let error = error {
