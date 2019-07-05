@@ -94,13 +94,15 @@ extension ProfileController {
     }
     
     fileprivate func setupMainStackView() {
-        let stackView = UIStackView(arrangedSubviews: [profileImageContainer, profileBodyContainer])
-        stackView.distribution = .fillEqually
-        stackView.axis = .vertical
-        view.addSubview(stackView)
-        stackView.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+        view.addSubview(profileImageContainer)
+        view.addSubview(profileBodyContainer)
+        profileImageContainer.translatesAutoresizingMaskIntoConstraints = false
+        profileImageContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        profileImageContainer.widthAnchor.constraint(equalToConstant: view.frame.width/1.5).isActive = true
+        profileImageContainer.heightAnchor.constraint(equalToConstant: view.frame.width/1.5).isActive = true
+        profileImageContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        profileBodyContainer.anchor(topAnchor: profileImageContainer.bottomAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 20, paddingRight: 20, width: 0, height: 0)
     }
-    
     
     fileprivate func setupProfileImage() {
         let userInfo = UserInfo.shared.user
@@ -115,7 +117,7 @@ extension ProfileController {
             profileImage.contentHorizontalAlignment = .center
             profileImage.contentVerticalAlignment = .center
             profileImage.imageView?.contentMode = .scaleAspectFill
-            profileImage.imageView?.layer.cornerRadius = cornerRadius
+            profileImage.imageView?.layer.cornerRadius = view.frame.width/3
 //
 //
         } else {
@@ -239,12 +241,9 @@ extension ProfileController {
             self.profileImage.contentHorizontalAlignment = .center
             self.profileImage.contentVerticalAlignment = .center
             self.profileImage.imageView?.contentMode = .scaleAspectFill
-            self.profileImage.imageView?.layer.cornerRadius = self.cornerRadius
-            
+            self.profileImage.imageView?.layer.cornerRadius = self.view.frame.width/3
             print("Update User")
         }
-        
-       
     }
 }
 
