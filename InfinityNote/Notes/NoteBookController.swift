@@ -95,11 +95,12 @@ class NoteBookController: UIViewController, UICollectionViewDataSource, UICollec
 // MARK: UI/UX Functions
 extension NoteBookController {
     fileprivate func setupWelcomeLabel() {
+        let user = UserInfo.shared.user
         view.addSubview(welcomeLabel)
         welcomeLabel.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: nil, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 20, paddingRight: 0, width: 0, height: 80)
         
         let attributedText = NSMutableAttributedString(string: "Welcome, \n", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 32, weight: .thin),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
-        guard let name = Auth.auth().currentUser?.email else { return }
+        guard let name = user?.fullname else { return }
         attributedText.append(NSMutableAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22, weight: .ultraLight),NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue]))
         welcomeLabel.attributedText = attributedText
     }

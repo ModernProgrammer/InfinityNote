@@ -140,19 +140,6 @@ extension Database{
             }
         })
     }
-    
-    static func getUserInfo(completion:  @escaping (_ user: User) -> Void) {
-        let userId = Auth.auth().currentUser?.uid
-        var user : User?
-        Database.database().reference().child(userId!).child("user").observeSingleEvent(of: .value) { (snapshot) in
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            dictionary.forEach({ (values) in
-                let (_, value) = values
-                user = User(uid: userId!, dictionary: value as! [String : Any])
-            })
-            completion(user!)
-        }
-   }
 }
 
 

@@ -12,6 +12,8 @@ import Lottie
 
 class ProfileController: UIViewController, UIImagePickerControllerDelegate,  UINavigationControllerDelegate {
     var user: User?
+    let imageName = "profileImage.png"
+    let cornerRadius:CGFloat = 160
     let infinityLoader: AnimationView = {
         let lottie = AnimationView(filePath: "infinityLoaderProfile")
         lottie.play()
@@ -83,9 +85,9 @@ class ProfileController: UIViewController, UIImagePickerControllerDelegate,  UIN
 
 extension ProfileController {
     func setUserInfo() {
-        guard let userInfo = user else { return }
+        guard let userInfo = UserInfo.shared.user else { return }
         
-        let attributedText = NSMutableAttributedString(string: userInfo.fullname, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22, weight: .bold), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
+        let attributedText = NSMutableAttributedString(string: "\(userInfo.fullname)\n", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22, weight: .bold), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue])
         attributedText.append(NSMutableAttributedString(string:  userInfo.email, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .light), NSAttributedString.Key.foregroundColor: paletteSystemGrayBlue]))
         self.userInfoLabel.attributedText = attributedText
 
@@ -99,12 +101,31 @@ extension ProfileController {
         stackView.anchor(topAnchor: view.safeAreaLayoutGuide.topAnchor, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor, leadingAnchor: view.leadingAnchor, trailingAnchor: view.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
     }
     
+    
     fileprivate func setupProfileImage() {
-        profileImageContainer.addSubview(profileImageView)
-        // If Image does not exist
-        profileImageView.anchor(topAnchor: profileImageContainer.topAnchor, bottomAnchor: profileImageContainer.bottomAnchor, leadingAnchor: profileImageContainer.leadingAnchor, trailingAnchor: profileImageContainer.trailingAnchor, paddingTop: 30, paddingBottom: 30, paddingLeft: 30, paddingRight: 30, width: 0, height: 0)
-        profileImageView.addSubview(profileImageButton)
-        profileImageButton.anchor(topAnchor: profileImageView.topAnchor, bottomAnchor: profileImageView.bottomAnchor, leadingAnchor: profileImageView.leadingAnchor, trailingAnchor: profileImageView.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+        let userInfo = UserInfo.shared.user
+        
+        if userInfo?.profileImageUID != "" {
+            print("Yes")
+            
+            let proImage = getImagefromUID(uid: userInfo!.profileImageUID)
+//
+            profileImageContainer.addSubview(profileImage)
+            profileImage.anchor(topAnchor: profileImageContainer.topAnchor, bottomAnchor: profileImageContainer.bottomAnchor, leadingAnchor: profileImageContainer.leadingAnchor, trailingAnchor: profileImageContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+            profileImage.contentHorizontalAlignment = .center
+            profileImage.contentVerticalAlignment = .center
+            profileImage.imageView?.contentMode = .scaleAspectFill
+            profileImage.imageView?.layer.cornerRadius = cornerRadius
+//
+//
+        } else {
+            print("No")
+            profileImageContainer.addSubview(profileImageView)
+            profileImageView.anchor(topAnchor: profileImageContainer.topAnchor, bottomAnchor: profileImageContainer.bottomAnchor, leadingAnchor: profileImageContainer.leadingAnchor, trailingAnchor: profileImageContainer.trailingAnchor, paddingTop: 30, paddingBottom: 30, paddingLeft: 30, paddingRight: 30, width: 0, height: 0)
+            profileImageView.addSubview(profileImageButton)
+            profileImageButton.anchor(topAnchor: profileImageView.topAnchor, bottomAnchor: profileImageView.bottomAnchor, leadingAnchor: profileImageView.leadingAnchor, trailingAnchor: profileImageView.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+        }
+      
         // Else set image as profile pic
         
 //        profileImageContainer.addSubview(profileImage)
@@ -169,8 +190,9 @@ extension ProfileController {
     }
     
     func updateUser(uid: String, imageName: String) {
-        let name = user?.fullname
-        let email = user?.email
+        let userInfo = UserInfo.shared.user
+        let name = userInfo?.fullname
+        let email = userInfo?.email
         let dictionaryValues = ["fullname": name, "email": email, "profileImageUID": imageName]
         let values = [uid:dictionaryValues]
         Database.database().reference().child(uid).child("user").updateChildValues(values) { (error, ref) in
@@ -182,30 +204,47 @@ extension ProfileController {
         }
     }
     
+    fileprivate func getImagefromUID(uid: String) {
+        let storageRef = Storage.storage().reference()
+        let userInfo = UserInfo.shared.user
+        let imageRef = storageRef.child(userInfo!.uid).child(uid)
+        
+        imageRef.getData(maxSize: 3 * 1024 * 1024) { data, error in
+            if let error = error {
+                print(error)
+            } else {
+                let image = UIImage(data: data!)
+                self.profileImage.setImage(image, for: .normal)
+            }
+        }
+    }
+    
     func setSelectImage(image: UIImage) {
         // Upload to Firebase
-        let imageName = NSUUID().uuidString
+//        let imageName = NSUUID().uuidString
         let uid = String(Auth.auth().currentUser!.uid)
         guard let data = image.pngData() else { return }
-        let storageRef = Storage.storage().reference().child(uid).child("\(imageName).png")
+        let storageRef = Storage.storage().reference().child(uid).child(imageName)
         storageRef.putData(data, metadata: nil) { (meta, error) in
             if error != nil {
                 print(error as Any)
                 return
             }
-            self.updateUser(uid: uid, imageName: imageName)
-            print("Update User")
+            self.updateUser(uid: uid, imageName: self.imageName)
+            // Set image as profile Pic
+            self.profileImageView.removeFromSuperview()
+            self.profileImageContainer.addSubview(self.profileImage)
+            self.profileImage.anchor(topAnchor: self.profileImageContainer.topAnchor, bottomAnchor: self.profileImageContainer.bottomAnchor, leadingAnchor: self.profileImageContainer.leadingAnchor, trailingAnchor: self.profileImageContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
+            self.profileImage.setImage(image, for: .normal)
+            self.profileImage.contentHorizontalAlignment = .center
+            self.profileImage.contentVerticalAlignment = .center
+            self.profileImage.imageView?.contentMode = .scaleAspectFill
+            self.profileImage.imageView?.layer.cornerRadius = self.cornerRadius
             
+            print("Update User")
         }
         
-        
-        // Set image as profile Pic
-        profileImageContainer.addSubview(profileImage)
-        profileImage.anchor(topAnchor: profileImageContainer.topAnchor, bottomAnchor: profileImageContainer.bottomAnchor, leadingAnchor: profileImageContainer.leadingAnchor, trailingAnchor: profileImageContainer.trailingAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 0)
-        profileImage.setImage(image, for: .normal)
-        profileImage.contentHorizontalAlignment = .center
-        profileImage.contentVerticalAlignment = .center
-        profileImage.imageView?.contentMode = .scaleAspectFill
+       
     }
 }
 

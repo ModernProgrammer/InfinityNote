@@ -22,15 +22,10 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
             }
             return
         } else {
-//            getuserInfo
-            Database.getUserInfo(completion: { (user) in
-                print("Current User: \(user)")
-                // set global user info
-                
+            UserInfo.shared.getUserInfo {
                 self.setUpControllers()
                 self.fadeInView()
-            })
-
+            }
         }
     }
     
